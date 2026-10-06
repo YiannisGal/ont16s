@@ -1,0 +1,24 @@
+# Nextflow runtime
+work/
+.nextflow/
+.nextflow.log*
+results/
+null/
+
+# Sequencing data and databases (too large for git; document provenance instead)
+data/
+*.bam
+*.pod5
+*.fastq
+*.fastq.gz
+*.fq.gz
+
+# Secrets — never commit
+.env
+*.pem
+*credentials*
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
