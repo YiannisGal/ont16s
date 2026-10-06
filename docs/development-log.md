@@ -39,4 +39,21 @@ Status vocabulary: Written · Reasoned about · Executed · Tested · Validated.
   (`basecalls/{GutMock,MSPlus}/MAB114/{hac,sup}/repN/`).
 - GitHub remote added: `YiannisGal/ont16s` (private).
 
-**Next:** clone repo on server; run Emu manually on one Zymo SUP chunk, before any Nextflow.
+**Server setup (executed by user):** GitHub SSH key on server, repo cloned to
+`/mnt/Ubuntu_HD5/yiannis/ont16s`, Nextflow 26.04.2, Docker works without sudo.
+
+**Zymo 2025.09 dataset details (from S3 listing + ONT page):**
+- `basecalls/` only contains SQK-MAB114 BAMs (MSPlus ×6 reps, GutMock ×4, HAC + SUP).
+  `analysis/` also has SQK-16S114 results, but no 16S114 BAMs are published.
+- MSPlus = Zymo DNA standard + gDNA of *B. adolescentis*, *B. burgdorferi*,
+  *C. trachomatis*, *G. vaginalis*. **Expected proportions not published.** Must be sourced
+  before quantitative validation.
+- ONT ran Emu, wf-16s (Kraken2) and wf-16s (minimap2) on all samples (`analysis/`).
+  Useful comparators. ONT's Emu DB (369 MB fasta) is **undocumented**.
+- Emu default DB = rrnDB v5.6 + NCBI 16S RefSeq of **2020-09-17** (6 years old).
+- Emu v3.6.2 supports `--type lr:hq` (minimap2 preset for high-accuracy reads):
+  candidate comparison for R10.4.1 SUP data later.
+
+**Written:** `docs/server-tasks/ST-001-emu-manual-run.md` (not yet executed).
+
+**Next:** execute ST-001 on the server with Claude Code.

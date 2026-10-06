@@ -20,8 +20,11 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
 
-**Current task:** on the server, run Emu manually on one Zymo 2025.09 SUP chunk
-(Docker), to learn inputs/outputs/resources — before writing any Nextflow.
+**Current task:** execute `docs/server-tasks/ST-001-emu-manual-run.md` on the server
+(manual Emu run on one Zymo chunk, Docker). Then Milestone 1 scaffold.
+
+**Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; data under
+`/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).
 
 **Known issues / open questions:**
 - Chemistry/versions in Ota et al. comparison unverified.
@@ -29,7 +32,9 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 - No SLURM on lab server → HPC milestone needs another cluster.
 - Server root partition 87 % full → keep data/`work/` on the large data disk.
 
-**Server tasks pending:** none yet (full Zymo benchmark later).
+**Server tasks pending:** ST-001 (manual Emu run). Later: full Zymo benchmark.
+
+**Data gaps:** expected proportions for Zymo MSPlus spike-ins not published.
 
 **Key docs:** `docs/decision-log.md`, `docs/development-log.md`.
 
