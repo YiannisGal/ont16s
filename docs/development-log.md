@@ -29,4 +29,14 @@ Status vocabulary: Written · Reasoned about · Executed · Tested · Validated.
   into abundant relatives). Plan: validation module reports limit of detection via
   depth subsampling, using low-abundance members of Zymo D6331 (verify Zymo sheet).
 
-**Next:** run Emu manually on a ~20 k-read Zymo subset (laptop), before any Nextflow.
+**Environment check:**
+- MacBook: arm64, 8 GB RAM, ~12 GB free disk, Java 8 (too old for Nextflow), Docker installed.
+- Lab server: Ubuntu 24.04 x86_64, 28 CPU, 125 GB RAM, Docker 29.8, Java 17,
+  Nextflow present (version TBC), conda present, no SLURM. Data disk ~1.7 TB free;
+  root partition 87 % full.
+- Decision D-004: server is primary execution environment.
+- Zymo 2025.09 BAMs are split into ~70–120 MB chunks per replicate
+  (`basecalls/{GutMock,MSPlus}/MAB114/{hac,sup}/repN/`).
+- GitHub remote added: `YiannisGal/ont16s` (private).
+
+**Next:** clone repo on server; run Emu manually on one Zymo SUP chunk, before any Nextflow.

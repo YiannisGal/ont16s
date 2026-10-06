@@ -16,15 +16,18 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 **Completed:**
 - Landscape assessment (`docs/project-landscape.md`)
 - Decisions D-001 positioning, D-002 Emu primary / Savont deferred, D-003 dataset roles
-- Git repository initialised (`main`)
+- Git repository initialised (`main`), remote `github.com/YiannisGal/ont16s` (private)
+- D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
+  MacBook (8 GB RAM) = docs/review only
 
-**Current task:** manual Emu run on ~20 k-read Zymo 2025.09 subset (laptop, container),
-to learn inputs/outputs/resources and arm64 behaviour — before writing any Nextflow.
+**Current task:** on the server, run Emu manually on one Zymo 2025.09 SUP chunk
+(Docker), to learn inputs/outputs/resources — before writing any Nextflow.
 
 **Known issues / open questions:**
 - Chemistry/versions in Ota et al. comparison unverified.
 - PRJNA925180 publication unidentified; its ONT runs mix R9.4.1 and R10.4.1.
-- arm64 availability of Emu/Chopper/NanoPlot containers unchecked.
+- No SLURM on lab server → HPC milestone needs another cluster.
+- Server root partition 87 % full → keep data/`work/` on the large data disk.
 
 **Server tasks pending:** none yet (full Zymo benchmark later).
 

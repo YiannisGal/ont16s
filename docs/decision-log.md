@@ -45,3 +45,22 @@ Format: date · decision · alternatives · reason · consequences.
   lab/protocol independence, not biological independence. Re-tuning would overfit.
 - **Consequences:** Independent validation may show worse performance — that is a
   valid result and will be reported.
+
+## D-004 — Lab server is the primary execution environment
+
+- **Date:** 2026-10-06
+- **Decision:** All pipeline runs, data downloads and container work happen on the lab
+  server (Ubuntu 24.04, x86_64, 28 CPU, 125 GB RAM, Docker 29.8, Java 17, no SLURM).
+  The MacBook (M1, 8 GB RAM, ~12 GB free disk) is used for documentation, review and
+  Claude Desktop discussion only. GitHub (`YiannisGal/ont16s`) synchronises the two.
+- **Alternatives:** Develop locally on the MacBook with subsets; copy project to server manually.
+- **Reason:** 8 GB RAM and ~12 GB free disk are too tight for Docker + Nextflow + Emu,
+  and the full Zymo set is 5.1 GB. Server is x86_64, avoiding arm64 container issues.
+  Manual copying would create diverging copies; git keeps one source of truth.
+- **Consequences:**
+  - Default container engine: Docker (`-profile docker`) on the server.
+  - Large data and Nextflow `work/` must live on the large data disk, not the
+    nearly-full root partition.
+  - The server has **no SLURM**: the HPC milestone (M11) needs another cluster, or a
+    local test SLURM setup. Unresolved.
+  - ARM compatibility is no longer blocking but should still be documented for users.
