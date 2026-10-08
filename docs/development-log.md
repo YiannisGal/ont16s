@@ -57,3 +57,20 @@ Status vocabulary: Written · Reasoned about · Executed · Tested · Validated.
 **Written:** `docs/server-tasks/ST-001-emu-manual-run.md` (not yet executed).
 
 **Next:** execute ST-001 on the server with Claude Code.
+
+## 2026-10-08 — ST-001 executed (manual Emu run)
+
+Ran ST-001 on the server (2026-10-06, Docker, detached script). Full write-up:
+`docs/server-tasks/ST-001-results.md`. **Executed, not validated.**
+
+- One MSPlus SUP chunk: 53,011 reads (all barcode04), median 1,577 bp, AvgQual 15.7.
+- Emu 3.6.2 + default DB (49,243 seqs): **12/12 expected bacteria detected** in full and
+  20k subsample (*Borrelia* reported as *Borreliella*); they make up ~99.4 % of abundance.
+- Resources (8 threads): 20k = 20 min / 2.6 GB; full = 50 min / 3.4 GB. Emu is slow,
+  not memory-hungry. `/usr/bin/time` around `docker run` does not measure the container.
+- 9 trace taxa (≤0.055 %) present in full but absent at 20k (detection floor `10/n_reads`).
+- ONT's own Emu result uses a GTDB-like DB: different species names/splits for several
+  mock members. Confirms DB choice matters (D-001).
+
+**Next:** Milestone 1 scaffold; investigate Emu speed (`--type lr:hq`, thread scaling);
+add read-length filter.

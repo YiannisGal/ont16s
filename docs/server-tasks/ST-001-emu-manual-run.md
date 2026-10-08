@@ -1,6 +1,6 @@
 # SERVER TASK ST-001 — Run Emu manually on one Zymo chunk
 
-Status: **Not yet executed.** Written 2026-10-06.
+Status: **Executed 2026-10-06.** Results: `ST-001-results.md`. Written 2026-10-06.
 
 This prompt is self-contained. Claude Code on the server can execute it without the
 conversation that created it. Read `CLAUDE.md` section 0 first.

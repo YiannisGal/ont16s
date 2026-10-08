@@ -5,23 +5,23 @@
 
 # 0. Current project state (keep this section short and up to date)
 
-**Last updated:** 2026-10-06
+**Last updated:** 2026-10-08
 
 **Positioning (D-001):** validation- and database-aware Emu profiling pipeline for
 environmental ONT full-length 16S. Differentiated from TRANA (Emu Nextflow pipeline)
 and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 
-**Current milestone:** Milestone 0 complete → starting Milestone 1 (scaffold).
+**Current milestone:** Milestone 0 complete, ST-001 executed → starting Milestone 1 (scaffold).
 
 **Completed:**
 - Landscape assessment (`docs/project-landscape.md`)
 - Decisions D-001 positioning, D-002 Emu primary / Savont deferred, D-003 dataset roles
 - Git repository initialised (`main`), remote `github.com/YiannisGal/ont16s` (private)
+- ST-001 manual Emu run executed (`docs/server-tasks/ST-001-results.md`): 12/12 mock taxa, 50 min / 3.4 GB per 53k-read chunk
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
 
-**Current task:** execute `docs/server-tasks/ST-001-emu-manual-run.md` on the server
-(manual Emu run on one Zymo chunk, Docker). Then Milestone 1 scaffold.
+**Current task:** Milestone 1 scaffold. Open: Emu speed, read-length filter.
 
 **Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; data under
 `/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).
@@ -32,7 +32,7 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 - No SLURM on lab server → HPC milestone needs another cluster.
 - Server root partition 87 % full → keep data/`work/` on the large data disk.
 
-**Server tasks pending:** ST-001 (manual Emu run). Later: full Zymo benchmark.
+**Server tasks pending:** full Zymo benchmark (later).
 
 **Data gaps:** expected proportions for Zymo MSPlus spike-ins not published.
 
