@@ -16,6 +16,14 @@ You will need to create a samplesheet with information about the samples you wou
 
 Each row is **one reads file**. Reads can be unaligned ONT BAM files (as written by dorado) or FASTQ files (plain or gzipped).
 
+For real (non-mock) samples leave `mock` empty; every step except mock validation runs:
+
+```csv title="samplesheet.csv"
+sample,reads,mock
+soil_rep1,/data/soil_rep1.fastq.gz,
+lake_rep1,/data/lake_rep1.fastq.gz,
+```
+
 ### Multiple files of the same sample
 
 ONT output is often split into chunks (`..._0.bam`, `..._1.bam`, ...). Give every chunk its own row with the **same** `sample` name; the pipeline groups them into one sample. All files of a sample must be the same format (all BAM or all FASTQ) and have the same `mock` value.

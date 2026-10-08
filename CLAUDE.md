@@ -23,11 +23,12 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 - ST-002 Emu speed test (`docs/server-tasks/ST-002-results.md`): minimap2 is the bottleneck, scales with threads; `lr:hq` 15× faster but not equivalent
 - nf-core scaffold generated + runs (`-profile test,docker`); D-005 branching model `dev` → `main`
 - Pipeline: BAM/FASTQ → NanoPlot → chopper (1–2 kb) → NanoPlot → Emu; CI green (PR #6)
+- ST-004: pipeline runs on real environmental samples (9 × PRJNA925180 R10.4.1), plausible results
 - D-006: universal pipeline — no hard-coded samples/taxa/DB; Zymo only for tests + validation
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
 
-**Current task:** Mock validation (presence/absence) on branch `m8-mock-validation`. Next: independent validation data (NaMeco, PRJNA925180), expected proportions, environmental demo.
+**Current task:** ST-004 real environmental samples done (branch `st004-real-samples`). Next: environmental Emu DB (SILVA/GTDB), independent mock data (NaMeco), cross-platform comparison.
 
 **Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; tools (nf-core venv, nf-test) in `ont16s_data/tools/`; data under
 `/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).

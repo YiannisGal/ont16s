@@ -194,3 +194,14 @@ Zymo subset; Milestone 2 modules.
   broke the joined summary; missing-definition check moved to samplesheet validation so
   it fails before any task runs.
 - Limits documented: depth-dependent false positives; genus rule misses _Shigella_/_E. coli_.
+
+## 2026-10-08 — ST-004: real environmental samples
+
+- User asked whether the pipeline handles real samples, not only mocks. ST-004 ran the
+  pipeline on 9 R10.4.1 environmental runs (PRJNA925180: soil, lake, freshwater ×3) with an
+  empty `mock` column and the Emu default DB: 40/40 tasks, ~1 h 42 min, Emu ≤ 2.5 GB.
+  96–98 % reads classified; replicates agree (Bray-Curtis ≤ 0.27), habitats separate
+  (0.62–0.92); plausible genera. Results: `docs/server-tasks/ST-004-results.md`.
+- Fix: no empty `mock_validation/` folder when there are no mock samples (branch
+  `st004-real-samples`).
+- PR #10 merged before CI finished; CI later passed (latest-everything verified).
