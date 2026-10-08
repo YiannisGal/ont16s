@@ -74,3 +74,26 @@ Ran ST-001 on the server (2026-10-06, Docker, detached script). Full write-up:
 
 **Next:** Milestone 1 scaffold; investigate Emu speed (`--type lr:hq`, thread scaling);
 add read-length filter.
+
+## 2026-10-08 — ST-002 Emu speed test; Milestone 1 scaffold started
+
+**ST-002** (`docs/server-tasks/ST-002-results.md`, executed, not validated): on the 20 k
+subsample, minimap2 is the bottleneck (99.6 % of CPU); 8 → 16 threads halves wall time
+(1,221 → 608 s) with identical results. `--type lr:hq` is ~15× faster but leaves 1.9 %
+reads unmapped and shifts *Bacillus* assignments. Keep `map-ont` default; expose `--type`
+as a parameter; decide in Milestone 8.
+
+**Milestone 1** (branch `m1-scaffold`):
+- Tools in `ont16s_data/tools/`: nf-core/tools 4.1.0 (venv), nf-test 0.9.5
+  (sha256 `b7679eb9…fc1641` of the release tarball).
+- `nf-core pipelines create` (org `YiannisGal`; skipped igenomes, fastqc, gpu, codespaces,
+  seqera_platform, email). Merged via a `TEMPLATE` branch with
+  `--allow-unrelated-histories`; `.gitignore` conflict resolved by combining rules.
+- `nextflow run . -profile test,docker` → success (MULTIQC only). Warnings:
+  `validation.defaultIgnoreParams` / `validation.monochromeLogs` unrecognised.
+  Test profile still points at nf-core viralrecon Illumina samplesheet (placeholder).
+- `nf-core pipelines lint`: 192 passed, 36 warnings, 1 failed (`branch.yml`, see D-005).
+- D-005: nf-core branching model (`dev` → `main`).
+
+**Next:** walk through scaffold files together (step 1c); replace test data with an ONT
+Zymo subset; Milestone 2 modules.

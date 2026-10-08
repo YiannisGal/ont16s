@@ -11,19 +11,21 @@
 environmental ONT full-length 16S. Differentiated from TRANA (Emu Nextflow pipeline)
 and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 
-**Current milestone:** Milestone 0 complete, ST-001 executed → starting Milestone 1 (scaffold).
+**Current milestone:** Milestone 1 (scaffold) in progress on branch `m1-scaffold` (PR → `dev`).
 
 **Completed:**
 - Landscape assessment (`docs/project-landscape.md`)
 - Decisions D-001 positioning, D-002 Emu primary / Savont deferred, D-003 dataset roles
 - Git repository initialised (`main`), remote `github.com/YiannisGal/ont16s` (private)
 - ST-001 manual Emu run executed (`docs/server-tasks/ST-001-results.md`): 12/12 mock taxa, 50 min / 3.4 GB per 53k-read chunk
+- ST-002 Emu speed test (`docs/server-tasks/ST-002-results.md`): minimap2 is the bottleneck, scales with threads; `lr:hq` 15× faster but not equivalent
+- nf-core scaffold generated + runs (`-profile test,docker`); D-005 branching model `dev` → `main`
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
 
-**Current task:** Milestone 1 scaffold. Open: Emu speed, read-length filter.
+**Current task:** Milestone 1 step 1c — walk through generated nf-core files together. Then ONT test data, Milestone 2.
 
-**Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; data under
+**Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; tools (nf-core venv, nf-test) in `ont16s_data/tools/`; data under
 `/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).
 
 **Known issues / open questions:**
