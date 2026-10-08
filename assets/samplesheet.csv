@@ -1,3 +1,4 @@
-sample,fastq_1,fastq_2
-SAMPLE_PAIRED_END,/path/to/fastq/files/AEG588A1_S1_L002_R1_001.fastq.gz,/path/to/fastq/files/AEG588A1_S1_L002_R2_001.fastq.gz
-SAMPLE_SINGLE_END,/path/to/fastq/files/AEG588A4_S4_L003_R1_001.fastq.gz,
+sample,reads,mock
+zymo_msplus_rep1,/path/to/FBB32095_bam_pass_15aa3986_bbffde72_0.bam,zymo_msplus
+zymo_msplus_rep1,/path/to/FBB32095_bam_pass_15aa3986_bbffde72_1.bam,zymo_msplus
+soil_A,/path/to/soil_A.fastq.gz,
