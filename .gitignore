@@ -24,3 +24,7 @@ data/
 .DS_Store
 .idea/
 *.pyc
+
+# nf-test
+.nf-test/
+.nf-test.log

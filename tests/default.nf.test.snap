@@ -1,0 +1,36 @@
+{
+    "-profile test": {
+        "content": [
+            {
+                "SAMTOOLS_FASTQ": {
+                    "samtools": 1.24
+                },
+                "Workflow": {
+                    "YiannisGal/ont16s": "v0.1.0dev"
+                }
+            },
+            [
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/llms-full.txt",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
+                "pipeline_info",
+                "pipeline_info/ont16s_software_mqc_versions.yml"
+            ],
+            [
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
+            ]
+        ],
+        "timestamp": "2026-10-08T14:31:55.592936004",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.2"
+        }
+    }
+}
