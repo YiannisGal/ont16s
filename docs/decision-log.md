@@ -64,3 +64,18 @@ Format: date · decision · alternatives · reason · consequences.
   - The server has **no SLURM**: the HPC milestone (M11) needs another cluster, or a
     local test SLURM setup. Unresolved.
   - ARM compatibility is no longer blocking but should still be documented for users.
+
+## D-005 — nf-core branching model (`dev` → `main`)
+
+- **Date:** 2026-10-08
+- **Decision:** Feature branches merge into `dev` through pull requests. `main` only
+  receives merges from `dev` (or `patch`) at releases. A `TEMPLATE` branch holds the
+  untouched nf-core template output for future template syncs.
+- **Alternatives:** Merge feature branches directly into `main` and delete the template's
+  `branch.yml` check.
+- **Reason:** It is the nf-core convention (and `branch.yml` from the template enforces
+  it); `main` always reflects the latest release; learning value for nf-core work.
+- **Consequences:** Default branch for development is `dev`. Releases are explicit
+  `dev` → `main` PRs plus a tag. `nf-core pipelines lint` currently reports
+  `files_unchanged: .github/workflows/branch.yml` although the file is unmodified
+  (likely tools behaviour for non-nf-core orgs); to investigate.
