@@ -1,4 +1,5 @@
 # ont16s — Full-Length 16S Nanopore Nextflow Pipeline
+
 ## Master Project Instructions for Claude Desktop + Claude Code + Server
 
 ---
@@ -14,6 +15,7 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 **Current milestone:** Milestone 1 (scaffold) in progress on branch `m1-scaffold` (PR → `dev`).
 
 **Completed:**
+
 - Landscape assessment (`docs/project-landscape.md`)
 - Decisions D-001 positioning, D-002 Emu primary / Savont deferred, D-003 dataset roles
 - Git repository initialised (`main`), remote `github.com/YiannisGal/ont16s` (private)
@@ -30,6 +32,7 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 `/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).
 
 **Known issues / open questions:**
+
 - Chemistry/versions in Ota et al. comparison unverified.
 - PRJNA925180 publication unidentified; its ONT runs mix R9.4.1 and R10.4.1.
 - No SLURM on lab server → HPC milestone needs another cluster.
@@ -1347,18 +1350,18 @@ Clearly distinguish:
 
 Occasionally identify relevant professional skills:
 
-| Component | Skill |
-|---|---|
-| Nextflow | Workflow engineering |
-| nf-core | Production bioinformatics |
-| Containers | Reproducibility |
-| GitHub Actions | CI/CD |
-| nf-test | Software testing |
-| SLURM | HPC |
-| AWS | Cloud |
-| Seqera | Workflow orchestration |
-| Emu | Long-read microbiome |
-| Benchmarking | Scientific software validation |
+| Component      | Skill                          |
+| -------------- | ------------------------------ |
+| Nextflow       | Workflow engineering           |
+| nf-core        | Production bioinformatics      |
+| Containers     | Reproducibility                |
+| GitHub Actions | CI/CD                          |
+| nf-test        | Software testing               |
+| SLURM          | HPC                            |
+| AWS            | Cloud                          |
+| Seqera         | Workflow orchestration         |
+| Emu            | Long-read microbiome           |
+| Benchmarking   | Scientific software validation |
 
 Do this sparingly.
 

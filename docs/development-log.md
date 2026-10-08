@@ -8,6 +8,7 @@ Status vocabulary: Written · Reasoned about · Executed · Tested · Validated.
 ## 2026-10-06 — Milestone 0: landscape and feasibility
 
 **Done (Reasoned about — no code executed):**
+
 - Surveyed nf-core/ampliseq (2.18.0 release; ONT/Savont in dev 3.0.0), Savont, Emu
   (v3.6.2), TRANA (v1.1.0), EPI2ME wf-16s (v1.6.x).
 - Queried ENA run metadata for PRJEB82315 and PRJNA925180 (counts in
@@ -16,11 +17,13 @@ Status vocabulary: Written · Reasoned about · Executed · Tested · Validated.
 - Initialised git repository (`main`), added docs.
 
 **Discoveries:**
+
 - TRANA is an existing, maintained Emu Nextflow pipeline — not in original brief.
 - PRJEB82315 contains Zymo D6306/D6331 + chicken samples, not independent mocks.
 - PRJNA925180 is cross-platform (Illumina/PacBio/ONT R9+R10) with a synthetic mock.
 
 **Open questions:**
+
 - Chemistry / software versions used in Ota et al. comparison.
 - Publication linked to PRJNA925180.
 - Which Emu container images exist for arm64.
@@ -30,6 +33,7 @@ Status vocabulary: Written · Reasoned about · Executed · Tested · Validated.
   depth subsampling, using low-abundance members of Zymo D6331 (verify Zymo sheet).
 
 **Environment check:**
+
 - MacBook: arm64, 8 GB RAM, ~12 GB free disk, Java 8 (too old for Nextflow), Docker installed.
 - Lab server: Ubuntu 24.04 x86_64, 28 CPU, 125 GB RAM, Docker 29.8, Java 17,
   Nextflow present (version TBC), conda present, no SLURM. Data disk ~1.7 TB free;
@@ -43,10 +47,11 @@ Status vocabulary: Written · Reasoned about · Executed · Tested · Validated.
 `/mnt/Ubuntu_HD5/yiannis/ont16s`, Nextflow 26.04.2, Docker works without sudo.
 
 **Zymo 2025.09 dataset details (from S3 listing + ONT page):**
+
 - `basecalls/` only contains SQK-MAB114 BAMs (MSPlus ×6 reps, GutMock ×4, HAC + SUP).
   `analysis/` also has SQK-16S114 results, but no 16S114 BAMs are published.
-- MSPlus = Zymo DNA standard + gDNA of *B. adolescentis*, *B. burgdorferi*,
-  *C. trachomatis*, *G. vaginalis*. **Expected proportions not published.** Must be sourced
+- MSPlus = Zymo DNA standard + gDNA of _B. adolescentis_, _B. burgdorferi_,
+  _C. trachomatis_, _G. vaginalis_. **Expected proportions not published.** Must be sourced
   before quantitative validation.
 - ONT ran Emu, wf-16s (Kraken2) and wf-16s (minimap2) on all samples (`analysis/`).
   Useful comparators. ONT's Emu DB (369 MB fasta) is **undocumented**.
@@ -65,7 +70,7 @@ Ran ST-001 on the server (2026-10-06, Docker, detached script). Full write-up:
 
 - One MSPlus SUP chunk: 53,011 reads (all barcode04), median 1,577 bp, AvgQual 15.7.
 - Emu 3.6.2 + default DB (49,243 seqs): **12/12 expected bacteria detected** in full and
-  20k subsample (*Borrelia* reported as *Borreliella*); they make up ~99.4 % of abundance.
+  20k subsample (_Borrelia_ reported as _Borreliella_); they make up ~99.4 % of abundance.
 - Resources (8 threads): 20k = 20 min / 2.6 GB; full = 50 min / 3.4 GB. Emu is slow,
   not memory-hungry. `/usr/bin/time` around `docker run` does not measure the container.
 - 9 trace taxa (≤0.055 %) present in full but absent at 20k (detection floor `10/n_reads`).
@@ -80,10 +85,11 @@ add read-length filter.
 **ST-002** (`docs/server-tasks/ST-002-results.md`, executed, not validated): on the 20 k
 subsample, minimap2 is the bottleneck (99.6 % of CPU); 8 → 16 threads halves wall time
 (1,221 → 608 s) with identical results. `--type lr:hq` is ~15× faster but leaves 1.9 %
-reads unmapped and shifts *Bacillus* assignments. Keep `map-ont` default; expose `--type`
+reads unmapped and shifts _Bacillus_ assignments. Keep `map-ont` default; expose `--type`
 as a parameter; decide in Milestone 8.
 
 **Milestone 1** (branch `m1-scaffold`):
+
 - Tools in `ont16s_data/tools/`: nf-core/tools 4.1.0 (venv), nf-test 0.9.5
   (sha256 `b7679eb9…fc1641` of the release tarball).
 - `nf-core pipelines create` (org `YiannisGal`; skipped igenomes, fastqc, gpu, codespaces,

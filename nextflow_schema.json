@@ -10,10 +10,7 @@
             "type": "object",
             "fa_icon": "fas fa-terminal",
             "description": "Define where the pipeline should find input data and save output data.",
-            "required": [
-                "input",
-                "outdir"
-            ],
+            "required": ["input", "outdir"],
             "properties": {
                 "input": {
                     "type": "string",
@@ -44,9 +41,7 @@
             "type": "object",
             "fa_icon": "fas fa-bacteria",
             "description": "Taxonomic profiling with Emu.",
-            "required": [
-                "emu_db"
-            ],
+            "required": ["emu_db"],
             "properties": {
                 "emu_db": {
                     "type": "string",
@@ -58,13 +53,7 @@
                 "emu_type": {
                     "type": "string",
                     "default": "map-ont",
-                    "enum": [
-                        "map-ont",
-                        "lr:hq",
-                        "sr",
-                        "map-pb",
-                        "map-hifi"
-                    ],
+                    "enum": ["map-ont", "lr:hq", "sr", "map-pb", "map-hifi"],
                     "description": "minimap2 preset used by Emu (`emu abundance --type`).",
                     "help_text": "`map-ont` is Emu's default. `lr:hq` was ~15x faster on R10.4.1 SUP reads but left more reads unmapped (ST-002); not yet validated.",
                     "fa_icon": "fas fa-sliders-h"
@@ -138,14 +127,7 @@
                     "description": "Method used to save pipeline results to output directory.",
                     "help_text": "The Nextflow `publishDir` option specifies which intermediate files should be saved to the output directory. This option tells the pipeline what method should be used to move these files. See [Nextflow docs](https://www.nextflow.io/docs/latest/process.html#publishdir) for details.",
                     "fa_icon": "fas fa-copy",
-                    "enum": [
-                        "symlink",
-                        "rellink",
-                        "link",
-                        "copy",
-                        "copyNoFollow",
-                        "move"
-                    ],
+                    "enum": ["symlink", "rellink", "link", "copy", "copyNoFollow", "move"],
                     "hidden": true
                 },
                 "max_multiqc_email_size": {
@@ -201,10 +183,7 @@
                     "hidden": true
                 },
                 "help": {
-                    "type": [
-                        "boolean",
-                        "string"
-                    ],
+                    "type": ["boolean", "string"],
                     "description": "Display the help message."
                 },
                 "help_full": {

@@ -27,10 +27,10 @@ zymo_msplus_rep1,FBB32095_bam_pass_15aa3986_bbffde72_1.bam,zymo_msplus
 soil_A,soil_A.fastq.gz,
 ```
 
-| Column   | Required | Description                                                                                                                                  |
-| -------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample` | yes      | Sample name, no spaces. Identical for all files of the same sample.                                                                          |
-| `reads`  | yes      | Path or URL to a reads file with extension `.bam`, `.fastq`, `.fq`, `.fastq.gz` or `.fq.gz`. No spaces.                                     |
+| Column   | Required | Description                                                                                                                             |
+| -------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample` | yes      | Sample name, no spaces. Identical for all files of the same sample.                                                                     |
+| `reads`  | yes      | Path or URL to a reads file with extension `.bam`, `.fastq`, `.fq`, `.fastq.gz` or `.fq.gz`. No spaces.                                 |
 | `mock`   | no       | Name of the mock community this sample contains (e.g. `zymo_msplus`), used for mock-community validation. Leave empty for real samples. |
 
 Basecalling model and kit are not samplesheet columns: they will be read from the BAM header (planned).
