@@ -17,7 +17,7 @@ jobs:
       - name: Check PRs
         if: github.repository == 'YiannisGal/ont16s'
         env:
-          HEAD_REPO:  ${{ github.event.pull_request.head.repo.full_name }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
         run: |
           { [[ "$HEAD_REPO" == YiannisGal/ont16s ]] && [[ $GITHUB_HEAD_REF == "dev" ]]; } || [[ $GITHUB_HEAD_REF == "patch" ]]
 

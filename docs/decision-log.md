@@ -77,5 +77,5 @@ Format: date · decision · alternatives · reason · consequences.
   it); `main` always reflects the latest release; learning value for nf-core work.
 - **Consequences:** Default branch for development is `dev`. Releases are explicit
   `dev` → `main` PRs plus a tag. `nf-core pipelines lint` currently reports
-  `files_unchanged: .github/workflows/branch.yml` although the file is unmodified
-  (likely tools behaviour for non-nf-core orgs); to investigate.
+  `files_unchanged: .github/workflows/branch.yml`: caused by a one-space whitespace
+  difference (nf-core/tools 4.1.0 template with skipped features); fixed 2026-10-08.
