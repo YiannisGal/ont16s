@@ -109,3 +109,21 @@ Zymo subset; Milestone 2 modules.
 - Test profiles now use `assets/test/samplesheet_test.csv` → public ONT S3 BAM chunk
   (53 k reads). **Open:** need a small public test subset before Emu goes into CI.
 - Lint: 192 passed, 33 warnings, 1 failed (`branch.yml`, D-005).
+
+## 2026-10-08 — Test data repo; branch.yml lint fix; read preparation (M2)
+
+- Lint `branch.yml` failure explained and fixed (one-space whitespace difference).
+  Lint: 0 failures.
+- D-006: universal pipeline; Zymo only for tests and validation.
+- Public test data repo `YiannisGal/ont16s-test-datasets`: 546-read subset (seed 42, 1 %)
+  of the ST-001 BAM, 0.7 MB, CC BY-NC 4.0 (ONT). Emu default DB detects 12/12 in 52 s on
+  4 threads. Test profiles use it via raw.githubusercontent.com.
+- Branch `m2-bam2fastq`: nf-core modules `samtools/cat`, `samtools/fastq`, `cat/fastq`.
+  Samples are branched by format/file count; unpaired ONT reads come out of
+  `samtools fastq` as `*_other.fastq.gz` (verified: 546/546 reads, flag 4).
+  Tested with BAM×1, BAM×2, FASTQ×1, FASTQ×2.gz: read counts exact (546, 53,557, 546,
+  1,092). Mixed gz/plain FASTQ rejected. Intermediates not published.
+- nf-test pipeline snapshot created and reproduced (2 runs, ~19 s).
+- Planned exercise was done by Claude at the user's request.
+
+**Next:** Emu module (`--emu_db`, `--emu_type`) — Milestone 2/5.
