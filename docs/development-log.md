@@ -127,3 +127,21 @@ Zymo subset; Milestone 2 modules.
 - Planned exercise was done by Claude at the user's request.
 
 **Next:** Emu module (`--emu_db`, `--emu_type`) — Milestone 2/5.
+
+## 2026-10-08 — Emu module (branch `m5-emu`)
+
+- PRs #3 (samplesheet) and #4 (read preparation) merged into `dev` by user.
+- Test data repo: `emu_db_zymo_genera/` (+ `.tar.gz`, 1.5 MB): all 955 species / 10,170
+  sequences of the 15 mock genera from the Emu default DB. Emu detects 12/12 on the
+  546-read subset. Citations in the test repo README.
+- nf-core modules `emu/abundance` (Emu 3.6.2, Wave container) and `untar`.
+- Params `--emu_db` (required; directory or .tar/.tar.gz/.tgz, local or URL) and
+  `--emu_type` (default `map-ont`). Emu args: `--type <emu_type> --keep-counts --output-unclassified`.
+- Emu resources overridden from `process_high` (12 CPU / 72 GB) to 8 CPU / 8 GB / 8 h
+  (× attempt), from ST-001/ST-002 measurements.
+- Tests: `-profile test` end-to-end (BAM → FASTQ → Emu) 144 s, result identical to manual
+  run; local DB directory works; missing `--emu_db` gives a clear schema error.
+  nf-test snapshot updated; Emu output md5 identical across 2 runs.
+- Lint: 217 passed, 0 failed.
+
+**Next:** Emu outputs in MultiQC / summary table; read QC + length filter (M4); DB provenance in report.

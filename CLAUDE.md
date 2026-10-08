@@ -24,7 +24,7 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
 
-**Current task:** Milestone 2 — read preparation done (branch `m2-bam2fastq`); next: Emu module with `--emu_db`, `--emu_type`.
+**Current task:** Emu integrated (branch `m5-emu`, BAM → FASTQ → Emu runs end to end). Next: read QC + length filter (M4), merged abundance table, DB provenance.
 
 **Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; tools (nf-core venv, nf-test) in `ont16s_data/tools/`; data under
 `/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).
