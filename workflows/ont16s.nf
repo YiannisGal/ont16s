@@ -125,9 +125,15 @@ workflow ONT16S {
         .collectFile(
             name: 'mock_validation_summary.tsv',
             keepHeader: true,
-            sort: true,
-            storeDir: "${params.outdir}/mock_validation"
+            sort: true
         )
+        // Publish only if there is a summary (storeDir would create an empty folder for runs without mocks)
+        .map { summary ->
+            def mock_dir = file("${outdir}/mock_validation")
+            mock_dir.mkdirs()
+            summary.copyTo(mock_dir.resolve(summary.name))
+            summary
+        }
     ch_multiqc_files = ch_multiqc_files.mix(ch_mock_summary)
 
     //
