@@ -8,6 +8,7 @@ process ONT16S_REPORT {
     path metrics , stageAs: 'metrics/*'
     path raw     , stageAs: 'raw/*'
     path filtered, stageAs: 'filtered/*'
+    path dedup   , stageAs: 'dedup/*'
     path decision
     path db_fit
 
@@ -27,6 +28,7 @@ process ONT16S_REPORT {
         --metrics-dir metrics \\
         --raw-dir raw \\
         --filtered-dir filtered \\
+        --dedup-dir dedup \\
         --decision ${decision} \\
         ${fit} \\
         ${args}

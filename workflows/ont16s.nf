@@ -8,6 +8,7 @@ include { SAMTOOLS_FASTQ         } from '../modules/nf-core/samtools/fastq/main'
 include { CAT_FASTQ              } from '../modules/nf-core/cat/fastq/main'
 include { NANOPLOT as NANOPLOT_RAW      } from '../modules/nf-core/nanoplot/main'
 include { CHOPPER                       } from '../modules/nf-core/chopper/main'
+include { SEQKIT_RMDUP                  } from '../modules/nf-core/seqkit/rmdup/main'
 include { NANOPLOT as NANOPLOT_FILTERED } from '../modules/nf-core/nanoplot/main'
 include { UNTAR as UNTAR_EMU_DB  } from '../modules/nf-core/untar/main'
 include { EMU_ABUNDANCE          } from '../modules/nf-core/emu/abundance/main'
@@ -89,7 +90,13 @@ workflow ONT16S {
     //
     NANOPLOT_RAW ( ch_reads )
     CHOPPER ( ch_reads, [] )
-    NANOPLOT_FILTERED ( CHOPPER.out.fastq )
+
+    //
+    // MODULE: Remove duplicate reads (same read ID written twice, e.g. overlapping chunks)
+    //
+    SEQKIT_RMDUP ( CHOPPER.out.fastq )
+    def ch_filtered = SEQKIT_RMDUP.out.fastx
+    NANOPLOT_FILTERED ( ch_filtered )
 
     ch_multiqc_files = ch_multiqc_files
         .mix ( NANOPLOT_RAW.out.txt.map { _meta, txt -> txt } )
@@ -113,7 +120,7 @@ workflow ONT16S {
     def ch_filtered_counts = NANOPLOT_FILTERED.out.txt
         .map { meta, txt -> [ meta.id, nanostatReads(txt) ] }
     def ch_mode = ch_filtered_counts.toList().map { counts -> decideEmuMode(counts) }
-    def ch_for_emu = CHOPPER.out.fastq.combine(ch_mode)
+    def ch_for_emu = ch_filtered.combine(ch_mode)
 
     //
     // MODULE: Emu per sample
@@ -147,7 +154,7 @@ workflow ONT16S {
         EMU_ABUNDANCE_POOLED.out.unmapped.map { _meta, files -> files }.ifEmpty([]),
         EMU_POOL_READS.out.counts
     )
-    def ch_meta_by_id = CHOPPER.out.fastq.map { meta, _reads -> [ meta.id, meta ] }
+    def ch_meta_by_id = ch_filtered.map { meta, _reads -> [ meta.id, meta ] }
     def ch_split = EMU_SPLIT_POOLED.out.reports
         .flatten()
         .map { report -> [ report.name - '_rel-abundance.tsv', report ] }
@@ -171,7 +178,7 @@ workflow ONT16S {
     def ch_db_fit = channel.value([])
     if (!params.skip_db_fit) {
         DB_FIT (
-            CHOPPER.out.fastq
+            ch_filtered
                 .map { meta, reads -> [ meta.id, reads ] }
                 .toList()
                 .map { pairs -> [ pairs.collect { pair -> pair[0] }, pairs.collect { pair -> pair[1] } ] },
@@ -191,6 +198,7 @@ workflow ONT16S {
         EMU_POSTPROCESS.out.metrics.map { _meta, tsv -> tsv }.collect(),
         NANOPLOT_RAW.out.txt.map { _meta, txt -> txt }.collect(),
         NANOPLOT_FILTERED.out.txt.map { _meta, txt -> txt }.collect(),
+        SEQKIT_RMDUP.out.log.map { _meta, log -> log }.collect(),
         ch_decision,
         ch_db_fit
     )
@@ -294,7 +302,7 @@ workflow ONT16S {
         }
     )
     emit:
-    reads          = CHOPPER.out.fastq           // channel: [ val(meta), path(fastq.gz) ] filtered reads
+    reads          = ch_filtered           // channel: [ val(meta), path(fastq.gz) ] filtered reads
     emu_abundance  = ch_emu_report               // channel: [ val(meta), path(rel-abundance.tsv) ]
     emu_combined   = EMU_COMBINE.out.tables      // channel: [ path(emu-combined-*.tsv) ]
     multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html

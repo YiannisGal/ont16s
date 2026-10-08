@@ -31,6 +31,7 @@ def main():
     ap.add_argument("--metrics-dir", required=True)
     ap.add_argument("--raw-dir", required=True)
     ap.add_argument("--filtered-dir", required=True)
+    ap.add_argument("--dedup-dir", default=None, help="seqkit rmdup logs '<sample>*.log'")
     ap.add_argument("--decision", required=True)
     ap.add_argument("--db-fit", default=None)
     ap.add_argument("--min-reads", type=int, default=1000)
@@ -43,6 +44,11 @@ def main():
            for p in glob.glob(os.path.join(args.raw_dir, "*_raw_NanoStats.txt"))}
     flt = {sample_from(p, "_filtered_NanoStats.txt"): nanostats(p)
            for p in glob.glob(os.path.join(args.filtered_dir, "*_filtered_NanoStats.txt"))}
+    dups = {}
+    if args.dedup_dir:
+        for p in glob.glob(os.path.join(args.dedup_dir, "*.log")):
+            m = re.search(r"(\d+) duplicated records removed", open(p).read())
+            dups[re.sub(r"(\.dedup)?\.log$", "", os.path.basename(p))] = int(m.group(1)) if m else 0
     metrics = {}
     for p in glob.glob(os.path.join(args.metrics_dir, "*_emu_metrics.tsv")):
         with open(p) as fh:
@@ -65,7 +71,10 @@ def main():
         n_raw = float(raw.get(s, {}).get("number_of_reads", "nan"))
         n_flt = float(flt.get(s, {}).get("number_of_reads", "nan"))
         m = metrics.get(s, {})
-        loss = 1 - n_flt / n_raw if n_raw and n_raw == n_raw else float("nan")
+
+        # reads removed by the length/quality filter only (duplicates are reported separately)
+        n_dup = dups.get(s, 0) if isinstance(dups.get(s), int) else 0
+        loss = 1 - (n_flt + n_dup) / n_raw if n_raw and n_raw == n_raw else float("nan")
         unassigned = 1 - float(m["classified_frac"]) if m.get("classified_frac", "NA") != "NA" else float("nan")
         organelle = float(m.get("organelle_frac", "nan")) if m.get("organelle_frac", "NA") != "NA" else float("nan")
         row = {
@@ -73,6 +82,7 @@ def main():
             "reads_raw": f"{n_raw:.0f}",
             "median_length_raw": raw.get(s, {}).get("median_read_length", "NA"),
             "mean_qual_raw": raw.get(s, {}).get("mean_qual", "NA"),
+            "duplicates_removed": dups.get(s, "NA"),
             "reads_filtered": f"{n_flt:.0f}",
             "filter_loss_frac": f"{loss:.4f}",
             "emu_mode": m.get("emu_mode", decision["emu_mode"]),
@@ -91,6 +101,10 @@ def main():
             warn(s, "filter_loss", f"{loss:.2f}", args.max_filter_loss,
                  f"Most reads removed by the length/quality filter (raw median length "
                  f"{row['median_length_raw']} bp): check library quality or filter settings.")
+        if isinstance(dups.get(s), int) and dups[s] > 0:
+            warn(s, "duplicate_reads", dups[s], 0,
+                 "Identical reads occurred more than once (same read ID) and were removed; "
+                 "check how the input files were assembled (e.g. overlapping chunks).")
         if unassigned == unassigned and unassigned > args.max_unassigned:
             hint = ("in per-sample mode this can be caused by Emu's per-sample abundance floor; "
                     "consider --emu_mode pooled" if row["emu_mode"] == "per_sample"
