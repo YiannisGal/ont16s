@@ -2,14 +2,22 @@
     "-profile test": {
         "content": [
             {
+                "EMU_ABUNDANCE": {
+                    "emu": "v3.6.2"
+                },
                 "SAMTOOLS_FASTQ": {
                     "samtools": 1.24
+                },
+                "UNTAR_EMU_DB": {
+                    "untar": 1.34
                 },
                 "Workflow": {
                     "YiannisGal/ont16s": "v0.1.0dev"
                 }
             },
             [
+                "emu",
+                "emu/zymo_msplus_mab114_sup_rep1_rel-abundance.tsv",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/llms-full.txt",
@@ -24,10 +32,11 @@
                 "pipeline_info/ont16s_software_mqc_versions.yml"
             ],
             [
+                "zymo_msplus_mab114_sup_rep1_rel-abundance.tsv:md5,8534af4d7bed8a22ec5c0f1e5b567e34",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ]
         ],
-        "timestamp": "2026-10-08T14:31:55.592936004",
+        "timestamp": "2026-10-08T14:44:26.872027652",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
