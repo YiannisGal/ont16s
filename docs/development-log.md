@@ -97,3 +97,15 @@ as a parameter; decide in Milestone 8.
 
 **Next:** walk through scaffold files together (step 1c); replace test data with an ONT
 Zymo subset; Milestone 2 modules.
+
+## 2026-10-08 — ONT samplesheet (branch `m3-samplesheet`)
+
+- PR #2 (`m1-scaffold` → `dev`) merged by user. CI check results not visible from the
+  server (no `gh`/token).
+- New samplesheet: `sample,reads,mock`. One row per file (BAM or FASTQ), chunks grouped by
+  `sample`. Channel item: `[ [id, mock, format, n_files], [files] ]`.
+- Tested locally: valid (BAM + 2-chunk FASTQ + no-mock), mixed BAM/FASTQ (error),
+  bad extension (schema error) — all behave as intended.
+- Test profiles now use `assets/test/samplesheet_test.csv` → public ONT S3 BAM chunk
+  (53 k reads). **Open:** need a small public test subset before Emu goes into CI.
+- Lint: 192 passed, 33 warnings, 1 failed (`branch.yml`, D-005).
