@@ -27,10 +27,10 @@ zymo_msplus_rep1,FBB32095_bam_pass_15aa3986_bbffde72_1.bam,zymo_msplus
 soil_A,soil_A.fastq.gz,
 ```
 
-| Column   | Required | Description                                                                                                                                  |
-| -------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample` | yes      | Sample name, no spaces. Identical for all files of the same sample.                                                                          |
-| `reads`  | yes      | Path or URL to a reads file with extension `.bam`, `.fastq`, `.fq`, `.fastq.gz` or `.fq.gz`. No spaces.                                     |
+| Column   | Required | Description                                                                                                                             |
+| -------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `sample` | yes      | Sample name, no spaces. Identical for all files of the same sample.                                                                     |
+| `reads`  | yes      | Path or URL to a reads file with extension `.bam`, `.fastq`, `.fq`, `.fastq.gz` or `.fq.gz`. No spaces.                                 |
 | `mock`   | no       | Name of the mock community this sample contains (e.g. `zymo_msplus`), used for mock-community validation. Leave empty for real samples. |
 
 Basecalling model and kit are not samplesheet columns: they will be read from the BAM header (planned).
@@ -42,8 +42,23 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run YiannisGal/ont16s --input ./samplesheet.csv --outdir ./results  -profile docker
+nextflow run YiannisGal/ont16s --input ./samplesheet.csv --emu_db /path/to/emu_db --outdir ./results  -profile docker
 ```
+
+## Emu database (`--emu_db`, required)
+
+Emu assigns reads by aligning them to a reference database, and the database choice strongly
+affects species names and assignments. `--emu_db` accepts:
+
+- a directory containing `species_taxid.fasta` and `taxonomy.tsv`, or
+- a `.tar`, `.tar.gz` or `.tgz` archive of such a directory (local path or URL); it is unpacked automatically.
+
+Emu's prebuilt default database (rrnDB v5.6 + NCBI 16S RefSeq, 2020-09-17) can be downloaded from
+OSF project `56uf7` (`emu-prebuilt/emu.tar`) and passed directly as `--emu_db emu.tar`.
+Any other Emu-format database (e.g. SILVA, GTDB or a custom environmental database) works the same way.
+
+`--emu_type` sets the minimap2 preset used by Emu (default `map-ont`). In our tests `lr:hq` was
+about 15x faster on R10.4.1 SUP reads, but left more reads unmapped; it is not yet validated.
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
 

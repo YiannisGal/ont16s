@@ -23,35 +23,35 @@ high-accuracy long reads, e.g. R10.4.1 SUP) help?
 
 ## Results
 
-| Run | Preset | Threads | Wall | Container CPU | minimap2 real / CPU | Peak mem | Unmapped |
-|---|---|---|---|---|---|---|---|
-| A (ST-001) | map-ont (default) | 8 | 1,221 s | not measured | not logged | 2.62 GB | 7 |
-| B | lr:hq | 8 | 81 s | 420 s | 51 s / 388 s | 0.94 GB | 376 (1.9 %) |
-| C | map-ont (default) | 16 | 608 s | 9,187 s | 575 s / 9,151 s | 4.04 GB | 7 |
+| Run        | Preset            | Threads | Wall    | Container CPU | minimap2 real / CPU | Peak mem | Unmapped    |
+| ---------- | ----------------- | ------- | ------- | ------------- | ------------------- | -------- | ----------- |
+| A (ST-001) | map-ont (default) | 8       | 1,221 s | not measured  | not logged          | 2.62 GB  | 7           |
+| B          | lr:hq             | 8       | 81 s    | 420 s         | 51 s / 388 s        | 0.94 GB  | 376 (1.9 %) |
+| C          | map-ont (default) | 16      | 608 s   | 9,187 s       | 575 s / 9,151 s     | 4.04 GB  | 7           |
 
 Emu calls `minimap2 -ax <preset> -t <threads> -N 50 -p .9 -K 500000000`.
 
 Abundance (%) for taxa > 0.01 %:
 
-| Taxon | A map-ont t8 | B lr:hq t8 | C map-ont t16 |
-|---|---|---|---|
-| Bacillus subtilis | 16.485 | 14.630 | 16.485 |
-| Listeria monocytogenes | 14.354 | 14.894 | 14.354 |
-| Staphylococcus aureus | 14.575 | 14.328 | 14.575 |
-| Limosilactobacillus fermentum | 13.198 | 13.647 | 13.198 |
-| Enterococcus faecalis | 9.578 | 9.905 | 9.578 |
-| Gardnerella vaginalis | 8.200 | 8.393 | 8.200 |
-| Bifidobacterium adolescentis | 5.995 | 6.113 | 5.995 |
-| Salmonella enterica | 5.527 | 5.193 | 5.527 |
-| Escherichia coli | 4.928 | 4.695 | 4.928 |
-| Borreliella burgdorferi | 2.594 | 2.670 | 2.594 |
-| Pseudomonas aeruginosa | 2.508 | 2.588 | 2.508 |
-| Chlamydia trachomatis | 1.757 | 1.795 | 1.757 |
-| Bacillus halotolerans | 0.161 | 0.519 | 0.161 |
-| Bacillus mojavensis | 0.051 | 0.411 | 0.051 |
-| Borreliella americana | 0.090 | 0.076 | 0.090 |
-| Bacillus amyloliquefaciens | 0 | 0.083 | 0 |
-| Bacillus velezensis | 0 | 0.060 | 0 |
+| Taxon                         | A map-ont t8 | B lr:hq t8 | C map-ont t16 |
+| ----------------------------- | ------------ | ---------- | ------------- |
+| Bacillus subtilis             | 16.485       | 14.630     | 16.485        |
+| Listeria monocytogenes        | 14.354       | 14.894     | 14.354        |
+| Staphylococcus aureus         | 14.575       | 14.328     | 14.575        |
+| Limosilactobacillus fermentum | 13.198       | 13.647     | 13.198        |
+| Enterococcus faecalis         | 9.578        | 9.905      | 9.578         |
+| Gardnerella vaginalis         | 8.200        | 8.393      | 8.200         |
+| Bifidobacterium adolescentis  | 5.995        | 6.113      | 5.995         |
+| Salmonella enterica           | 5.527        | 5.193      | 5.527         |
+| Escherichia coli              | 4.928        | 4.695      | 4.928         |
+| Borreliella burgdorferi       | 2.594        | 2.670      | 2.594         |
+| Pseudomonas aeruginosa        | 2.508        | 2.588      | 2.508         |
+| Chlamydia trachomatis         | 1.757        | 1.795      | 1.757         |
+| Bacillus halotolerans         | 0.161        | 0.519      | 0.161         |
+| Bacillus mojavensis           | 0.051        | 0.411      | 0.051         |
+| Borreliella americana         | 0.090        | 0.076      | 0.090         |
+| Bacillus amyloliquefaciens    | 0            | 0.083      | 0             |
+| Bacillus velezensis           | 0            | 0.060      | 0             |
 
 A vs C: identical (max difference 0.0).
 
@@ -62,8 +62,8 @@ A vs C: identical (max difference 0.0).
 2. **Thread scaling is ~linear** (8 → 16 threads: 1,221 → 608 s) with identical results.
    Cost ≈ 9,200 CPU-s per 20 k reads with map-ont (≈ 0.46 CPU-s/read).
 3. **`lr:hq` is ~15× faster in wall time (~22× less CPU)**, but leaves 1.9 % of reads
-   unmapped (vs 0.04 %) and spreads *Bacillus* reads more across congeners
-   (*B. subtilis* −1.9 percentage points). All 12 expected taxa still detected.
+   unmapped (vs 0.04 %) and spreads _Bacillus_ reads more across congeners
+   (_B. subtilis_ −1.9 percentage points). All 12 expected taxa still detected.
 4. No preset decision now. `--type` becomes a pipeline parameter (default `map-ont`, as
    Emu); the choice is deferred to mock-community validation (Milestone 8).
 

@@ -20,7 +20,7 @@
                     "mimetype": "text/csv",
                     "pattern": "^\\S+\\.csv$",
                     "description": "Path to comma-separated file containing information about the samples in the experiment.",
-                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row.",
+                    "help_text": "Comma-separated samplesheet with columns sample, reads (BAM or FASTQ) and optional mock. One row per reads file. See docs/usage.md.",
                     "fa_icon": "fas fa-file-csv"
                 },
                 "outdir": {
@@ -33,6 +33,30 @@
                     "type": "string",
                     "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
                     "fa_icon": "fas fa-file-signature"
+                }
+            }
+        },
+        "emu_options": {
+            "title": "Emu options",
+            "type": "object",
+            "fa_icon": "fas fa-bacteria",
+            "description": "Taxonomic profiling with Emu.",
+            "required": ["emu_db"],
+            "properties": {
+                "emu_db": {
+                    "type": "string",
+                    "description": "Emu database: a directory containing species_taxid.fasta and taxonomy.tsv, or a .tar/.tar.gz/.tgz archive of it (local path or URL).",
+                    "help_text": "Use Emu's prebuilt default database (OSF project 56uf7, emu-prebuilt/emu.tar) or any Emu-format database (e.g. SILVA, GTDB, custom). The database strongly affects species names and assignments; report which one you used.",
+                    "pattern": "^\\S+$",
+                    "fa_icon": "fas fa-database"
+                },
+                "emu_type": {
+                    "type": "string",
+                    "default": "map-ont",
+                    "enum": ["map-ont", "lr:hq", "sr", "map-pb", "map-hifi"],
+                    "description": "minimap2 preset used by Emu (`emu abundance --type`).",
+                    "help_text": "`map-ont` is Emu's default. `lr:hq` was ~15x faster on R10.4.1 SUP reads but left more reads unmapped (ST-002); not yet validated.",
+                    "fa_icon": "fas fa-sliders-h"
                 }
             }
         },
@@ -176,6 +200,9 @@
     "allOf": [
         {
             "$ref": "#/$defs/input_output_options"
+        },
+        {
+            "$ref": "#/$defs/emu_options"
         },
         {
             "$ref": "#/$defs/institutional_config_options"

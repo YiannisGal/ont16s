@@ -6,6 +6,8 @@
 include { SAMTOOLS_CAT           } from '../modules/nf-core/samtools/cat/main'
 include { SAMTOOLS_FASTQ         } from '../modules/nf-core/samtools/fastq/main'
 include { CAT_FASTQ              } from '../modules/nf-core/cat/fastq/main'
+include { UNTAR as UNTAR_EMU_DB  } from '../modules/nf-core/untar/main'
+include { EMU_ABUNDANCE          } from '../modules/nf-core/emu/abundance/main'
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -70,6 +72,22 @@ workflow ONT16S {
         .mix ( ch_input.fastq.map { meta, reads -> [ meta, reads[0] ] } )
 
     //
+    // Emu database: a directory, or an archive that is unpacked first
+    //
+    def ch_emu_db
+    if (params.emu_db ==~ /.*\.(tar\.gz|tgz|tar)$/) {
+        UNTAR_EMU_DB ( channel.value([ [ id: 'emu_db' ], file(params.emu_db, checkIfExists: true) ]) )
+        ch_emu_db = UNTAR_EMU_DB.out.untar.map { _meta, db -> db }
+    } else {
+        ch_emu_db = channel.value(file(params.emu_db, checkIfExists: true))
+    }
+
+    //
+    // MODULE: Emu taxonomic abundance
+    //
+    EMU_ABUNDANCE ( ch_reads, ch_emu_db )
+
+    //
     // Collate and save software versions
     //
     def topic_versions = channel.topic("versions")
@@ -126,6 +144,7 @@ workflow ONT16S {
     )
     emit:
     reads          = ch_reads                    // channel: [ val(meta), path(fastq) ]
+    emu_abundance  = EMU_ABUNDANCE.out.report    // channel: [ val(meta), path(rel-abundance.tsv) ]
     multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
 }

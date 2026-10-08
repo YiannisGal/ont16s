@@ -31,11 +31,11 @@ This is a learning/feasibility run, **not validation**. Do not over-interpret nu
 
 ## Inputs
 
-| Item | Source | Notes |
-|---|---|---|
-| Reads | `https://ont-open-data.s3.amazonaws.com/zymo_16s_2025.09/basecalls/MSPlus/MAB114/sup/rep1/FBB32095_bam_pass_15aa3986_bbffde72_0.bam` | 67.6 MB, unaligned BAM, SUP v5.2.0, SQK-MAB114.24, R10.4.1 |
-| Emu default DB | OSF project `56uf7`, file `osfstorage/emu-prebuilt/emu.tar` | rrnDB v5.6 + NCBI 16S RefSeq, 2020-09-17; 49,301 seqs, 17,555 species (per Emu README) |
-| ONT's own Emu result (for comparison only) | `https://ont-open-data.s3.amazonaws.com/zymo_16s_2025.09/analysis/emu/MSPlus/MAB114/rep1/reads.fastq_rel-abundance.tsv` | ONT used an **undocumented** Emu DB (`analysis/databases/emu/`, 369 MB fasta). Not directly comparable. |
+| Item                                       | Source                                                                                                                               | Notes                                                                                                   |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| Reads                                      | `https://ont-open-data.s3.amazonaws.com/zymo_16s_2025.09/basecalls/MSPlus/MAB114/sup/rep1/FBB32095_bam_pass_15aa3986_bbffde72_0.bam` | 67.6 MB, unaligned BAM, SUP v5.2.0, SQK-MAB114.24, R10.4.1                                              |
+| Emu default DB                             | OSF project `56uf7`, file `osfstorage/emu-prebuilt/emu.tar`                                                                          | rrnDB v5.6 + NCBI 16S RefSeq, 2020-09-17; 49,301 seqs, 17,555 species (per Emu README)                  |
+| ONT's own Emu result (for comparison only) | `https://ont-open-data.s3.amazonaws.com/zymo_16s_2025.09/analysis/emu/MSPlus/MAB114/rep1/reads.fastq_rel-abundance.tsv`              | ONT used an **undocumented** Emu DB (`analysis/databases/emu/`, 369 MB fasta). Not directly comparable. |
 
 ## Containers (pinned by tag + digest)
 
@@ -112,16 +112,16 @@ this task. Use `--threads 8`. Leave the remaining cores for other server users.
 
 ## Expected biology (for a plausibility check only)
 
-MSPlus = ZymoBIOMICS Microbial Community DNA Standard + gDNA from *Bifidobacterium
-adolescentis*, *Borrelia burgdorferi*, *Chlamydia trachomatis*, *Gardnerella vaginalis*
-(per ONT dataset page). The standard's bacteria: *Pseudomonas aeruginosa*,
-*Escherichia coli*, *Salmonella enterica*, *Limosilactobacillus fermentum*,
-*Enterococcus faecalis*, *Staphylococcus aureus*, *Listeria monocytogenes*,
-*Bacillus subtilis*. (Its two yeasts have no 16S and should not appear.)
+MSPlus = ZymoBIOMICS Microbial Community DNA Standard + gDNA from _Bifidobacterium
+adolescentis_, _Borrelia burgdorferi_, _Chlamydia trachomatis_, _Gardnerella vaginalis_
+(per ONT dataset page). The standard's bacteria: _Pseudomonas aeruginosa_,
+_Escherichia coli_, _Salmonella enterica_, _Limosilactobacillus fermentum_,
+_Enterococcus faecalis_, _Staphylococcus aureus_, _Listeria monocytogenes_,
+_Bacillus subtilis_. (Its two yeasts have no 16S and should not appear.)
 
 Expected **proportions are not published by ONT** for the spiked mix, so use this as a
-**presence/absence** check only. Note naming differences (e.g. *Lactobacillus fermentum*
-vs *Limosilactobacillus fermentum*) caused by the database being from 2020.
+**presence/absence** check only. Note naming differences (e.g. _Lactobacillus fermentum_
+vs _Limosilactobacillus fermentum_) caused by the database being from 2020.
 
 ## Outputs to produce
 

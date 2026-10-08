@@ -1,4 +1,5 @@
 # ont16s — Full-Length 16S Nanopore Nextflow Pipeline
+
 ## Master Project Instructions for Claude Desktop + Claude Code + Server
 
 ---
@@ -14,6 +15,7 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 **Current milestone:** Milestone 1 (scaffold) in progress on branch `m1-scaffold` (PR → `dev`).
 
 **Completed:**
+
 - Landscape assessment (`docs/project-landscape.md`)
 - Decisions D-001 positioning, D-002 Emu primary / Savont deferred, D-003 dataset roles
 - Git repository initialised (`main`), remote `github.com/YiannisGal/ont16s` (private)
@@ -24,12 +26,13 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
 
-**Current task:** Milestone 2 — read preparation done (branch `m2-bam2fastq`); next: Emu module with `--emu_db`, `--emu_type`.
+**Current task:** Emu integrated (branch `m5-emu`, BAM → FASTQ → Emu runs end to end). Next: read QC + length filter (M4), merged abundance table, DB provenance.
 
 **Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; tools (nf-core venv, nf-test) in `ont16s_data/tools/`; data under
 `/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).
 
 **Known issues / open questions:**
+
 - Chemistry/versions in Ota et al. comparison unverified.
 - PRJNA925180 publication unidentified; its ONT runs mix R9.4.1 and R10.4.1.
 - No SLURM on lab server → HPC milestone needs another cluster.
@@ -1347,18 +1350,18 @@ Clearly distinguish:
 
 Occasionally identify relevant professional skills:
 
-| Component | Skill |
-|---|---|
-| Nextflow | Workflow engineering |
-| nf-core | Production bioinformatics |
-| Containers | Reproducibility |
-| GitHub Actions | CI/CD |
-| nf-test | Software testing |
-| SLURM | HPC |
-| AWS | Cloud |
-| Seqera | Workflow orchestration |
-| Emu | Long-read microbiome |
-| Benchmarking | Scientific software validation |
+| Component      | Skill                          |
+| -------------- | ------------------------------ |
+| Nextflow       | Workflow engineering           |
+| nf-core        | Production bioinformatics      |
+| Containers     | Reproducibility                |
+| GitHub Actions | CI/CD                          |
+| nf-test        | Software testing               |
+| SLURM          | HPC                            |
+| AWS            | Cloud                          |
+| Seqera         | Workflow orchestration         |
+| Emu            | Long-read microbiome           |
+| Benchmarking   | Scientific software validation |
 
 Do this sparingly.
 
