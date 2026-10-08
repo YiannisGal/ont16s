@@ -1,0 +1,51 @@
+repository_type: pipeline
+
+nf_core_version: 4.1.0
+
+lint:
+  files_unchanged:
+    - docs/CONTRIBUTING.md
+    - .prettierignore
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-ont16s_logo_light.png
+    - docs/images/nf-core-ont16s_logo_light.png
+    - docs/images/nf-core-ont16s_logo_dark.png
+    - .github/ISSUE_TEMPLATE/bug_report.yml
+    - .github/PULL_REQUEST_TEMPLATE.md
+    - assets/email_template.txt
+    - docs/README.md
+  nextflow_config:
+    - manifest.name
+    - manifest.homePage
+  multiqc_config:
+    - report_comment
+  files_exist:
+    - conf/igenomes.config
+    - conf/igenomes_ignored.config
+    - assets/email_template.html
+    - assets/sendmail_template.txt
+    - assets/email_template.txt
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-ont16s_logo_light.png
+    - docs/images/nf-core-ont16s_logo_light.png
+    - docs/images/nf-core-ont16s_logo_dark.png
+    - .github/ISSUE_TEMPLATE/config.yml
+    - .github/workflows/awstest.yml
+    - .github/workflows/awsfulltest.yml
+
+template:
+  org: YiannisGal
+  name: ont16s
+  description: Validation- and database-aware Emu profiling of ONT full-length 16S
+    amplicons
+  author: IGaliatsatos
+  version: 0.1.0dev
+  force: true
+  skip_features:
+    - igenomes
+    - fastqc
+    - gpu
+    - codespaces
+    - seqera_platform
+    - email
+  is_nfcore: false
