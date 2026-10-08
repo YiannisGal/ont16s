@@ -75,6 +75,10 @@ def main():
                 if value:
                     per[tax] = per.get(tax, 0.0) + float(value)
 
+    # Emu also writes '*_threshold-<min abundance>*' files for large inputs; they repeat reads
+    args.unclassified = [p for p in args.unclassified if "threshold" not in p]
+    args.unmapped = [p for p in args.unmapped if "threshold" not in p]
+
     unclassified = {s: 0 for s in n_in}
     for path in args.unclassified:
         for rid in read_ids(path):
