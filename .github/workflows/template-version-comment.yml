@@ -10,6 +10,9 @@ permissions: {}
 jobs:
   check_template_version:
     runs-on: ubuntu-latest
+    # Needed to check out a private repository (template default is no permissions)
+    permissions:
+      contents: read
     steps:
       - name: Check out pipeline code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
