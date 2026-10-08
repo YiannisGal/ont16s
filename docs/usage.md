@@ -45,6 +45,22 @@ The typical command for running the pipeline is as follows:
 nextflow run YiannisGal/ont16s --input ./samplesheet.csv --emu_db /path/to/emu_db --outdir ./results  -profile docker
 ```
 
+## Read filtering
+
+Reads are filtered with [chopper](https://github.com/wdecoster/chopper) before profiling, and
+summarised with [NanoPlot](https://github.com/wdecoster/NanoPlot) before and after filtering
+(`qc/nanoplot/raw`, `qc/nanoplot/filtered`, and the MultiQC report).
+
+| Parameter           | Default | Meaning                                    |
+| ------------------- | ------- | ------------------------------------------ |
+| `--min_read_length` | 1000    | Minimum read length (bp)                   |
+| `--max_read_length` | 2000    | Maximum read length (bp)                   |
+| `--min_read_qual`   | 0       | Minimum mean read quality (Phred); 0 = off |
+
+The defaults come from one Zymo R10.4.1 SUP run (`docs/server-tasks/ST-003-results.md`): the
+length window removed ~8 % of reads, mostly truncated amplicons and reads > 2 kb that were
+enriched for spurious taxa. They are provisional; adjust them for other primers or chemistries.
+
 ## Emu database (`--emu_db`, required)
 
 Emu assigns reads by aligning them to a reference database, and the database choice strongly

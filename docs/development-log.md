@@ -151,3 +151,18 @@ Zymo subset; Milestone 2 modules.
 - Lint: 217 passed, 0 failed.
 
 **Next:** Emu outputs in MultiQC / summary table; read QC + length filter (M4); DB provenance in report.
+
+## 2026-10-08 — CI fixed; read QC and filtering (branch `m4-read-qc`)
+
+- CI failures diagnosed via read-only GitHub token (`~/.config/ont16s/github_token`):
+  test profile requested 12 GB on 7.8 GB private-repo runners; template-version job had no
+  checkout permission. Fixed in PR #6; all checks green (latest-everything verified in log).
+- ST-003 (`docs/server-tasks/ST-003-results.md`): length 1,000–2,000 removes 8.3 %; short
+  reads are truncated amplicons with similar composition; > 2 kb reads carry spurious taxa.
+- nf-core modules `chopper` (0.12.0) and `nanoplot` (1.47.0). NanoPlot before/after filter,
+  stats in MultiQC. Plain single FASTQ now routed through CAT_FASTQ (gzip) because
+  chopper/NanoPlot modules need `.gz`. Emu runs on filtered reads.
+- Params `--min_read_length 1000`, `--max_read_length 2000`, `--min_read_qual 0`.
+- Tested: BAM×1, BAM×2, plain FASTQ, gz FASTQ, FASTQ×2: 546→507 and 1,092→1,014 reads.
+- nf-test snapshot updated (NanoPlot html/png and nanostat tables ignored for content);
+  stable over 2 runs.
