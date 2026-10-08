@@ -92,6 +92,29 @@
                 }
             }
         },
+        "mock_validation_options": {
+            "title": "Mock-community validation options",
+            "type": "object",
+            "fa_icon": "fas fa-vial",
+            "description": "Checks samples with a 'mock' value in the samplesheet against a mock definition.",
+            "properties": {
+                "mock_definitions": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "Directory with mock definitions, one '<mock>.tsv' per mock name used in the samplesheet. Default: assets/mocks in the pipeline.",
+                    "help_text": "Columns: species, aliases (';'-separated alternative names), expected_abundance (fraction or NA), source. See assets/mocks/zymo_msplus.tsv.",
+                    "fa_icon": "fas fa-folder-open"
+                },
+                "mock_min_abundance": {
+                    "type": "number",
+                    "default": 0.001,
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Unexpected taxa at or above this relative abundance count as false positives.",
+                    "fa_icon": "fas fa-percentage"
+                }
+            }
+        },
         "institutional_config_options": {
             "title": "Institutional config options",
             "type": "object",
@@ -238,6 +261,9 @@
         },
         {
             "$ref": "#/$defs/emu_options"
+        },
+        {
+            "$ref": "#/$defs/mock_validation_options"
         },
         {
             "$ref": "#/$defs/institutional_config_options"

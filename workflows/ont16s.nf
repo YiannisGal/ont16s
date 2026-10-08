@@ -13,6 +13,7 @@ include { UNTAR as UNTAR_EMU_DB  } from '../modules/nf-core/untar/main'
 include { EMU_ABUNDANCE          } from '../modules/nf-core/emu/abundance/main'
 include { EMU_COMBINE            } from '../modules/local/emu_combine/main'
 include { EMU_DB_INFO            } from '../modules/local/emu_db_info/main'
+include { MOCK_VALIDATION        } from '../modules/local/mock_validation/main'
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -108,6 +109,26 @@ workflow ONT16S {
     // MODULE: Record which Emu database was used (checksums, size)
     //
     EMU_DB_INFO ( ch_emu_db, params.emu_db )
+
+    //
+    // MODULE: Mock-community validation for samples with a 'mock' value
+    //
+    MOCK_VALIDATION (
+        EMU_ABUNDANCE.out.report
+            .filter { meta, _report -> meta.mock }
+            // Definition file existence is checked during samplesheet validation
+            .map { meta, report -> [ meta, report, file("${params.mock_definitions ?: "${projectDir}/assets/mocks"}/${meta.mock}.tsv") ] }
+    )
+
+    def ch_mock_summary = MOCK_VALIDATION.out.summary
+        .map { _meta, summary -> summary }
+        .collectFile(
+            name: 'mock_validation_summary.tsv',
+            keepHeader: true,
+            sort: true,
+            storeDir: "${params.outdir}/mock_validation"
+        )
+    ch_multiqc_files = ch_multiqc_files.mix(ch_mock_summary)
 
     //
     // MODULE: Combine per-sample Emu tables into one table per rank

@@ -27,7 +27,7 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
 
-**Current task:** Read QC + filter done (branch `m4-read-qc`). Next: merged abundance table across samples, DB provenance in outputs, mock validation (M8).
+**Current task:** Mock validation (presence/absence) on branch `m8-mock-validation`. Next: independent validation data (NaMeco, PRJNA925180), expected proportions, environmental demo.
 
 **Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; tools (nf-core venv, nf-test) in `ont16s_data/tools/`; data under
 `/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).

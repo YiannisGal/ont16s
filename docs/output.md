@@ -15,6 +15,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Read QC](#read-qc) - NanoPlot statistics before and after length/quality filtering
 - [Emu](#emu) - Per-sample and combined taxonomic abundance tables
 - [Emu database provenance](#emu-database-provenance) - Which database was used
+- [Mock-community validation](#mock-community-validation) - Expected vs observed taxa for mock samples
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
@@ -53,6 +54,17 @@ The order of sample columns in the combined tables is not guaranteed; select col
 </details>
 
 Species names and assignments depend strongly on the database. Report this file with your results.
+
+### Mock-community validation
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `mock_validation/<sample>_mock_validation.tsv`: one row per taxon: expected taxa (detected yes/no, observed and expected abundance, name reported by Emu) and unexpected taxa (`near_neighbour` or `off_target`).
+- `mock_validation/<sample>_mock_summary.tsv`: one-row summary (recall, missing taxa, unexpected abundance, false positives, L1 distance).
+- `mock_validation/mock_validation_summary.tsv`: all mock samples together; also shown in the MultiQC report.
+
+</details>
 
 ### MultiQC
 
