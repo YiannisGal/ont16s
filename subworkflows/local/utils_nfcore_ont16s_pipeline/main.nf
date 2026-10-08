@@ -154,6 +154,11 @@ def validateInputSamplesheet(input) {
         error("Please check input samplesheet -> Reads of a sample must all be BAM or all FASTQ: ${metas[0].id}")
     }
 
+    // Do not mix gzipped and plain FASTQ within one sample (chunks are concatenated)
+    if (reads.collect{ r -> r.file.name.endsWith('.gz') }.unique().size() != 1) {
+        error("Please check input samplesheet -> FASTQ files of a sample must all be gzipped or all plain: ${metas[0].id}")
+    }
+
     return [ metas[0] + [ format: formats[0], n_files: reads.size() ], reads.collect{ r -> r.file } ]
 }
 //
