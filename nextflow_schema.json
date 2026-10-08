@@ -92,6 +92,86 @@
                 }
             }
         },
+        "emu_mode_options": {
+            "title": "Emu mode, database fit and run checks",
+            "type": "object",
+            "fa_icon": "fas fa-sliders-h",
+            "description": "Pooling, taxon exclusion, database-fit check and warning thresholds.",
+            "properties": {
+                "emu_mode": {
+                    "type": "string",
+                    "default": "auto",
+                    "enum": ["auto", "per_sample", "pooled"],
+                    "fa_icon": "fas fa-layer-group",
+                    "description": "Run Emu per sample, on all samples pooled, or decide automatically.",
+                    "help_text": "Emu drops taxa below 10/n reads per run. With many shallow, diverse samples this discards many reads (ST-005: up to 44% in samples with < 3,000 reads). 'pooled' runs Emu once on all samples (shared floor) and splits the result per sample. 'auto' pools when at least --pool_min_fraction of samples have fewer than --pool_min_reads filtered reads. The decision and its reason are reported."
+                },
+                "pool_min_reads": {
+                    "type": "integer",
+                    "default": 10000,
+                    "minimum": 0,
+                    "fa_icon": "fas fa-sort-numeric-down",
+                    "description": "'auto' mode: samples with fewer filtered reads count as shallow."
+                },
+                "pool_min_fraction": {
+                    "type": "number",
+                    "default": 0.25,
+                    "minimum": 0,
+                    "maximum": 1,
+                    "fa_icon": "fas fa-percentage",
+                    "description": "'auto' mode: pool if at least this fraction of samples is shallow."
+                },
+                "exclude_taxa": {
+                    "type": "string",
+                    "fa_icon": "fas fa-ban",
+                    "description": "Comma-separated terms; taxa whose lineage contains any of them are removed and abundances renormalised (e.g. 'chloroplast,mitochondria').",
+                    "help_text": "Useful for plant- or host-associated samples. Requires a database that labels organelles (e.g. SILVA); Emu's default database does not. Removed fractions are reported."
+                },
+                "skip_db_fit": {
+                    "type": "boolean",
+                    "fa_icon": "fas fa-forward",
+                    "description": "Skip the database-fit check (best-hit identity of a read subsample)."
+                },
+                "db_fit_reads": {
+                    "type": "integer",
+                    "default": 500,
+                    "minimum": 1,
+                    "fa_icon": "fas fa-vial",
+                    "description": "Reads per sample used for the database-fit check."
+                },
+                "min_sample_reads": {
+                    "type": "integer",
+                    "default": 1000,
+                    "minimum": 0,
+                    "fa_icon": "fas fa-exclamation-triangle",
+                    "description": "Warn when a sample has fewer filtered reads."
+                },
+                "warn_filter_loss": {
+                    "type": "number",
+                    "default": 0.5,
+                    "minimum": 0,
+                    "maximum": 1,
+                    "fa_icon": "fas fa-exclamation-triangle",
+                    "description": "Warn when the read filter removes more than this fraction of a sample's reads."
+                },
+                "warn_unassigned": {
+                    "type": "number",
+                    "default": 0.2,
+                    "minimum": 0,
+                    "maximum": 1,
+                    "fa_icon": "fas fa-exclamation-triangle",
+                    "description": "Warn when more than this fraction of a sample's reads is not assigned to a taxon."
+                },
+                "warn_organelle": {
+                    "type": "number",
+                    "default": 0.05,
+                    "minimum": 0,
+                    "maximum": 1,
+                    "fa_icon": "fas fa-exclamation-triangle",
+                    "description": "Warn when more than this fraction of assigned reads is chloroplast/mitochondria."
+                }
+            }
+        },
         "mock_validation_options": {
             "title": "Mock-community validation options",
             "type": "object",
@@ -261,6 +341,9 @@
         },
         {
             "$ref": "#/$defs/emu_options"
+        },
+        {
+            "$ref": "#/$defs/emu_mode_options"
         },
         {
             "$ref": "#/$defs/mock_validation_options"
