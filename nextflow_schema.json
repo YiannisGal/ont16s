@@ -36,6 +36,38 @@
                 }
             }
         },
+        "read_filtering_options": {
+            "title": "Read filtering options",
+            "type": "object",
+            "fa_icon": "fas fa-filter",
+            "description": "Length and quality filtering of reads with chopper before profiling.",
+            "properties": {
+                "min_read_length": {
+                    "type": "integer",
+                    "default": 1000,
+                    "minimum": 0,
+                    "description": "Minimum read length (bp).",
+                    "help_text": "Full-length 16S amplicons are ~1.5 kb. On a Zymo R10.4.1 SUP run, 1,000-2,000 bp removed 8.3% of reads (mostly truncated amplicons) with little change in profile (ST-003).",
+                    "fa_icon": "fas fa-ruler-horizontal"
+                },
+                "max_read_length": {
+                    "type": "integer",
+                    "default": 2000,
+                    "minimum": 1,
+                    "description": "Maximum read length (bp).",
+                    "help_text": "Reads >2 kb were enriched for spurious taxa (likely chimeras/concatemers) in ST-003.",
+                    "fa_icon": "fas fa-ruler-horizontal"
+                },
+                "min_read_qual": {
+                    "type": "number",
+                    "default": 0,
+                    "minimum": 0,
+                    "description": "Minimum mean read quality (Phred). 0 = no quality filter.",
+                    "help_text": "Not yet evaluated for its effect on Emu profiles; off by default.",
+                    "fa_icon": "fas fa-star"
+                }
+            }
+        },
         "emu_options": {
             "title": "Emu options",
             "type": "object",
@@ -200,6 +232,9 @@
     "allOf": [
         {
             "$ref": "#/$defs/input_output_options"
+        },
+        {
+            "$ref": "#/$defs/read_filtering_options"
         },
         {
             "$ref": "#/$defs/emu_options"
