@@ -79,3 +79,25 @@ Format: date · decision · alternatives · reason · consequences.
   `dev` → `main` PRs plus a tag. `nf-core pipelines lint` currently reports
   `files_unchanged: .github/workflows/branch.yml`: caused by a one-space whitespace
   difference (nf-core/tools 4.1.0 template with skipped features); fixed 2026-10-08.
+
+## D-006 — Universal pipeline; Zymo is test and validation data only
+
+- **Date:** 2026-10-08
+- **Decision:** ont16s must work on any ONT full-length 16S dataset. Nothing
+  sample-, mock- or organism-specific is hard-coded. Zymo data is used only for (1) CI
+  test data and (2) mock-community validation.
+- **Alternatives:** A Zymo-tuned pipeline (simpler, but useless for real samples).
+- **Reason:** The target users are environmental microbiologists with their own samples.
+  A benchmark-only pipeline has no value outside our validation.
+- **Consequences (rules for all future code):**
+  - Input is any samplesheet (`sample,reads,mock`). `mock` is optional; empty = real sample.
+  - The reference database is a parameter (`--emu_db`), not a fixed path. The default
+    is Emu's prebuilt DB with recorded provenance; users can supply their own Emu-format
+    DB (e.g. SILVA, GTDB, custom environmental). DB provenance is reported in every run.
+  - Mock definitions are data files (e.g. `assets/mocks/<name>.tsv`: expected taxa
+    and, if known, proportions). Users can add their own with `--mock_definitions`.
+    The validation step runs only for samples with a `mock` value.
+  - All filtering/tool settings are parameters with documented defaults derived from
+    our benchmarks (e.g. read length/quality filter, `--emu_type`), never constants.
+  - Taxon names are never used in code logic.
+  - Tests use Zymo subsets; documentation examples include a non-mock sample.
