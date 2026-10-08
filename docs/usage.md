@@ -69,6 +69,34 @@ The defaults come from one Zymo R10.4.1 SUP run (`docs/server-tasks/ST-003-resul
 length window removed ~8 % of reads, mostly truncated amplicons and reads > 2 kb that were
 enriched for spurious taxa. They are provisional; adjust them for other primers or chemistries.
 
+## Choosing a database
+
+The database decides which taxa can be reported and how they are named. Measured on 2,000 reads
+from a lake-sediment core (R10.4.1 fast basecalling, per-sample Emu, ST-007):
+
+| Database                                       | Size       | Time  | Peak memory | Mapped reads unclassified | Notes                                                                                           |
+| ---------------------------------------------- | ---------- | ----- | ----------- | ------------------------- | ----------------------------------------------------------------------------------------------- |
+| Emu default (rrnDB + NCBI RefSeq, 2020)        | 49 k seqs  | 17 s  | 1.2 GB      | 46 %                      | species level; few environmental lineages                                                       |
+| Emu prebuilt SILVA 138.2                       | 2.2 M seqs | 104 s | 16.9 GB     | 73 %                      | one taxon per sequence: support is split, most reads fall below Emu's floor                     |
+| **SILVA 138.2 grouped by genus** (built below) | 79 k seqs  | 14 s  | 0.9 GB      | 32 %                      | genus level, SILVA names; detects sediment phyla (Zixibacteria, Atribacterota, Acetothermia, …) |
+
+For environmental samples rich in uncultured lineages, the genus-level SILVA database is the
+better choice; for well-characterised communities (mocks, host-associated) the default
+database gives species-level names. It also labels organelles, which `--exclude_taxa` needs.
+
+Build the genus-level SILVA database (once):
+
+```bash
+# Emu prebuilt SILVA 138.2 (OSF project 56uf7, file emu-prebuilt/silva-138.2.tar, ~680 MB)
+pip install osfclient && osf -p 56uf7 fetch osfstorage/emu-prebuilt/silva-138.2.tar
+mkdir emu_silva && tar -xf silva-138.2.tar -C emu_silva --exclude='./._*'
+mkdir emu_silva_genus20 && cd emu_silva_genus20
+python3 /path/to/ont16s/bin/build_silva_genus_db.py ../emu_silva 20
+```
+
+Then run with `--emu_db /path/to/emu_silva_genus20`. SILVA is licensed CC BY 4.0; cite SILVA
+(Quast et al. 2013) and Emu (Curry et al. 2022).
+
 ## Emu mode: per sample or pooled (`--emu_mode`)
 
 Emu removes taxa below an abundance floor of `10 / n` reads (n > 1,000) **per run**. Run per
