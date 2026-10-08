@@ -2,8 +2,17 @@
     "-profile test": {
         "content": [
             {
+                "CHOPPER": {
+                    "chopper": "0.12.0"
+                },
                 "EMU_ABUNDANCE": {
                     "emu": "v3.6.2"
+                },
+                "NANOPLOT_FILTERED": {
+                    "NanoPlot": "1.47.0"
+                },
+                "NANOPLOT_RAW": {
+                    "NanoPlot": "1.47.0"
                 },
                 "SAMTOOLS_FASTQ": {
                     "samtools": 1.24
@@ -25,18 +34,61 @@
                 "multiqc/multiqc_data/multiqc.parquet",
                 "multiqc/multiqc_data/multiqc_citations.txt",
                 "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_general_stats.txt",
+                "multiqc/multiqc_data/multiqc_nanostat.txt",
                 "multiqc/multiqc_data/multiqc_software_versions.txt",
                 "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_data/nanostat_fastq_stats_table.txt",
+                "multiqc/multiqc_data/nanostat_quality_dist.txt",
+                "multiqc/multiqc_plots",
+                "multiqc/multiqc_plots/pdf",
+                "multiqc/multiqc_plots/pdf/nanostat_fastq_stats_table.pdf",
+                "multiqc/multiqc_plots/pdf/nanostat_quality_dist-cnt.pdf",
+                "multiqc/multiqc_plots/pdf/nanostat_quality_dist-pct.pdf",
+                "multiqc/multiqc_plots/png",
+                "multiqc/multiqc_plots/png/nanostat_fastq_stats_table.png",
+                "multiqc/multiqc_plots/png/nanostat_quality_dist-cnt.png",
+                "multiqc/multiqc_plots/png/nanostat_quality_dist-pct.png",
+                "multiqc/multiqc_plots/svg",
+                "multiqc/multiqc_plots/svg/nanostat_fastq_stats_table.svg",
+                "multiqc/multiqc_plots/svg/nanostat_quality_dist-cnt.svg",
+                "multiqc/multiqc_plots/svg/nanostat_quality_dist-pct.svg",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
-                "pipeline_info/ont16s_software_mqc_versions.yml"
+                "pipeline_info/ont16s_software_mqc_versions.yml",
+                "qc",
+                "qc/nanoplot",
+                "qc/nanoplot/filtered",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_LengthvsQualityScatterPlot_dot.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_LengthvsQualityScatterPlot_kde.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_NanoPlot-report.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_NanoStats.txt",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_Non_weightedHistogramReadlength.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_Non_weightedLogTransformed_HistogramReadlength.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_WeightedHistogramReadlength.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_WeightedLogTransformed_HistogramReadlength.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_Yield_By_Length.html",
+                "qc/nanoplot/raw",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_LengthvsQualityScatterPlot_dot.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_LengthvsQualityScatterPlot_kde.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_NanoPlot-report.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_Non_weightedHistogramReadlength.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_Non_weightedLogTransformed_HistogramReadlength.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_WeightedHistogramReadlength.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_WeightedLogTransformed_HistogramReadlength.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_Yield_By_Length.html"
             ],
             [
-                "zymo_msplus_mab114_sup_rep1_rel-abundance.tsv:md5,8534af4d7bed8a22ec5c0f1e5b567e34",
-                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
+                "zymo_msplus_mab114_sup_rep1_rel-abundance.tsv:md5,975d4739cfa9a93c1b31d6726763701e",
+                "multiqc_citations.txt:md5,613fb67692e408c8225369c2081ff8b9",
+                "multiqc_general_stats.txt:md5,5e66325761bcbe168bd9d0b345a34178",
+                "multiqc_nanostat.txt:md5,d935ef2819d093d32f71a3511540b5f1",
+                "zymo_msplus_mab114_sup_rep1_filtered_NanoStats.txt:md5,a83729c96fb9f28fc523da9630f70c9b",
+                "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
             ]
         ],
-        "timestamp": "2026-10-08T14:44:26.872027652",
+        "timestamp": "2026-10-08T15:39:28.067203876",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"

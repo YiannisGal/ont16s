@@ -6,6 +6,9 @@
 include { SAMTOOLS_CAT           } from '../modules/nf-core/samtools/cat/main'
 include { SAMTOOLS_FASTQ         } from '../modules/nf-core/samtools/fastq/main'
 include { CAT_FASTQ              } from '../modules/nf-core/cat/fastq/main'
+include { NANOPLOT as NANOPLOT_RAW      } from '../modules/nf-core/nanoplot/main'
+include { CHOPPER                       } from '../modules/nf-core/chopper/main'
+include { NANOPLOT as NANOPLOT_FILTERED } from '../modules/nf-core/nanoplot/main'
 include { UNTAR as UNTAR_EMU_DB  } from '../modules/nf-core/untar/main'
 include { EMU_ABUNDANCE          } from '../modules/nf-core/emu/abundance/main'
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
@@ -40,10 +43,11 @@ workflow ONT16S {
     //
     def ch_input = ch_samplesheet
         .map { meta, reads -> [ meta + [ single_end: true ], reads ] }
-        .branch { meta, _reads ->
+        .branch { meta, reads ->
             bam_multi: meta.format == 'bam' && meta.n_files > 1
             bam:       meta.format == 'bam'
-            fastq_multi: meta.n_files > 1
+            // CAT_FASTQ merges chunks and gzips plain FASTQ (downstream tools need .gz)
+            fastq_multi: meta.n_files > 1 || !reads[0].name.endsWith('.gz')
             fastq:     true
         }
 
@@ -72,6 +76,17 @@ workflow ONT16S {
         .mix ( ch_input.fastq.map { meta, reads -> [ meta, reads[0] ] } )
 
     //
+    // MODULES: Read QC before and after length/quality filtering
+    //
+    NANOPLOT_RAW ( ch_reads )
+    CHOPPER ( ch_reads, [] )
+    NANOPLOT_FILTERED ( CHOPPER.out.fastq )
+
+    ch_multiqc_files = ch_multiqc_files
+        .mix ( NANOPLOT_RAW.out.txt.map { _meta, txt -> txt } )
+        .mix ( NANOPLOT_FILTERED.out.txt.map { _meta, txt -> txt } )
+
+    //
     // Emu database: a directory, or an archive that is unpacked first
     //
     def ch_emu_db
@@ -85,7 +100,7 @@ workflow ONT16S {
     //
     // MODULE: Emu taxonomic abundance
     //
-    EMU_ABUNDANCE ( ch_reads, ch_emu_db )
+    EMU_ABUNDANCE ( CHOPPER.out.fastq, ch_emu_db )
 
     //
     // Collate and save software versions
@@ -143,7 +158,7 @@ workflow ONT16S {
         }
     )
     emit:
-    reads          = ch_reads                    // channel: [ val(meta), path(fastq) ]
+    reads          = CHOPPER.out.fastq           // channel: [ val(meta), path(fastq.gz) ] filtered reads
     emu_abundance  = EMU_ABUNDANCE.out.report    // channel: [ val(meta), path(rel-abundance.tsv) ]
     multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
