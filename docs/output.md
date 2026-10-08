@@ -15,6 +15,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Read QC](#read-qc) - NanoPlot statistics before and after length/quality filtering
 - [Emu](#emu) - Per-sample and combined taxonomic abundance tables
 - [Emu database provenance](#emu-database-provenance) - Which database was used
+- [Run checks and warnings](#run-checks-and-warnings) - Per-sample summary, warnings, database fit, Emu mode decision
 - [Mock-community validation](#mock-community-validation) - Expected vs observed taxa for mock samples
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
@@ -54,6 +55,19 @@ The order of sample columns in the combined tables is not guaranteed; select col
 </details>
 
 Species names and assignments depend strongly on the database. Report this file with your results.
+
+### Run checks and warnings
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `ont16s_report/ont16s_run_summary.tsv`: per sample: reads before/after filtering, raw median length and quality, Emu mode, classified/unassigned/organelle/excluded fractions, database fit.
+- `ont16s_report/ont16s_warnings.tsv`: the Emu mode decision and every warning with value, threshold and reason.
+- `qc/emu_metrics/<sample>_emu_metrics.tsv`: per-sample Emu read accounting.
+- `qc/db_fit/db_fit.tsv`: best-hit identity of a read subsample against the database.
+- `emu/pooled/pooled_rel-abundance.tsv`: in pooled mode, the Emu result for all samples together.
+
+</details>
 
 ### Mock-community validation
 

@@ -69,6 +69,50 @@ The defaults come from one Zymo R10.4.1 SUP run (`docs/server-tasks/ST-003-resul
 length window removed ~8 % of reads, mostly truncated amplicons and reads > 2 kb that were
 enriched for spurious taxa. They are provisional; adjust them for other primers or chemistries.
 
+## Emu mode: per sample or pooled (`--emu_mode`)
+
+Emu removes taxa below an abundance floor of `10 / n` reads (n > 1,000) **per run**. Run per
+sample, shallow and diverse samples lose many reads: in a lake-sediment core (ST-005), samples
+with fewer than 3,000 reads had a median of 44 % reads unassigned, versus 11 % for samples with
+more than 10,000 reads.
+
+| `--emu_mode`     | What happens                                                                                                                               | Use for                         |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------- |
+| `auto` (default) | `pooled` if at least `--pool_min_fraction` (0.25) of samples have fewer than `--pool_min_reads` (10,000) filtered reads, else `per_sample` | most runs                       |
+| `per_sample`     | Emu once per sample                                                                                                                        | few, deeply sequenced samples   |
+| `pooled`         | reads of all samples are tagged with their sample, Emu runs once (one shared floor), the result is split back into per-sample tables       | many shallow or diverse samples |
+
+The decision and its reason are written to `ont16s_report/ont16s_warnings.tsv` and the MultiQC
+report. In pooled mode a single Emu task processes all reads, so it needs more memory and time
+(`EMU_ABUNDANCE_POOLED`: 16 CPUs, 32 GB by default). Pooling shares the abundance floor across
+samples: a taxon well supported in some samples can be reported in others with few reads.
+
+## Taxon exclusion (`--exclude_taxa`)
+
+Taxa whose lineage contains any of the comma-separated terms are removed and abundances
+renormalised, e.g. `--exclude_taxa chloroplast,mitochondria` for plant- or host-associated
+samples. The removed fraction is reported per sample. Organelle reads are always reported
+(`organelle_frac`), but only databases that label organelles (such as SILVA) can detect them;
+Emu's default database does not.
+
+## Run checks and warnings
+
+`ont16s_report/ont16s_run_summary.tsv` (one row per sample) and `ont16s_warnings.tsv` (one row per
+warning, with its reason) are also shown in MultiQC:
+
+| Check                                                      | Default threshold | Parameter            |
+| ---------------------------------------------------------- | ----------------- | -------------------- |
+| Few reads after filtering                                  | < 1,000           | `--min_sample_reads` |
+| Most reads removed by the filter (e.g. degraded libraries) | > 50 %            | `--warn_filter_loss` |
+| Many reads not assigned to a taxon                         | > 20 %            | `--warn_unassigned`  |
+| Many organelle reads                                       | > 5 %             | `--warn_organelle`   |
+
+**Database fit** (`qc/db_fit/db_fit.tsv`): the best-hit identity of the first `--db_fit_reads`
+(500) reads per sample against the database (minimap2). It is informational: read errors lower
+identity too, so compare samples or databases with the same chemistry and basecalling, not
+absolute values. On Zymo R10.4.1 SUP reads against a database containing the mock species, the
+median identity was 0.99. Skip with `--skip_db_fit`.
+
 ## Mock-community validation
 
 Samples with a `mock` value in the samplesheet are compared with a mock definition
