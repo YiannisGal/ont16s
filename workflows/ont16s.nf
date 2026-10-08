@@ -3,6 +3,9 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+include { SAMTOOLS_CAT           } from '../modules/nf-core/samtools/cat/main'
+include { SAMTOOLS_FASTQ         } from '../modules/nf-core/samtools/fastq/main'
+include { CAT_FASTQ              } from '../modules/nf-core/cat/fastq/main'
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -28,6 +31,43 @@ workflow ONT16S {
 
     def ch_versions = channel.empty()
     def ch_multiqc_files = channel.empty()
+
+    //
+    // Prepare reads: one FASTQ per sample, whatever the input format.
+    // ONT reads are never paired, so every sample is single-end.
+    //
+    def ch_input = ch_samplesheet
+        .map { meta, reads -> [ meta + [ single_end: true ], reads ] }
+        .branch { meta, _reads ->
+            bam_multi: meta.format == 'bam' && meta.n_files > 1
+            bam:       meta.format == 'bam'
+            fastq_multi: meta.n_files > 1
+            fastq:     true
+        }
+
+    //
+    // MODULE: Merge BAM chunks of the same sample
+    //
+    SAMTOOLS_CAT ( ch_input.bam_multi )
+
+    //
+    // MODULE: Unaligned BAM -> FASTQ. Unpaired ONT reads go to the `other` output.
+    //
+    SAMTOOLS_FASTQ (
+        ch_input.bam
+            .map { meta, reads -> [ meta, reads[0] ] }
+            .mix ( SAMTOOLS_CAT.out.bam ),
+        false
+    )
+
+    //
+    // MODULE: Merge FASTQ chunks of the same sample
+    //
+    CAT_FASTQ ( ch_input.fastq_multi )
+
+    def ch_reads = SAMTOOLS_FASTQ.out.other
+        .mix ( CAT_FASTQ.out.reads )
+        .mix ( ch_input.fastq.map { meta, reads -> [ meta, reads[0] ] } )
 
     //
     // Collate and save software versions
@@ -84,7 +124,9 @@ workflow ONT16S {
             ]
         }
     )
-    emit:multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
+    emit:
+    reads          = ch_reads                    // channel: [ val(meta), path(fastq) ]
+    multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
 }
 
