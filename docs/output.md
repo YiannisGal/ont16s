@@ -12,8 +12,47 @@ The directories listed below will be created in the results directory after the 
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
+- [Read QC](#read-qc) - NanoPlot statistics before and after length/quality filtering
+- [Emu](#emu) - Per-sample and combined taxonomic abundance tables
+- [Emu database provenance](#emu-database-provenance) - Which database was used
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
+
+### Read QC
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `qc/nanoplot/raw/`: NanoPlot report (`<sample>_raw_NanoPlot-report.html`), statistics (`<sample>_raw_NanoStats.txt`) and plots, before filtering.
+- `qc/nanoplot/filtered/`: the same after chopper filtering (`--min_read_length`, `--max_read_length`, `--min_read_qual`).
+
+</details>
+
+Filtered reads themselves are not published (they stay in Nextflow's `work/` directory).
+
+### Emu
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `emu/<sample>_rel-abundance.tsv`: per-sample Emu result. Columns: `tax_id`, `abundance` (fraction of classified reads), taxonomic ranks, `estimated counts`. Extra rows `unmapped`, `mapped_filtered`, `mapped_unclassified` give read counts that were not classified.
+- `emu/emu-combined-species.tsv`, `emu/emu-combined-genus.tsv`: all samples in one table (taxa × samples), relative abundance.
+- `emu/emu-combined-species-counts.tsv`, `emu/emu-combined-genus-counts.tsv`: the same with estimated read counts.
+
+</details>
+
+The order of sample columns in the combined tables is not guaranteed; select columns by name.
+
+### Emu database provenance
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `pipeline_info/emu_db_provenance.tsv`: the `--emu_db` value, sha256 and size of `species_taxid.fasta`, sha256 of `taxonomy.tsv`, number of sequences and species.
+
+</details>
+
+Species names and assignments depend strongly on the database. Report this file with your results.
 
 ### MultiQC
 

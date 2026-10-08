@@ -8,6 +8,12 @@
                 "EMU_ABUNDANCE": {
                     "emu": "v3.6.2"
                 },
+                "EMU_COMBINE": {
+                    "emu": "v3.6.2"
+                },
+                "EMU_DB_INFO": {
+                    "sha256sum": 9.4
+                },
                 "NANOPLOT_FILTERED": {
                     "NanoPlot": "1.47.0"
                 },
@@ -26,6 +32,10 @@
             },
             [
                 "emu",
+                "emu/emu-combined-genus-counts.tsv",
+                "emu/emu-combined-genus.tsv",
+                "emu/emu-combined-species-counts.tsv",
+                "emu/emu-combined-species.tsv",
                 "emu/zymo_msplus_mab114_sup_rep1_rel-abundance.tsv",
                 "multiqc",
                 "multiqc/multiqc_data",
@@ -55,6 +65,7 @@
                 "multiqc/multiqc_plots/svg/nanostat_quality_dist-pct.svg",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
+                "pipeline_info/emu_db_provenance.tsv",
                 "pipeline_info/ont16s_software_mqc_versions.yml",
                 "qc",
                 "qc/nanoplot",
@@ -80,15 +91,20 @@
                 "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_Yield_By_Length.html"
             ],
             [
+                "emu-combined-genus-counts.tsv:md5,865242de852037d032bfec2efc9ff6c7",
+                "emu-combined-genus.tsv:md5,4f6118a3c5dac876f71c9d8aeff33503",
+                "emu-combined-species-counts.tsv:md5,0f6126a0e47413b43f013a708c883b50",
+                "emu-combined-species.tsv:md5,bae68ea7699759be78b437aadf8a8a45",
                 "zymo_msplus_mab114_sup_rep1_rel-abundance.tsv:md5,975d4739cfa9a93c1b31d6726763701e",
                 "multiqc_citations.txt:md5,613fb67692e408c8225369c2081ff8b9",
                 "multiqc_general_stats.txt:md5,5e66325761bcbe168bd9d0b345a34178",
                 "multiqc_nanostat.txt:md5,d935ef2819d093d32f71a3511540b5f1",
+                "emu_db_provenance.tsv:md5,1bb261f79938619db38043bf3df4d4ca",
                 "zymo_msplus_mab114_sup_rep1_filtered_NanoStats.txt:md5,a83729c96fb9f28fc523da9630f70c9b",
                 "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
             ]
         ],
-        "timestamp": "2026-10-08T15:39:28.067203876",
+        "timestamp": "2026-10-08T15:57:27.77505681",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"

@@ -166,3 +166,15 @@ Zymo subset; Milestone 2 modules.
 - Tested: BAM×1, BAM×2, plain FASTQ, gz FASTQ, FASTQ×2: 546→507 and 1,092→1,014 reads.
 - nf-test snapshot updated (NanoPlot html/png and nanostat tables ignored for content);
   stable over 2 runs.
+
+## 2026-10-08 — Combined tables and DB provenance (branch `m6-outputs`)
+
+- PR #7 (read QC) was merged while CI was running; nf-test passed, linting failed because
+  the new ST-003 doc was untracked when pre-commit ran locally (pre-commit only checks
+  tracked files). Fixed on `fix/prettier-st003`. Lesson: stage new files before pre-commit.
+- First local modules: `EMU_COMBINE` (`emu combine-outputs`, species + genus, abundance +
+  counts) and `EMU_DB_INFO` (source, sha256, size, n sequences, n species).
+- Tested: 5-sample run; provenance checksums match the test-data README; DB missing
+  `taxonomy.tsv` fails with a clear message. nf-test snapshot includes combined tables and
+  provenance file (stable over 2 runs).
+- Open: sample column order in combined tables follows Emu's file listing (not sorted).

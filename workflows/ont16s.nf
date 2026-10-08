@@ -11,6 +11,8 @@ include { CHOPPER                       } from '../modules/nf-core/chopper/main'
 include { NANOPLOT as NANOPLOT_FILTERED } from '../modules/nf-core/nanoplot/main'
 include { UNTAR as UNTAR_EMU_DB  } from '../modules/nf-core/untar/main'
 include { EMU_ABUNDANCE          } from '../modules/nf-core/emu/abundance/main'
+include { EMU_COMBINE            } from '../modules/local/emu_combine/main'
+include { EMU_DB_INFO            } from '../modules/local/emu_db_info/main'
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -103,6 +105,20 @@ workflow ONT16S {
     EMU_ABUNDANCE ( CHOPPER.out.fastq, ch_emu_db )
 
     //
+    // MODULE: Record which Emu database was used (checksums, size)
+    //
+    EMU_DB_INFO ( ch_emu_db, params.emu_db )
+
+    //
+    // MODULE: Combine per-sample Emu tables into one table per rank
+    //
+    EMU_COMBINE (
+        EMU_ABUNDANCE.out.report
+            .map { _meta, report -> report }
+            .collect()
+    )
+
+    //
     // Collate and save software versions
     //
     def topic_versions = channel.topic("versions")
@@ -160,6 +176,7 @@ workflow ONT16S {
     emit:
     reads          = CHOPPER.out.fastq           // channel: [ val(meta), path(fastq.gz) ] filtered reads
     emu_abundance  = EMU_ABUNDANCE.out.report    // channel: [ val(meta), path(rel-abundance.tsv) ]
+    emu_combined   = EMU_COMBINE.out.tables      // channel: [ path(emu-combined-*.tsv) ]
     multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
 }
