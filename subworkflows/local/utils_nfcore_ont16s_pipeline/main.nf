@@ -148,6 +148,12 @@ def validateInputSamplesheet(input) {
         error("Please check input samplesheet -> All rows of a sample must have the same 'mock' value: ${metas[0].id}")
     }
 
+    // A mock name needs a definition file (checked now, not after hours of profiling)
+    def mock = metas[0].mock
+    if (mock && !file("${params.mock_definitions ?: "${projectDir}/assets/mocks"}/${mock}.tsv").exists()) {
+        error("Please check input samplesheet -> No mock definition for '${mock}' (sample ${metas[0].id}): expected ${params.mock_definitions ?: "${projectDir}/assets/mocks"}/${mock}.tsv")
+    }
+
     // Do not mix BAM and FASTQ within one sample
     def formats = reads.collect{ r -> r.format }.unique()
     if (formats.size() != 1) {

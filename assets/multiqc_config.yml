@@ -12,3 +12,15 @@ report_section_order:
 export_plots: true
 
 disable_version_detection: true
+
+custom_data:
+  mock_validation:
+    section_name: "Mock-community validation"
+    description: "Expected taxa detected (recall) and unexpected taxa for samples with a 'mock' value. Proportions are only assessed (l1_distance) when the mock definition gives expected abundances."
+    plot_type: "table"
+    file_format: "tsv"
+    pconfig:
+      id: "mock_validation_table"
+sp:
+  mock_validation:
+    fn: "mock_validation_summary.tsv"
