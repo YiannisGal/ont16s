@@ -61,6 +61,29 @@ The defaults come from one Zymo R10.4.1 SUP run (`docs/server-tasks/ST-003-resul
 length window removed ~8 % of reads, mostly truncated amplicons and reads > 2 kb that were
 enriched for spurious taxa. They are provisional; adjust them for other primers or chemistries.
 
+## Mock-community validation
+
+Samples with a `mock` value in the samplesheet are compared with a mock definition
+`<mock_definitions>/<mock>.tsv` (default directory: `assets/mocks/`). The run stops at the
+start if a definition is missing. To use your own mock, create a TSV like
+`assets/mocks/zymo_msplus.tsv` and pass its directory with `--mock_definitions`:
+
+| Column               | Meaning                                                                                                            |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `species`            | Expected species name                                                                                              |
+| `aliases`            | Other names it may have in your database, `;`-separated (e.g. `Borrelia burgdorferi` vs `Borreliella burgdorferi`) |
+| `expected_abundance` | Expected fraction of 16S reads, or `NA` if unknown                                                                 |
+| `source`             | Where the expectation comes from                                                                                   |
+
+Reported per mock sample: expected taxa detected (recall), unexpected taxa split into
+near-neighbours (same genus as an expected taxon) and off-target taxa, false positives at or
+above `--mock_min_abundance` (default 0.001 = 0.1 %), and the L1 distance to the expected
+proportions when all expected abundances are given.
+
+Limits: false positives depend on depth (with < 1,000 reads a single read exceeds 0.1 %); the
+genus rule cannot see that e.g. _Shigella_ is nested within _E. coli_; proportions are not
+assessed when expected abundances are `NA` (as for the shipped `zymo_msplus` definition).
+
 ## Emu database (`--emu_db`, required)
 
 Emu assigns reads by aligning them to a reference database, and the database choice strongly

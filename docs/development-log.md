@@ -178,3 +178,19 @@ Zymo subset; Milestone 2 modules.
   `taxonomy.tsv` fails with a clear message. nf-test snapshot includes combined tables and
   provenance file (stable over 2 runs).
 - Open: sample column order in combined tables follows Emu's file listing (not sorted).
+
+## 2026-10-08 — Mock-community validation (branch `m8-mock-validation`)
+
+- PRs #8 and #9 merged after all checks were green.
+- `assets/mocks/zymo_msplus.tsv`: 12 expected species with aliases; proportions `NA`
+  (not published — data gap).
+- `bin/mock_validation.py` (stdlib only) + local module `MOCK_VALIDATION` (Emu container).
+  Recall, missing taxa, near-neighbour vs off-target unexpected taxa, false positives
+  ≥ `--mock_min_abundance` (0.001), L1 distance if all proportions known.
+- Checked against ST-001 manual analysis: 12/12, 1 FP (_B. halotolerans_), unexpected
+  0.6 %. Fake mock: recall 2/3 and L1 = 0.4 as computed by hand.
+- Bugs found and fixed while testing: `collectFile` cannot combine `keepHeader` and `seed`
+  (MultiQC section moved to `assets/multiqc_config.yml`); Python csv `\r\n` line endings
+  broke the joined summary; missing-definition check moved to samplesheet validation so
+  it fails before any task runs.
+- Limits documented: depth-dependent false positives; genus rule misses _Shigella_/_E. coli_.
