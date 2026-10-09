@@ -21,6 +21,24 @@ custom_data:
     file_format: "tsv"
     pconfig:
       id: "mock_validation_table"
+  ont16s_warnings:
+    section_name: "ont16s checks and warnings"
+    description: "Emu mode decision and per-sample warnings (low depth, reads lost in filtering, unassigned reads, organelles), with the reason for each."
+    plot_type: "table"
+    file_format: "tsv"
+    pconfig:
+      id: "ont16s_warnings_table"
+  ont16s_run_summary:
+    section_name: "ont16s run summary"
+    description: "Per sample: reads before/after filtering, Emu mode, assigned and unassigned fractions, organelle fraction, database fit (median best-hit identity of a read subsample; read errors lower identity too)."
+    plot_type: "table"
+    file_format: "tsv"
+    pconfig:
+      id: "ont16s_run_summary_table"
 sp:
+  ont16s_warnings:
+    fn: "ont16s_warnings.tsv"
+  ont16s_run_summary:
+    fn: "ont16s_run_summary.tsv"
   mock_validation:
     fn: "mock_validation_summary.tsv"

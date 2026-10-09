@@ -16,6 +16,14 @@ You will need to create a samplesheet with information about the samples you wou
 
 Each row is **one reads file**. Reads can be unaligned ONT BAM files (as written by dorado) or FASTQ files (plain or gzipped).
 
+For real (non-mock) samples leave `mock` empty; every step except mock validation runs:
+
+```csv title="samplesheet.csv"
+sample,reads,mock
+soil_rep1,/data/soil_rep1.fastq.gz,
+lake_rep1,/data/lake_rep1.fastq.gz,
+```
+
 ### Multiple files of the same sample
 
 ONT output is often split into chunks (`..._0.bam`, `..._1.bam`, ...). Give every chunk its own row with the **same** `sample` name; the pipeline groups them into one sample. All files of a sample must be the same format (all BAM or all FASTQ) and have the same `mock` value.
@@ -60,6 +68,78 @@ summarised with [NanoPlot](https://github.com/wdecoster/NanoPlot) before and aft
 The defaults come from one Zymo R10.4.1 SUP run (`docs/server-tasks/ST-003-results.md`): the
 length window removed ~8 % of reads, mostly truncated amplicons and reads > 2 kb that were
 enriched for spurious taxa. They are provisional; adjust them for other primers or chemistries.
+
+## Choosing a database
+
+The database decides which taxa can be reported and how they are named. Measured on 2,000 reads
+from a lake-sediment core (R10.4.1 fast basecalling, per-sample Emu, ST-007):
+
+| Database                                       | Size       | Time  | Peak memory | Mapped reads unclassified | Notes                                                                                           |
+| ---------------------------------------------- | ---------- | ----- | ----------- | ------------------------- | ----------------------------------------------------------------------------------------------- |
+| Emu default (rrnDB + NCBI RefSeq, 2020)        | 49 k seqs  | 17 s  | 1.2 GB      | 46 %                      | species level; few environmental lineages                                                       |
+| Emu prebuilt SILVA 138.2                       | 2.2 M seqs | 104 s | 16.9 GB     | 73 %                      | one taxon per sequence: support is split, most reads fall below Emu's floor                     |
+| **SILVA 138.2 grouped by genus** (built below) | 79 k seqs  | 14 s  | 0.9 GB      | 32 %                      | genus level, SILVA names; detects sediment phyla (Zixibacteria, Atribacterota, Acetothermia, …) |
+
+For environmental samples rich in uncultured lineages, the genus-level SILVA database is the
+better choice; for well-characterised communities (mocks, host-associated) the default
+database gives species-level names. It also labels organelles, which `--exclude_taxa` needs.
+
+Build the genus-level SILVA database (once):
+
+```bash
+# Emu prebuilt SILVA 138.2 (OSF project 56uf7, file emu-prebuilt/silva-138.2.tar, ~680 MB)
+pip install osfclient && osf -p 56uf7 fetch osfstorage/emu-prebuilt/silva-138.2.tar
+mkdir emu_silva && tar -xf silva-138.2.tar -C emu_silva --exclude='./._*'
+mkdir emu_silva_genus20 && cd emu_silva_genus20
+python3 /path/to/ont16s/bin/build_silva_genus_db.py ../emu_silva 20
+```
+
+Then run with `--emu_db /path/to/emu_silva_genus20`. SILVA is licensed CC BY 4.0; cite SILVA
+(Quast et al. 2013) and Emu (Curry et al. 2022).
+
+## Emu mode: per sample or pooled (`--emu_mode`)
+
+Emu removes taxa below an abundance floor of `10 / n` reads (n > 1,000) **per run**. Run per
+sample, shallow and diverse samples lose many reads: in a lake-sediment core (ST-005), samples
+with fewer than 3,000 reads had a median of 44 % reads unassigned, versus 11 % for samples with
+more than 10,000 reads.
+
+| `--emu_mode`     | What happens                                                                                                                               | Use for                         |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------- |
+| `auto` (default) | `pooled` if at least `--pool_min_fraction` (0.25) of samples have fewer than `--pool_min_reads` (10,000) filtered reads, else `per_sample` | most runs                       |
+| `per_sample`     | Emu once per sample                                                                                                                        | few, deeply sequenced samples   |
+| `pooled`         | reads of all samples are tagged with their sample, Emu runs once (one shared floor), the result is split back into per-sample tables       | many shallow or diverse samples |
+
+The decision and its reason are written to `ont16s_report/ont16s_warnings.tsv` and the MultiQC
+report. In pooled mode a single Emu task processes all reads, so it needs more memory and time
+(`EMU_ABUNDANCE_POOLED`: 16 CPUs, 32 GB by default). Pooling shares the abundance floor across
+samples: a taxon well supported in some samples can be reported in others with few reads.
+
+## Taxon exclusion (`--exclude_taxa`)
+
+Taxa whose lineage contains any of the comma-separated terms are removed and abundances
+renormalised, e.g. `--exclude_taxa chloroplast,mitochondria` for plant- or host-associated
+samples. The removed fraction is reported per sample. Organelle reads are always reported
+(`organelle_frac`), but only databases that label organelles (such as SILVA) can detect them;
+Emu's default database does not.
+
+## Run checks and warnings
+
+`ont16s_report/ont16s_run_summary.tsv` (one row per sample) and `ont16s_warnings.tsv` (one row per
+warning, with its reason) are also shown in MultiQC:
+
+| Check                                                      | Default threshold | Parameter            |
+| ---------------------------------------------------------- | ----------------- | -------------------- |
+| Few reads after filtering                                  | < 1,000           | `--min_sample_reads` |
+| Most reads removed by the filter (e.g. degraded libraries) | > 50 %            | `--warn_filter_loss` |
+| Many reads not assigned to a taxon                         | > 20 %            | `--warn_unassigned`  |
+| Many organelle reads                                       | > 5 %             | `--warn_organelle`   |
+
+**Database fit** (`qc/db_fit/db_fit.tsv`): the best-hit identity of the first `--db_fit_reads`
+(500) reads per sample against the database (minimap2). It is informational: read errors lower
+identity too, so compare samples or databases with the same chemistry and basecalling, not
+absolute values. On Zymo R10.4.1 SUP reads against a database containing the mock species, the
+median identity was 0.99. Skip with `--skip_db_fit`.
 
 ## Mock-community validation
 
