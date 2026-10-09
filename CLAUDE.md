@@ -24,11 +24,12 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 - nf-core scaffold generated + runs (`-profile test,docker`); D-005 branching model `dev` → `main`
 - Pipeline: BAM/FASTQ → NanoPlot → chopper (1–2 kb) → NanoPlot → Emu; CI green (PR #6)
 - ST-004: pipeline runs on real environmental samples (9 × PRJNA925180 R10.4.1), plausible results
+- ST-005–009: Etoliko sediment core; pooled Emu + SILVA genus DB reproduce published results (Mantel 0.96/0.95)
 - D-006: universal pipeline — no hard-coded samples/taxa/DB; Zymo only for tests + validation
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
 
-**Current task:** ST-004 real environmental samples done (branch `st004-real-samples`). Next: environmental Emu DB (SILVA/GTDB), independent mock data (NaMeco), cross-platform comparison.
+**Current task:** Adaptive pipeline (pooled Emu, dedup, checks, SILVA genus DB) validated on Etoliko (ST-005–009); PR `m10-adaptive` → `dev` pending. Next: NaMeco, -resume/bin cache check, tests for new modules.
 
 **Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; tools (nf-core venv, nf-test) in `ont16s_data/tools/`; data under
 `/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).

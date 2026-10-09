@@ -205,3 +205,21 @@ Zymo subset; Milestone 2 modules.
 - Fix: no empty `mock_validation/` folder when there are no mock samples (branch
   `st004-real-samples`).
 - PR #10 merged before CI finished; CI later passed (latest-everything verified).
+
+## 2026-10-08/09 — ST-005 to ST-009: Etoliko sediment core; adaptive pipeline (branch `m10-adaptive`)
+
+- ST-005: ont16s (per-sample Emu, default DB) vs published NanoCLUST/SILVA results: same
+  community pattern (Mantel 0.93) but depth-dependent read loss (Emu floor 10/n; 44 % unassigned
+  in shallow samples) and missing sediment phyla (DB). Input issues: duplicated reads (5 samples),
+  barcode20/21 technical replicates sharing reads, R9.4.1 medaka model used on R10.4.1 fast reads.
+- ST-006: pooled Emu removes most of the depth bias (unassigned 15.8 % → 3.5 %).
+- ST-007: Emu prebuilt SILVA 138.2 is unusable as distributed (one taxon per sequence; 73 %
+  unclassified, 16.9 GB); genus-grouped build: 32 % unclassified, 0.9 GB, detects sediment phyla.
+- Implemented: `--emu_mode auto|per_sample|pooled`, duplicate-read removal (seqkit rmdup),
+  `--exclude_taxa` and organelle reporting, database-fit check, run summary + warnings in
+  MultiQC, genus-level SILVA builder. Bugs found by real data: Emu `*_threshold-*` outputs
+  double-counting, pooled memory (34 GB), duplicate IDs.
+- ST-008/009: full pipeline with defaults chose pooled automatically; with the SILVA genus DB:
+  all published phyla detected, Bray-Curtis vs published median 0.13, Mantel genus 0.95, 36 min.
+- User question on AI/LLM for parameter choice: answered with data-driven, logged rules inside
+  the pipeline (reproducible); an LLM could explain reports outside the pipeline.
