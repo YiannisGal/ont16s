@@ -1,4 +1,5 @@
 # ont16s — Full-Length 16S Nanopore Nextflow Pipeline
+
 ## Master Project Instructions for Claude Desktop + Claude Code + Server
 
 ---
@@ -11,22 +12,30 @@
 environmental ONT full-length 16S. Differentiated from TRANA (Emu Nextflow pipeline)
 and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 
-**Current milestone:** Milestone 0 complete, ST-001 executed → starting Milestone 1 (scaffold).
+**Current milestone:** Milestone 1 (scaffold) in progress on branch `m1-scaffold` (PR → `dev`).
 
 **Completed:**
+
 - Landscape assessment (`docs/project-landscape.md`)
 - Decisions D-001 positioning, D-002 Emu primary / Savont deferred, D-003 dataset roles
 - Git repository initialised (`main`), remote `github.com/YiannisGal/ont16s` (private)
 - ST-001 manual Emu run executed (`docs/server-tasks/ST-001-results.md`): 12/12 mock taxa, 50 min / 3.4 GB per 53k-read chunk
+- ST-002 Emu speed test (`docs/server-tasks/ST-002-results.md`): minimap2 is the bottleneck, scales with threads; `lr:hq` 15× faster but not equivalent
+- nf-core scaffold generated + runs (`-profile test,docker`); D-005 branching model `dev` → `main`
+- Pipeline: BAM/FASTQ → NanoPlot → chopper (1–2 kb) → NanoPlot → Emu; CI green (PR #6)
+- ST-004: pipeline runs on real environmental samples (9 × PRJNA925180 R10.4.1), plausible results
+- ST-005–009: Etoliko sediment core; pooled Emu + SILVA genus DB reproduce published results (Mantel 0.96/0.95)
+- D-006: universal pipeline — no hard-coded samples/taxa/DB; Zymo only for tests + validation
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
 
-**Current task:** Milestone 1 scaffold. Open: Emu speed, read-length filter.
+**Current task:** Adaptive pipeline (pooled Emu, dedup, checks, SILVA genus DB) validated on Etoliko (ST-005–009); PR `m10-adaptive` → `dev` pending. Next: NaMeco, -resume/bin cache check, tests for new modules.
 
-**Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; data under
+**Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; tools (nf-core venv, nf-test) in `ont16s_data/tools/`; data under
 `/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).
 
 **Known issues / open questions:**
+
 - Chemistry/versions in Ota et al. comparison unverified.
 - PRJNA925180 publication unidentified; its ONT runs mix R9.4.1 and R10.4.1.
 - No SLURM on lab server → HPC milestone needs another cluster.
@@ -1344,18 +1353,18 @@ Clearly distinguish:
 
 Occasionally identify relevant professional skills:
 
-| Component | Skill |
-|---|---|
-| Nextflow | Workflow engineering |
-| nf-core | Production bioinformatics |
-| Containers | Reproducibility |
-| GitHub Actions | CI/CD |
-| nf-test | Software testing |
-| SLURM | HPC |
-| AWS | Cloud |
-| Seqera | Workflow orchestration |
-| Emu | Long-read microbiome |
-| Benchmarking | Scientific software validation |
+| Component      | Skill                          |
+| -------------- | ------------------------------ |
+| Nextflow       | Workflow engineering           |
+| nf-core        | Production bioinformatics      |
+| Containers     | Reproducibility                |
+| GitHub Actions | CI/CD                          |
+| nf-test        | Software testing               |
+| SLURM          | HPC                            |
+| AWS            | Cloud                          |
+| Seqera         | Workflow orchestration         |
+| Emu            | Long-read microbiome           |
+| Benchmarking   | Scientific software validation |
 
 Do this sparingly.
 

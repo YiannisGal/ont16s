@@ -1,0 +1,161 @@
+{
+    "-profile test": {
+        "content": [
+            {
+                "CHOPPER": {
+                    "chopper": "0.12.0"
+                },
+                "DB_FIT": {
+                    "minimap2": "2.30-r1287"
+                },
+                "EMU_ABUNDANCE": {
+                    "emu": "v3.6.2"
+                },
+                "EMU_COMBINE": {
+                    "emu": "v3.6.2"
+                },
+                "EMU_DB_INFO": {
+                    "sha256sum": 9.4
+                },
+                "EMU_POSTPROCESS": {
+                    "python": "3.13.12"
+                },
+                "MOCK_VALIDATION": {
+                    "python": "3.13.12"
+                },
+                "NANOPLOT_FILTERED": {
+                    "NanoPlot": "1.47.0"
+                },
+                "NANOPLOT_RAW": {
+                    "NanoPlot": "1.47.0"
+                },
+                "ONT16S_REPORT": {
+                    "python": "3.13.12"
+                },
+                "SAMTOOLS_FASTQ": {
+                    "samtools": 1.24
+                },
+                "SEQKIT_RMDUP": {
+                    "seqkit": "2.13.0"
+                },
+                "UNTAR_EMU_DB": {
+                    "untar": 1.34
+                },
+                "Workflow": {
+                    "YiannisGal/ont16s": "v0.1.0dev"
+                }
+            },
+            [
+                "emu",
+                "emu/emu-combined-genus-counts.tsv",
+                "emu/emu-combined-genus.tsv",
+                "emu/emu-combined-species-counts.tsv",
+                "emu/emu-combined-species.tsv",
+                "emu/zymo_msplus_mab114_sup_rep1_rel-abundance.tsv",
+                "mock_validation",
+                "mock_validation/mock_validation_summary.tsv",
+                "mock_validation/zymo_msplus_mab114_sup_rep1_mock_summary.tsv",
+                "mock_validation/zymo_msplus_mab114_sup_rep1_mock_validation.tsv",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/llms-full.txt",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc.parquet",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_general_stats.txt",
+                "multiqc/multiqc_data/multiqc_mock_validation_table.txt",
+                "multiqc/multiqc_data/multiqc_nanostat.txt",
+                "multiqc/multiqc_data/multiqc_ont16s_run_summary_table.txt",
+                "multiqc/multiqc_data/multiqc_ont16s_warnings_table.txt",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_data/nanostat_fastq_stats_table.txt",
+                "multiqc/multiqc_data/nanostat_quality_dist.txt",
+                "multiqc/multiqc_plots",
+                "multiqc/multiqc_plots/pdf",
+                "multiqc/multiqc_plots/pdf/mock_validation_table.pdf",
+                "multiqc/multiqc_plots/pdf/nanostat_fastq_stats_table.pdf",
+                "multiqc/multiqc_plots/pdf/nanostat_quality_dist-cnt.pdf",
+                "multiqc/multiqc_plots/pdf/nanostat_quality_dist-pct.pdf",
+                "multiqc/multiqc_plots/pdf/ont16s_run_summary_table.pdf",
+                "multiqc/multiqc_plots/pdf/ont16s_warnings_table.pdf",
+                "multiqc/multiqc_plots/png",
+                "multiqc/multiqc_plots/png/mock_validation_table.png",
+                "multiqc/multiqc_plots/png/nanostat_fastq_stats_table.png",
+                "multiqc/multiqc_plots/png/nanostat_quality_dist-cnt.png",
+                "multiqc/multiqc_plots/png/nanostat_quality_dist-pct.png",
+                "multiqc/multiqc_plots/png/ont16s_run_summary_table.png",
+                "multiqc/multiqc_plots/png/ont16s_warnings_table.png",
+                "multiqc/multiqc_plots/svg",
+                "multiqc/multiqc_plots/svg/mock_validation_table.svg",
+                "multiqc/multiqc_plots/svg/nanostat_fastq_stats_table.svg",
+                "multiqc/multiqc_plots/svg/nanostat_quality_dist-cnt.svg",
+                "multiqc/multiqc_plots/svg/nanostat_quality_dist-pct.svg",
+                "multiqc/multiqc_plots/svg/ont16s_run_summary_table.svg",
+                "multiqc/multiqc_plots/svg/ont16s_warnings_table.svg",
+                "multiqc/multiqc_report.html",
+                "ont16s_report",
+                "ont16s_report/ont16s_run_summary.tsv",
+                "ont16s_report/ont16s_warnings.tsv",
+                "pipeline_info",
+                "pipeline_info/emu_db_provenance.tsv",
+                "pipeline_info/ont16s_software_mqc_versions.yml",
+                "qc",
+                "qc/db_fit",
+                "qc/db_fit/db_fit.tsv",
+                "qc/emu_metrics",
+                "qc/emu_metrics/zymo_msplus_mab114_sup_rep1_emu_metrics.tsv",
+                "qc/nanoplot",
+                "qc/nanoplot/filtered",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_LengthvsQualityScatterPlot_dot.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_LengthvsQualityScatterPlot_kde.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_NanoPlot-report.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_NanoStats.txt",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_Non_weightedHistogramReadlength.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_Non_weightedLogTransformed_HistogramReadlength.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_WeightedHistogramReadlength.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_WeightedLogTransformed_HistogramReadlength.html",
+                "qc/nanoplot/filtered/zymo_msplus_mab114_sup_rep1_filtered_Yield_By_Length.html",
+                "qc/nanoplot/raw",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_LengthvsQualityScatterPlot_dot.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_LengthvsQualityScatterPlot_kde.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_NanoPlot-report.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_Non_weightedHistogramReadlength.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_Non_weightedLogTransformed_HistogramReadlength.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_WeightedHistogramReadlength.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_WeightedLogTransformed_HistogramReadlength.html",
+                "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_Yield_By_Length.html"
+            ],
+            [
+                "emu-combined-genus-counts.tsv:md5,865242de852037d032bfec2efc9ff6c7",
+                "emu-combined-genus.tsv:md5,4f6118a3c5dac876f71c9d8aeff33503",
+                "emu-combined-species-counts.tsv:md5,0f6126a0e47413b43f013a708c883b50",
+                "emu-combined-species.tsv:md5,bae68ea7699759be78b437aadf8a8a45",
+                "zymo_msplus_mab114_sup_rep1_rel-abundance.tsv:md5,975d4739cfa9a93c1b31d6726763701e",
+                "mock_validation_summary.tsv:md5,a9d6433ea4a76b3eb735b66116abb765",
+                "zymo_msplus_mab114_sup_rep1_mock_summary.tsv:md5,a9d6433ea4a76b3eb735b66116abb765",
+                "zymo_msplus_mab114_sup_rep1_mock_validation.tsv:md5,e3d2191f6e573525492dcfe790d2e200",
+                "multiqc_citations.txt:md5,613fb67692e408c8225369c2081ff8b9",
+                "multiqc_general_stats.txt:md5,5e66325761bcbe168bd9d0b345a34178",
+                "multiqc_mock_validation_table.txt:md5,e887bcf2d4370a553fda35f7d7a0636d",
+                "multiqc_nanostat.txt:md5,d935ef2819d093d32f71a3511540b5f1",
+                "multiqc_ont16s_run_summary_table.txt:md5,8f37b98f485cd6490819aa657fc727f1",
+                "multiqc_ont16s_warnings_table.txt:md5,9c0a408901c305bd4ef11cdf4f82fb15",
+                "ont16s_run_summary.tsv:md5,d465af5bc8642b373fb7758ffeb66876",
+                "ont16s_warnings.tsv:md5,80b655c8dcc0f5b329752bb81e9eaf6e",
+                "emu_db_provenance.tsv:md5,1bb261f79938619db38043bf3df4d4ca",
+                "db_fit.tsv:md5,e7482b2d9da9029c608ab55a3874b5f2",
+                "zymo_msplus_mab114_sup_rep1_emu_metrics.tsv:md5,fb2290495b088a359253c8ca1a817939",
+                "zymo_msplus_mab114_sup_rep1_filtered_NanoStats.txt:md5,a83729c96fb9f28fc523da9630f70c9b",
+                "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
+            ]
+        ],
+        "timestamp": "2026-10-08T22:16:04.822829702",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "26.04.2"
+        }
+    }
+}

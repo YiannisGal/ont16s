@@ -1,9 +1,11 @@
 # Nextflow runtime
+.nextflow*
 work/
-.nextflow/
-.nextflow.log*
 results/
 null/
+.lineage/
+testing/
+testing*
 
 # Sequencing data and databases (too large for git; document provenance instead)
 data/
@@ -18,7 +20,11 @@ data/
 *.pem
 *credentials*
 
-# OS / editor
+# OS / editor / Python
 .DS_Store
-.vscode/
 .idea/
+*.pyc
+
+# nf-test
+.nf-test/
+.nf-test.log

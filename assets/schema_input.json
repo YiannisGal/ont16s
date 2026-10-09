@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/YiannisGal/ont16s/main/assets/schema_input.json",
+    "title": "YiannisGal/ont16s pipeline - params.input schema",
+    "description": "Schema for the file provided with params.input. One row per reads file; rows with the same sample are merged.",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "sample": {
+                "type": "string",
+                "pattern": "^\\S+$",
+                "errorMessage": "Sample name must be provided and cannot contain spaces",
+                "meta": ["id"]
+            },
+            "reads": {
+                "type": "string",
+                "format": "file-path",
+                "exists": true,
+                "pattern": "^([\\S\\s]*\\/)?[^\\s\\/]+\\.(bam|f(ast)?q(\\.gz)?)$",
+                "errorMessage": "Reads file must be provided, cannot contain spaces and must have extension '.bam', '.fastq', '.fq', '.fastq.gz' or '.fq.gz'"
+            },
+            "mock": {
+                "type": "string",
+                "pattern": "^\\S*$",
+                "errorMessage": "Mock community name cannot contain spaces",
+                "meta": ["mock"]
+            }
+        },
+        "required": ["sample", "reads"]
+    }
+}

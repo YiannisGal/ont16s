@@ -1,0 +1,4 @@
+sample,reads,mock
+zymo_msplus_rep1,/path/to/FBB32095_bam_pass_15aa3986_bbffde72_0.bam,zymo_msplus
+zymo_msplus_rep1,/path/to/FBB32095_bam_pass_15aa3986_bbffde72_1.bam,zymo_msplus
+soil_A,/path/to/soil_A.fastq.gz,

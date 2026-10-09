@@ -1,0 +1,7 @@
+contact_links:
+  - name: Join nf-core
+    url: https://nf-co.re/join
+    about: Please join the nf-core community here
+  - name: "Slack #ont16s channel"
+    url: https://nfcore.slack.com/channels/ont16s
+    about: Discussion about the YiannisGal/ont16s pipeline
