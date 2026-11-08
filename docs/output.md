@@ -69,6 +69,26 @@ Species names and assignments depend strongly on the database. Report this file 
 
 </details>
 
+### Novelty
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `novelty/`
+  - `novelty_summary.tsv`: one row per sample: median read accuracy, raw and error-corrected
+    identity, fraction of reads per deepest supported rank (`frac_species` … `frac_unclassified`,
+    `frac_unaligned`) and `frac_novel_genus`.
+  - `<sample>_novelty_profile.tsv`: lineage of each read's best hit truncated to the rank its
+    similarity supports, with read counts and abundance.
+  - `<sample>_novelty_reads.tsv.gz`: per read: accuracy, identity, corrected identity, coverage,
+    best hit, supported rank.
+  - `novel_otus/novel_otus.fasta`: consensus sequences of clusters of reads too distant for a genus.
+  - `novel_otus/novel_otus.tsv`: per consensus OTU: size, reads per sample, best hit, identity,
+    supported rank, lineage truncated to that rank.
+  - `novel_otus/novel_reads_per_sample.tsv`: reads selected per sample.
+
+</details>
+
 ### Mock-community validation
 
 <details markdown="1">
