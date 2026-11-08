@@ -35,6 +35,13 @@ custom_data:
     file_format: "tsv"
     pconfig:
       id: "ont16s_run_summary_table"
+  novelty_summary:
+    section_name: "Novelty (rank supported by similarity)"
+    description: "Per sample: fraction of reads whose similarity to the closest database reference (corrected for the read's own sequencing errors) supports a species, genus, family ... name (Yarza et al. 2014 thresholds). frac_novel_genus = aligned reads too distant for a genus name: candidates for organisms missing from the database."
+    plot_type: "table"
+    file_format: "tsv"
+    pconfig:
+      id: "novelty_summary_table"
 sp:
   ont16s_warnings:
     fn: "ont16s_warnings.tsv"
@@ -42,3 +49,5 @@ sp:
     fn: "ont16s_run_summary.tsv"
   mock_validation:
     fn: "mock_validation_summary.tsv"
+  novelty_summary:
+    fn: "novelty_summary.tsv"

@@ -29,6 +29,9 @@
                 "NANOPLOT_RAW": {
                     "NanoPlot": "1.47.0"
                 },
+                "NOVELTY": {
+                    "minimap2": "2.30-r1287"
+                },
                 "ONT16S_REPORT": {
                     "python": "3.13.12"
                 },
@@ -66,6 +69,7 @@
                 "multiqc/multiqc_data/multiqc_general_stats.txt",
                 "multiqc/multiqc_data/multiqc_mock_validation_table.txt",
                 "multiqc/multiqc_data/multiqc_nanostat.txt",
+                "multiqc/multiqc_data/multiqc_novelty_summary_table.txt",
                 "multiqc/multiqc_data/multiqc_ont16s_run_summary_table.txt",
                 "multiqc/multiqc_data/multiqc_ont16s_warnings_table.txt",
                 "multiqc/multiqc_data/multiqc_software_versions.txt",
@@ -78,6 +82,7 @@
                 "multiqc/multiqc_plots/pdf/nanostat_fastq_stats_table.pdf",
                 "multiqc/multiqc_plots/pdf/nanostat_quality_dist-cnt.pdf",
                 "multiqc/multiqc_plots/pdf/nanostat_quality_dist-pct.pdf",
+                "multiqc/multiqc_plots/pdf/novelty_summary_table.pdf",
                 "multiqc/multiqc_plots/pdf/ont16s_run_summary_table.pdf",
                 "multiqc/multiqc_plots/pdf/ont16s_warnings_table.pdf",
                 "multiqc/multiqc_plots/png",
@@ -85,6 +90,7 @@
                 "multiqc/multiqc_plots/png/nanostat_fastq_stats_table.png",
                 "multiqc/multiqc_plots/png/nanostat_quality_dist-cnt.png",
                 "multiqc/multiqc_plots/png/nanostat_quality_dist-pct.png",
+                "multiqc/multiqc_plots/png/novelty_summary_table.png",
                 "multiqc/multiqc_plots/png/ont16s_run_summary_table.png",
                 "multiqc/multiqc_plots/png/ont16s_warnings_table.png",
                 "multiqc/multiqc_plots/svg",
@@ -92,9 +98,14 @@
                 "multiqc/multiqc_plots/svg/nanostat_fastq_stats_table.svg",
                 "multiqc/multiqc_plots/svg/nanostat_quality_dist-cnt.svg",
                 "multiqc/multiqc_plots/svg/nanostat_quality_dist-pct.svg",
+                "multiqc/multiqc_plots/svg/novelty_summary_table.svg",
                 "multiqc/multiqc_plots/svg/ont16s_run_summary_table.svg",
                 "multiqc/multiqc_plots/svg/ont16s_warnings_table.svg",
                 "multiqc/multiqc_report.html",
+                "novelty",
+                "novelty/novelty_summary.tsv",
+                "novelty/zymo_msplus_mab114_sup_rep1_novelty_profile.tsv",
+                "novelty/zymo_msplus_mab114_sup_rep1_novelty_reads.tsv.gz",
                 "ont16s_report",
                 "ont16s_report/ont16s_run_summary.tsv",
                 "ont16s_report/ont16s_warnings.tsv",
@@ -141,8 +152,12 @@
                 "multiqc_general_stats.txt:md5,5e66325761bcbe168bd9d0b345a34178",
                 "multiqc_mock_validation_table.txt:md5,e887bcf2d4370a553fda35f7d7a0636d",
                 "multiqc_nanostat.txt:md5,d935ef2819d093d32f71a3511540b5f1",
+                "multiqc_novelty_summary_table.txt:md5,edb977fd766253beb92d95c676e122cc",
                 "multiqc_ont16s_run_summary_table.txt:md5,8f37b98f485cd6490819aa657fc727f1",
                 "multiqc_ont16s_warnings_table.txt:md5,9c0a408901c305bd4ef11cdf4f82fb15",
+                "novelty_summary.tsv:md5,2d8bc0b9094e18094523e9e8bb00b013",
+                "zymo_msplus_mab114_sup_rep1_novelty_profile.tsv:md5,262ec2952e391d243ae2e3a140c9edf0",
+                "zymo_msplus_mab114_sup_rep1_novelty_reads.tsv.gz:md5,b18d0fb84854c06f4977cb2def262077",
                 "ont16s_run_summary.tsv:md5,d465af5bc8642b373fb7758ffeb66876",
                 "ont16s_warnings.tsv:md5,80b655c8dcc0f5b329752bb81e9eaf6e",
                 "emu_db_provenance.tsv:md5,1bb261f79938619db38043bf3df4d4ca",
@@ -152,7 +167,7 @@
                 "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
             ]
         ],
-        "timestamp": "2026-11-08T17:11:46.444851676",
+        "timestamp": "2026-11-08T17:27:08.041388885",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
@@ -194,6 +209,9 @@
                 "NANOPLOT_RAW": {
                     "NanoPlot": "1.47.0"
                 },
+                "NOVELTY": {
+                    "minimap2": "2.30-r1287"
+                },
                 "ONT16S_REPORT": {
                     "python": "3.13.12"
                 },
@@ -233,6 +251,7 @@
                 "multiqc/multiqc_data/multiqc_general_stats.txt",
                 "multiqc/multiqc_data/multiqc_mock_validation_table.txt",
                 "multiqc/multiqc_data/multiqc_nanostat.txt",
+                "multiqc/multiqc_data/multiqc_novelty_summary_table.txt",
                 "multiqc/multiqc_data/multiqc_ont16s_run_summary_table.txt",
                 "multiqc/multiqc_data/multiqc_ont16s_warnings_table.txt",
                 "multiqc/multiqc_data/multiqc_software_versions.txt",
@@ -245,6 +264,7 @@
                 "multiqc/multiqc_plots/pdf/nanostat_fastq_stats_table.pdf",
                 "multiqc/multiqc_plots/pdf/nanostat_quality_dist-cnt.pdf",
                 "multiqc/multiqc_plots/pdf/nanostat_quality_dist-pct.pdf",
+                "multiqc/multiqc_plots/pdf/novelty_summary_table.pdf",
                 "multiqc/multiqc_plots/pdf/ont16s_run_summary_table.pdf",
                 "multiqc/multiqc_plots/pdf/ont16s_warnings_table.pdf",
                 "multiqc/multiqc_plots/png",
@@ -252,6 +272,7 @@
                 "multiqc/multiqc_plots/png/nanostat_fastq_stats_table.png",
                 "multiqc/multiqc_plots/png/nanostat_quality_dist-cnt.png",
                 "multiqc/multiqc_plots/png/nanostat_quality_dist-pct.png",
+                "multiqc/multiqc_plots/png/novelty_summary_table.png",
                 "multiqc/multiqc_plots/png/ont16s_run_summary_table.png",
                 "multiqc/multiqc_plots/png/ont16s_warnings_table.png",
                 "multiqc/multiqc_plots/svg",
@@ -259,9 +280,14 @@
                 "multiqc/multiqc_plots/svg/nanostat_fastq_stats_table.svg",
                 "multiqc/multiqc_plots/svg/nanostat_quality_dist-cnt.svg",
                 "multiqc/multiqc_plots/svg/nanostat_quality_dist-pct.svg",
+                "multiqc/multiqc_plots/svg/novelty_summary_table.svg",
                 "multiqc/multiqc_plots/svg/ont16s_run_summary_table.svg",
                 "multiqc/multiqc_plots/svg/ont16s_warnings_table.svg",
                 "multiqc/multiqc_report.html",
+                "novelty",
+                "novelty/novelty_summary.tsv",
+                "novelty/zymo_msplus_mab114_sup_rep1_novelty_profile.tsv",
+                "novelty/zymo_msplus_mab114_sup_rep1_novelty_reads.tsv.gz",
                 "ont16s_report",
                 "ont16s_report/ont16s_run_summary.tsv",
                 "ont16s_report/ont16s_warnings.tsv",
@@ -309,8 +335,12 @@
                 "multiqc_general_stats.txt:md5,5e66325761bcbe168bd9d0b345a34178",
                 "multiqc_mock_validation_table.txt:md5,ae64fa93ec0c916659b9dc48e6a6ac26",
                 "multiqc_nanostat.txt:md5,d935ef2819d093d32f71a3511540b5f1",
+                "multiqc_novelty_summary_table.txt:md5,edb977fd766253beb92d95c676e122cc",
                 "multiqc_ont16s_run_summary_table.txt:md5,667e8a4ff55484096f66c5e37964aa0a",
                 "multiqc_ont16s_warnings_table.txt:md5,c6fc1e6f8f730d90d1dee24f337781fd",
+                "novelty_summary.tsv:md5,2d8bc0b9094e18094523e9e8bb00b013",
+                "zymo_msplus_mab114_sup_rep1_novelty_profile.tsv:md5,262ec2952e391d243ae2e3a140c9edf0",
+                "zymo_msplus_mab114_sup_rep1_novelty_reads.tsv.gz:md5,b18d0fb84854c06f4977cb2def262077",
                 "ont16s_run_summary.tsv:md5,8481e354518fedb7ae043d036eeea25d",
                 "ont16s_warnings.tsv:md5,e6b78d9ce5bf344f088c7d0c896b75cd",
                 "emu_db_provenance.tsv:md5,1bb261f79938619db38043bf3df4d4ca",
@@ -320,7 +350,7 @@
                 "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
             ]
         ],
-        "timestamp": "2026-11-08T17:13:59.84352365",
+        "timestamp": "2026-11-08T17:29:24.490424468",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"

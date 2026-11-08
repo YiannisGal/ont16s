@@ -169,6 +169,19 @@
                     "maximum": 1,
                     "fa_icon": "fas fa-exclamation-triangle",
                     "description": "Warn when more than this fraction of assigned reads is chloroplast/mitochondria."
+                },
+                "skip_novelty": {
+                    "type": "boolean",
+                    "description": "Skip the novelty analysis (best-hit similarity of every read and the rank it supports).",
+                    "fa_icon": "fas fa-forward"
+                },
+                "novelty_min_coverage": {
+                    "type": "number",
+                    "default": 0.8,
+                    "minimum": 0,
+                    "maximum": 1,
+                    "description": "Minimum fraction of a read covered by its best hit; reads below are counted as 'unaligned' (chimeras, off-target).",
+                    "fa_icon": "fas fa-percent"
                 }
             }
         },
