@@ -22,5 +22,4 @@ First release.
 
 ### Changed
 
-- 
 - `manifest.defaultBranch` set to `main`.
