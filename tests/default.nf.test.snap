@@ -42,7 +42,7 @@
                     "untar": 1.34
                 },
                 "Workflow": {
-                    "YiannisGal/ont16s": "v0.1.0"
+                    "YiannisGal/ont16s": "v0.2.0dev"
                 }
             },
             [
@@ -152,7 +152,7 @@
                 "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
             ]
         ],
-        "timestamp": "2026-11-08T09:48:01.016799899",
+        "timestamp": "2026-11-08T17:11:46.444851676",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
@@ -207,7 +207,7 @@
                     "untar": 1.34
                 },
                 "Workflow": {
-                    "YiannisGal/ont16s": "v0.1.0"
+                    "YiannisGal/ont16s": "v0.2.0dev"
                 }
             },
             [
@@ -320,7 +320,7 @@
                 "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
             ]
         ],
-        "timestamp": "2026-11-08T09:50:32.085378186",
+        "timestamp": "2026-11-08T17:13:59.84352365",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"

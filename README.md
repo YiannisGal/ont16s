@@ -10,7 +10,7 @@
 [![nf-core linting](https://github.com/YiannisGal/ont16s/actions/workflows/linting.yml/badge.svg)](https://github.com/YiannisGal/ont16s/actions/workflows/linting.yml)
 [![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.10.4-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
-[![nf-core template version](https://img.shields.io/badge/nf--core_template-4.1.0-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/4.1.0)
+[![nf-core template version](https://img.shields.io/badge/nf--core_template-4.2.1-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/4.2.1)
 
 ## Introduction
 
@@ -95,9 +95,8 @@ nextflow run YiannisGal/ont16s -r v0.1.0 \
    nextflow -version
    ```
 
-2. **A container engine.** Docker is the tested option (`-profile docker`). Profiles for
-   `singularity`, `apptainer`, `podman` and `conda` are provided by the nf-core template but have not
-   yet been tested with this pipeline.
+2. **A software environment.** `-profile docker`, `-profile singularity` and `-profile conda` are
+   tested in CI on every change. `apptainer` and `podman` profiles are provided but not tested.
 
 3. **The pipeline.** Nextflow downloads it from GitHub on first use; nothing to install by hand.
    To work on the code instead, clone it:
@@ -201,7 +200,7 @@ proportion accuracy against Zymo's expected 16S composition.
 - Taxonomy depends on the database; Emu assigns every read to its closest reference, so organisms
   absent from the database appear under a related name.
 - No representative sequences are produced (yet).
-- Tested on Linux x86_64 with Docker; other container engines and ARM64 are not yet tested.
+- Tested on Linux x86_64 (Docker, Singularity, conda); ARM64, HPC schedulers and cloud are not yet tested.
 
 ## Credits
 
