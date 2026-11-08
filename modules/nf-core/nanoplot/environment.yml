@@ -5,3 +5,4 @@ channels:
   - bioconda
 dependencies:
   - bioconda::nanoplot=1.47.0
+  - conda-forge::plotly<7  # plotly 7 removed figure_factory.create_2d_density used by NanoPlot 1.47.0
