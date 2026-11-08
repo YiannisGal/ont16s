@@ -182,6 +182,26 @@
                     "maximum": 1,
                     "description": "Minimum fraction of a read covered by its best hit; reads below are counted as 'unaligned' (chimeras, off-target).",
                     "fa_icon": "fas fa-percent"
+                },
+                "skip_novel_otus": {
+                    "type": "boolean",
+                    "description": "Skip clustering and consensus of reads too distant from the database for a genus name.",
+                    "fa_icon": "fas fa-forward"
+                },
+                "novel_cluster_id": {
+                    "type": "number",
+                    "default": 0.9,
+                    "minimum": 0.5,
+                    "maximum": 1,
+                    "description": "vsearch identity for clustering novel reads (raw reads, so lower than the genus threshold).",
+                    "fa_icon": "fas fa-percent"
+                },
+                "novel_min_size": {
+                    "type": "integer",
+                    "default": 10,
+                    "minimum": 2,
+                    "description": "Minimum reads in a cluster to build a consensus sequence.",
+                    "fa_icon": "fas fa-hashtag"
                 }
             }
         },
