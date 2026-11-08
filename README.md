@@ -5,6 +5,7 @@
   </picture>
 </h1>
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24053595.svg)](https://doi.org/10.5281/zenodo.24053595)
 [![nf-test](https://github.com/YiannisGal/ont16s/actions/workflows/nf-test.yml/badge.svg)](https://github.com/YiannisGal/ont16s/actions/workflows/nf-test.yml)
 [![nf-core linting](https://github.com/YiannisGal/ont16s/actions/workflows/linting.yml/badge.svg)](https://github.com/YiannisGal/ont16s/actions/workflows/linting.yml)
 [![Nextflow](https://img.shields.io/badge/version-%E2%89%A525.10.4-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
@@ -208,7 +209,12 @@ ont16s was written by IGaliatsatos ([@YiannisGal](https://github.com/YiannisGal)
 
 ## Citations
 
-If you use ont16s, please cite the tools it runs, listed with references in
+If you use ont16s, please cite the pipeline:
+
+> Galiatsatos I. ont16s: full-length 16S rRNA profiling for Oxford Nanopore (v0.1.0). Zenodo.
+> doi: [10.5281/zenodo.24053595](https://doi.org/10.5281/zenodo.24053595)
+
+Please also cite the tools it runs, listed with references in
 [CITATIONS.md](CITATIONS.md), in particular:
 
 > Curry KD, Wang Q, Nute MG, et al. Emu: species-level microbial community profiling of full-length
