@@ -1,0 +1,9 @@
+species	aliases	expected_abundance	source
+Pseudomonas aeruginosa		0.042	Zymo D6305/D6306 manual v1.2.0 (2024-04-08), Table 1, 16S Only
+Escherichia coli		0.101	Zymo D6305/D6306 manual v1.2.0 (2024-04-08), Table 1, 16S Only
+Salmonella enterica		0.104	Zymo D6305/D6306 manual v1.2.0 (2024-04-08), Table 1, 16S Only
+Limosilactobacillus fermentum	Lactobacillus fermentum	0.184	Zymo D6305/D6306 manual v1.2.0 (2024-04-08), Table 1, 16S Only
+Enterococcus faecalis		0.099	Zymo D6305/D6306 manual v1.2.0 (2024-04-08), Table 1, 16S Only
+Staphylococcus aureus		0.155	Zymo D6305/D6306 manual v1.2.0 (2024-04-08), Table 1, 16S Only
+Listeria monocytogenes		0.141	Zymo D6305/D6306 manual v1.2.0 (2024-04-08), Table 1, 16S Only
+Bacillus subtilis		0.174	Zymo D6305/D6306 manual v1.2.0 (2024-04-08), Table 1, 16S Only
