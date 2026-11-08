@@ -32,9 +32,23 @@ All PubMed-indexed references below were checked against PubMed (2026-11-08).
 
   > Shen W, Le S, Li Y, Hu F. SeqKit: A Cross-Platform and Ultrafast Toolkit for FASTA/Q File Manipulation. PLoS One. 2016;11(10):e0163962. doi: [10.1371/journal.pone.0163962](https://doi.org/10.1371/journal.pone.0163962).
 
+- [VSEARCH](https://pubmed.ncbi.nlm.nih.gov/27781170/) (clustering of novel reads)
+
+  > Rognes T, Flouri T, Nichols B, Quince C, Mahé F. VSEARCH: a versatile open source tool for metagenomics. PeerJ. 2016;4:e2584. doi: [10.7717/peerj.2584](https://doi.org/10.7717/peerj.2584).
+
+- [Racon](https://pubmed.ncbi.nlm.nih.gov/28100585/) (consensus of novel read clusters)
+
+  > Vaser R, Sović I, Nagarajan N, Šikić M. Fast and accurate de novo genome assembly from long uncorrected reads. Genome Res. 2017;27(5):737-746. doi: [10.1101/gr.214270.116](https://doi.org/10.1101/gr.214270.116).
+
 - [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
 
   > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016;32(19):3047-3048. doi: [10.1093/bioinformatics/btw354](https://doi.org/10.1093/bioinformatics/btw354).
+
+## Methods
+
+- [Taxonomic thresholds for 16S identity](https://pubmed.ncbi.nlm.nih.gov/25118885/) (novelty analysis)
+
+  > Yarza P, Yilmaz P, Pruesse E, et al. Uniting the classification of cultured and uncultured bacteria and archaea using 16S rRNA gene sequences. Nat Rev Microbiol. 2014;12(9):635-645. doi: [10.1038/nrmicro3330](https://doi.org/10.1038/nrmicro3330).
 
 ## Reference databases
 
