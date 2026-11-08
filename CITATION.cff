@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this pipeline, please cite it as below."
+title: "ont16s: full-length 16S rRNA profiling for Oxford Nanopore"
+authors:
+  - family-names: Galiatsatos
+    given-names: I.
+version: 0.1.0
+doi: 10.5281/zenodo.24053595
+date-released: 2026-11-08
+license: MIT
+repository-code: "https://github.com/YiannisGal/ont16s"
