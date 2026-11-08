@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/YiannisGal/ont16s/master/assets/schema_input.json",
+    "$id": "https://raw.githubusercontent.com/YiannisGal/ont16s/main/assets/schema_input.json",
     "title": "YiannisGal/ont16s pipeline - params.input schema",
     "description": "Schema for the file provided with params.input",
     "type": "array",
