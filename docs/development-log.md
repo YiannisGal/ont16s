@@ -223,3 +223,21 @@ Zymo subset; Milestone 2 modules.
   all published phyla detected, Bray-Curtis vs published median 0.13, Mantel genus 0.95, 36 min.
 - User question on AI/LLM for parameter choice: answered with data-driven, logged rules inside
   the pipeline (reproducible); an LLM could explain reports outside the pipeline.
+
+## 2026-11-08 — v0.1.0 release preparation (branch `release-v0.1.0`)
+
+- Server cleanup (2026-11-07) archived the old repo copy and `ont16s_data` (ST-001–ST-011) to
+  `gdrive:server/09_ont16s_pipeline/` and removed them from the server. Fresh clone at
+  `/mnt/Ubuntu_HD5/Users/yiannis/ont16s`; tools reinstalled in `.../ont16s_tools/`.
+- Merged the three commits left on `m10-adaptive` after PR #11 (pooled-mode nf-test, Zymo D6306/
+  D6331 mock definitions, Etoliko method comparison).
+- Fixes: `manifest.defaultBranch` 'master' → 'main' (remote runs would fail); nf-schema kept at
+  2.5.1 (2.8.0 needs Nextflow >=26.04; CI tests 25.10.4, so the harmless 'validation.*' warnings stay); version 0.1.0 in manifest and
+  `.nf-core.yml`; `included_configs` lint check disabled (no nf-core/configs file for ont16s).
+- New: logo (`docs/images/`), README (install, test data, samplesheet, databases, parameters,
+  outputs, validation, limitations), CITATIONS (all PubMed references verified), CHANGELOG v0.1.0.
+- Verified from the fresh clone: `-profile test,docker` 14/14 tasks, 12/12 mock taxa; nf-test 2/2
+  (per-sample and pooled) twice; lint with nf-core 4.1.0 (as CI) 0 failures, also `--release`;
+  pre-commit 7/7.
+- Pending: NaMeco (ST-010, download had stopped at 3/15 runs), novelty Phase A (ST-011; best-hit
+  alignments in the archive) and Phase B.

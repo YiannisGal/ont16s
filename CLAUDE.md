@@ -6,13 +6,13 @@
 
 # 0. Current project state (keep this section short and up to date)
 
-**Last updated:** 2026-10-08
+**Last updated:** 2026-11-08
 
 **Positioning (D-001):** validation- and database-aware Emu profiling pipeline for
 environmental ONT full-length 16S. Differentiated from TRANA (Emu Nextflow pipeline)
 and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 
-**Current milestone:** Milestone 1 (scaffold) in progress on branch `m1-scaffold` (PR → `dev`).
+**Current milestone:** Release v0.1.0 (branch `release-v0.1.0` → `dev` → `main`): README, logo, citations, changelog.
 
 **Completed:**
 
@@ -29,10 +29,10 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
 
-**Current task:** Adaptive pipeline (pooled Emu, dedup, checks, SILVA genus DB) validated on Etoliko (ST-005–009); PR `m10-adaptive` → `dev` pending. Next: NaMeco, -resume/bin cache check, tests for new modules.
+**Current task:** v0.1.0 release PR. Next: NaMeco (ST-010, restart download), novelty Phase A (ST-011, alignments archived) and Phase B (consensus of novel lineages).
 
-**Server:** repo at `/mnt/Ubuntu_HD5/yiannis/ont16s`; tools (nf-core venv, nf-test) in `ont16s_data/tools/`; data under
-`/mnt/Ubuntu_HD5/yiannis/ont16s_data/` (never in repo, never on `/`).
+**Server:** repo at `/mnt/Ubuntu_HD5/Users/yiannis/ont16s`; tools (nf-core venv, pre-commit, nf-test) in `/mnt/Ubuntu_HD5/Users/yiannis/ont16s_tools/`; run scratch in `/mnt/Ubuntu_HD5/Users/yiannis/ont16s_runs/`.
+The old `/mnt/Ubuntu_HD5/yiannis/` (repo + `ont16s_data`, ST-001–ST-011) was archived on 2026-11-07 to `gdrive:server/09_ont16s_pipeline/` (verified) and deleted from the server.
 
 **Known issues / open questions:**
 

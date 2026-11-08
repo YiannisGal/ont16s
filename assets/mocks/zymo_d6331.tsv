@@ -1,0 +1,16 @@
+species	aliases	expected_abundance	source
+Faecalibacterium prausnitzii		0.1763	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Veillonella rogosae		0.1587	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Roseburia hominis		0.0989	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Bacteroides fragilis		0.0994	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Prevotella corporis		0.0498	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Bifidobacterium adolescentis		0.0878	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Fusobacterium nucleatum		0.0749	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Limosilactobacillus fermentum	Lactobacillus fermentum	0.0963	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Clostridioides difficile	Clostridium difficile;Peptoclostridium difficile	0.0262	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Akkermansia muciniphila		0.0097	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Methanobrevibacter smithii		0.00066	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Salmonella enterica		9e-05	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Enterococcus faecalis		9e-06	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Clostridium perfringens		2e-06	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
+Escherichia coli		0.1212	Zymo D6331 manual v1.2.0 (2023-01-25), Table 1, 16S Only; E. coli = sum of 5 strains
