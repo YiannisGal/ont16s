@@ -69,7 +69,7 @@ Requirements: [Nextflow](https://www.nextflow.io/docs/latest/install.html) ≥ 2
 
 ```bash
 # 1. Run the built-in test (downloads a 0.7 MB test BAM and a 1.5 MB test database)
-nextflow run YiannisGal/ont16s -r main -profile test,docker --outdir results_test
+nextflow run YiannisGal/ont16s -r v0.1.0 -profile test,docker --outdir results_test
 ```
 
 The test takes about 2–3 minutes on 2 CPUs and should report the 12 expected bacteria of a Zymo mock
@@ -77,7 +77,7 @@ community (`results_test/mock_validation/mock_validation_summary.tsv`).
 
 ```bash
 # 2. Run your data
-nextflow run YiannisGal/ont16s -r main \
+nextflow run YiannisGal/ont16s -r v0.1.0 \
     -profile docker \
     --input samplesheet.csv \
     --emu_db /path/to/emu_db \
@@ -98,20 +98,16 @@ nextflow run YiannisGal/ont16s -r main \
    `singularity`, `apptainer`, `podman` and `conda` are provided by the nf-core template but have not
    yet been tested with this pipeline.
 
-3. **The pipeline.** Nextflow downloads it on first use (`nextflow run YiannisGal/ont16s -r main`).
-   While the repository is private, either clone it and run the local copy:
+3. **The pipeline.** Nextflow downloads it from GitHub on first use; nothing to install by hand.
+   To work on the code instead, clone it:
 
    ```bash
-   git clone git@github.com:YiannisGal/ont16s.git
-   nextflow run ./ont16s -profile test,docker --outdir results_test
+   git clone https://github.com/YiannisGal/ont16s.git
    ```
-
-   or give Nextflow a GitHub token (`export NXF_SCM_FILE` / `~/.nextflow/scm`, see the
-   [Nextflow docs](https://www.nextflow.io/docs/latest/git.html)).
 
 4. **An Emu database** (see [Databases](#databases)).
 
-Use `-r <version>` (e.g. `-r 0.1.0`) to run a fixed release.
+Use `-r <version>` (e.g. `-r v0.1.0`) to run a fixed release.
 
 ## Test data
 
