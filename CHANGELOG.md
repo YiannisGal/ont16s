@@ -22,5 +22,5 @@ First release.
 
 ### Changed
 
-- nf-schema 2.5.1 → 2.8.0 (removes "Unrecognized config option 'validation.*'" warnings).
+- 
 - `manifest.defaultBranch` set to `main`.

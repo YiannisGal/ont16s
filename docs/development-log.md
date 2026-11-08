@@ -231,8 +231,8 @@ Zymo subset; Milestone 2 modules.
   `/mnt/Ubuntu_HD5/Users/yiannis/ont16s`; tools reinstalled in `.../ont16s_tools/`.
 - Merged the three commits left on `m10-adaptive` after PR #11 (pooled-mode nf-test, Zymo D6306/
   D6331 mock definitions, Etoliko method comparison).
-- Fixes: `manifest.defaultBranch` 'master' → 'main' (remote runs would fail); nf-schema 2.5.1 →
-  2.8.0 (no more 'Unrecognized config option validation.*' warnings); version 0.1.0 in manifest and
+- Fixes: `manifest.defaultBranch` 'master' → 'main' (remote runs would fail); nf-schema kept at
+  2.5.1 (2.8.0 needs Nextflow >=26.04; CI tests 25.10.4, so the harmless 'validation.*' warnings stay); version 0.1.0 in manifest and
   `.nf-core.yml`; `included_configs` lint check disabled (no nf-core/configs file for ont16s).
 - New: logo (`docs/images/`), README (install, test data, samplesheet, databases, parameters,
   outputs, validation, limitations), CITATIONS (all PubMed references verified), CHANGELOG v0.1.0.
