@@ -3,6 +3,8 @@ repository_type: pipeline
 nf_core_version: 4.1.0
 
 lint:
+  # Not an nf-core pipeline: nf-core/configs has no pipeline/ont16s.config to include
+  included_configs: false
   files_unchanged:
     - docs/CONTRIBUTING.md
     - .prettierignore
@@ -39,7 +41,7 @@ template:
   description: Validation- and database-aware Emu profiling of ONT full-length 16S
     amplicons
   author: IGaliatsatos
-  version: 0.1.0dev
+  version: 0.1.0
   force: true
   skip_features:
     - igenomes
