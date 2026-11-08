@@ -16,7 +16,7 @@ disable_version_detection: true
 custom_data:
   mock_validation:
     section_name: "Mock-community validation"
-    description: "Expected taxa detected (recall) and unexpected taxa for samples with a 'mock' value. Proportions are only assessed (l1_distance) when the mock definition gives expected abundances."
+    description: "Expected taxa detected (recall) and unexpected taxa for samples with a 'mock' value. Proportions (l1_distance, bray_curtis, mean_abs_log2_ratio over taxa expected at >= 1 %; log2 ratio 1 = twice too high) are only assessed when the mock definition gives expected abundances."
     plot_type: "table"
     file_format: "tsv"
     pconfig:
