@@ -153,12 +153,12 @@
                 "emu-combined-species-counts.tsv:md5,0f6126a0e47413b43f013a708c883b50",
                 "emu-combined-species.tsv:md5,bae68ea7699759be78b437aadf8a8a45",
                 "zymo_msplus_mab114_sup_rep1_rel-abundance.tsv:md5,975d4739cfa9a93c1b31d6726763701e",
-                "mock_validation_summary.tsv:md5,a9d6433ea4a76b3eb735b66116abb765",
-                "zymo_msplus_mab114_sup_rep1_mock_summary.tsv:md5,a9d6433ea4a76b3eb735b66116abb765",
-                "zymo_msplus_mab114_sup_rep1_mock_validation.tsv:md5,e3d2191f6e573525492dcfe790d2e200",
+                "mock_validation_summary.tsv:md5,db3da958276d67b495e843def1a5348a",
+                "zymo_msplus_mab114_sup_rep1_mock_summary.tsv:md5,db3da958276d67b495e843def1a5348a",
+                "zymo_msplus_mab114_sup_rep1_mock_validation.tsv:md5,97fc1923630a2ed564346578bce410fa",
                 "multiqc_citations.txt:md5,613fb67692e408c8225369c2081ff8b9",
                 "multiqc_general_stats.txt:md5,5e66325761bcbe168bd9d0b345a34178",
-                "multiqc_mock_validation_table.txt:md5,e887bcf2d4370a553fda35f7d7a0636d",
+                "multiqc_mock_validation_table.txt:md5,49a690d301a5a87bbe7403414a588b50",
                 "multiqc_nanostat.txt:md5,d935ef2819d093d32f71a3511540b5f1",
                 "multiqc_novelty_summary_table.txt:md5,edb977fd766253beb92d95c676e122cc",
                 "multiqc_ont16s_run_summary_table.txt:md5,8f37b98f485cd6490819aa657fc727f1",
@@ -178,7 +178,7 @@
                 "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
             ]
         ],
-        "timestamp": "2026-11-08T17:41:21.57945407",
+        "timestamp": "2026-11-08T18:01:25.898603258",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
@@ -347,12 +347,12 @@
                 "emu-combined-species.tsv:md5,c70fa3dd71f97f8955bf67de5e4394a8",
                 "pooled_rel-abundance.tsv:md5,20b0712167e0ad5b95a2165a61d73ad9",
                 "zymo_msplus_mab114_sup_rep1_rel-abundance.tsv:md5,203a5f2e9a711e0f16ffd6a0611c293d",
-                "mock_validation_summary.tsv:md5,c8f5a9698f13d9c9d70a8ade298a4b71",
-                "zymo_msplus_mab114_sup_rep1_mock_summary.tsv:md5,c8f5a9698f13d9c9d70a8ade298a4b71",
-                "zymo_msplus_mab114_sup_rep1_mock_validation.tsv:md5,4f1aa0b5e46d3b10a3c076c83c83af07",
+                "mock_validation_summary.tsv:md5,2b937d371cd8466594577ec8f0f41695",
+                "zymo_msplus_mab114_sup_rep1_mock_summary.tsv:md5,2b937d371cd8466594577ec8f0f41695",
+                "zymo_msplus_mab114_sup_rep1_mock_validation.tsv:md5,6127e8853dea09d3ad72fe0eec665365",
                 "multiqc_citations.txt:md5,613fb67692e408c8225369c2081ff8b9",
                 "multiqc_general_stats.txt:md5,5e66325761bcbe168bd9d0b345a34178",
-                "multiqc_mock_validation_table.txt:md5,ae64fa93ec0c916659b9dc48e6a6ac26",
+                "multiqc_mock_validation_table.txt:md5,0d1525070c972446f84c3738185b1ea1",
                 "multiqc_nanostat.txt:md5,d935ef2819d093d32f71a3511540b5f1",
                 "multiqc_novelty_summary_table.txt:md5,edb977fd766253beb92d95c676e122cc",
                 "multiqc_ont16s_run_summary_table.txt:md5,667e8a4ff55484096f66c5e37964aa0a",
@@ -372,7 +372,7 @@
                 "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
             ]
         ],
-        "timestamp": "2026-11-08T17:43:38.937487857",
+        "timestamp": "2026-11-08T18:03:44.261563617",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
