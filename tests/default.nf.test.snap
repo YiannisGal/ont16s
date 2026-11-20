@@ -49,7 +49,7 @@
                     "untar": 1.34
                 },
                 "Workflow": {
-                    "YiannisGal/ont16s": "v0.2.0"
+                    "YiannisGal/ont16s": "v0.3.0dev"
                 }
             },
             [
@@ -229,7 +229,7 @@
                     "untar": 1.34
                 },
                 "Workflow": {
-                    "YiannisGal/ont16s": "v0.2.0"
+                    "YiannisGal/ont16s": "v0.3.0dev"
                 }
             },
             [
