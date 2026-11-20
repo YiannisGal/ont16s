@@ -101,3 +101,18 @@ Format: date · decision · alternatives · reason · consequences.
     our benchmarks (e.g. read length/quality filter, `--emu_type`), never constants.
   - Taxon names are never used in code logic.
   - Tests use Zymo subsets; documentation examples include a non-mock sample.
+
+## D-007 — Novel organisms: report the supported rank and consensus OTUs next to Emu
+
+- **Date:** 2026-11-08
+- **Decision:** Keep Emu as the abundance profiler. Add (1) a per-read novelty analysis: best-hit
+  identity corrected by the read's quality-based accuracy, truncated to the rank reached under the
+  Yarza et al. 2014 thresholds; (2) consensus OTUs (vsearch clustering + racon polishing) of reads
+  too distant for a genus name.
+- **Alternatives:** NaMeco, CONCOMPRA, amplicon_sorter/NGSpeciesID (whole reference-free
+  pipelines); a fixed identity cut-off on raw reads (depends on chemistry and basecalling).
+- **Reason:** Error correction makes the rank decision comparable across chemistries (fast vs SUP
+  basecalling). Reusing standard tools (minimap2, vsearch, racon) keeps the pipeline small; the
+  full reference-free tools remain candidates for a benchmark.
+- **Consequences:** Two extra outputs (`novelty/`), one extra container. Thresholds must be
+  calibrated on mocks (NaMeco D6306/D6331: all reads from known species) before warnings use them.

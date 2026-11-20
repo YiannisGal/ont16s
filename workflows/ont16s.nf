@@ -17,6 +17,8 @@ include { EMU_POOL_READS         } from '../modules/local/emu_pool_reads/main'
 include { EMU_SPLIT_POOLED       } from '../modules/local/emu_split_pooled/main'
 include { EMU_POSTPROCESS        } from '../modules/local/emu_postprocess/main'
 include { DB_FIT                 } from '../modules/local/db_fit/main'
+include { NOVELTY                } from '../modules/local/novelty/main'
+include { NOVEL_OTUS             } from '../modules/local/novel_otus/main'
 include { ONT16S_REPORT          } from '../modules/local/ont16s_report/main'
 include { EMU_COMBINE            } from '../modules/local/emu_combine/main'
 include { EMU_DB_INFO            } from '../modules/local/emu_db_info/main'
@@ -186,6 +188,28 @@ workflow ONT16S {
             params.db_fit_reads
         )
         ch_db_fit = DB_FIT.out.tsv
+    }
+
+    //
+    // MODULE: Novelty — which rank does each read's similarity to the database support
+    //
+    if (!params.skip_novelty) {
+        NOVELTY ( ch_filtered, ch_emu_db, params.novelty_max_reads )
+        def ch_novelty_summary = NOVELTY.out.summary
+            .map { _meta, tsv -> tsv }
+            .collectFile(name: 'novelty_summary.tsv', keepHeader: true, sort: true, storeDir: "${params.outdir}/novelty")
+        ch_multiqc_files = ch_multiqc_files.mix(ch_novelty_summary)
+
+        if (!params.skip_novel_otus) {
+            NOVEL_OTUS (
+                NOVELTY.out.reads
+                    .join(ch_filtered)
+                    .map { meta, table, reads -> [ meta.id, table, reads ] }
+                    .toList()
+                    .map { rows -> [ rows.collect { row -> row[0] }, rows.collect { row -> row[1] }, rows.collect { row -> row[2] } ] },
+                ch_emu_db
+            )
+        }
     }
 
     //

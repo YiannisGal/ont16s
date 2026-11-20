@@ -6,19 +6,19 @@
 
 # 0. Current project state (keep this section short and up to date)
 
-**Last updated:** 2026-11-08
+**Last updated:** 2026-11-20
 
 **Positioning (D-001):** validation- and database-aware Emu profiling pipeline for
 environmental ONT full-length 16S. Differentiated from TRANA (Emu Nextflow pipeline)
 and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 
-**Current milestone:** Release v0.1.0 (branch `release-v0.1.0` → `dev` → `main`): README, logo, citations, changelog.
+**Current milestone:** Release v0.2.0 (branch `release-v0.2.0` → `dev` → `main`). v0.1.0 released 2026-11-08 (DOI 10.5281/zenodo.24053595).
 
 **Completed:**
 
 - Landscape assessment (`docs/project-landscape.md`)
 - Decisions D-001 positioning, D-002 Emu primary / Savont deferred, D-003 dataset roles
-- Git repository initialised (`main`), remote `github.com/YiannisGal/ont16s` (private)
+- Git repository initialised (`main`), remote `github.com/YiannisGal/ont16s` (public)
 - ST-001 manual Emu run executed (`docs/server-tasks/ST-001-results.md`): 12/12 mock taxa, 50 min / 3.4 GB per 53k-read chunk
 - ST-002 Emu speed test (`docs/server-tasks/ST-002-results.md`): minimap2 is the bottleneck, scales with threads; `lr:hq` 15× faster but not equivalent
 - nf-core scaffold generated + runs (`-profile test,docker`); D-005 branching model `dev` → `main`
@@ -28,8 +28,10 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 - D-006: universal pipeline — no hard-coded samples/taxa/DB; Zymo only for tests + validation
 - D-004: lab server (x86_64, 28 CPU, 125 GB, Docker, no SLURM) = execution environment;
   MacBook (8 GB RAM) = docs/review only
+- v0.2.0: novelty analysis + consensus OTUs (D-007), Bray-Curtis/log2 metrics, template 4.2.1
+- ST-010 NaMeco: D6306 8/8 BC 0.09; D6331 BC 0.48 (primer/copy-number bias); 0 false novel OTUs
 
-**Current task:** v0.1.0 release PR. Next: NaMeco (ST-010, restart download), novelty Phase A (ST-011, alignments archived) and Phase B (consensus of novel lineages).
+**Current task:** v0.2.0 release PRs. Next: Etoliko novelty results (ST-011), HPC profile.
 
 **Server:** repo at `/mnt/Ubuntu_HD5/Users/yiannis/ont16s`; tools (nf-core venv, pre-commit, nf-test) in `/mnt/Ubuntu_HD5/Users/yiannis/ont16s_tools/`; run scratch in `/mnt/Ubuntu_HD5/Users/yiannis/ont16s_runs/`.
 The old `/mnt/Ubuntu_HD5/yiannis/` (repo + `ont16s_data`, ST-001–ST-011) was archived on 2026-11-07 to `gdrive:server/09_ont16s_pipeline/` (verified) and deleted from the server.

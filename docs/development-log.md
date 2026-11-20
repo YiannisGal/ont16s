@@ -241,3 +241,16 @@ Zymo subset; Milestone 2 modules.
   pre-commit 7/7.
 - Pending: NaMeco (ST-010, download had stopped at 3/15 runs), novelty Phase A (ST-011; best-hit
   alignments in the archive) and Phase B.
+
+## 2026-11-20 — v0.2.0 (branch `release-v0.2.0`)
+
+- nf-core template 4.1.0 → 4.2.1 (nf-schema 2.7.3); NanoPlot conda `plotly<7` patch fixed conda CI.
+- Novelty analysis (D-007): minimap2 best hit, identity corrected by Q-score accuracy, Yarza ranks.
+  Consensus OTUs: vsearch 0.90 + racon ×2; on Zymo reads the consensus reached 99.9–100 % identity
+  to the true species. New container built via Wave (vsearch, racon, minimap2, python).
+- Mock validation adds Bray-Curtis and log2 ratios.
+- ST-010 NaMeco (15 samples, 50 k reads each, 6.5 h, 126 tasks OK): D6306 8/8, BC 0.09; D6331
+  BC 0.48 from primer bias, 16S-identical Veillonella and trace taxa. False-novel reads 0.4–3.3 %,
+  0 consensus OTUs → read-level novelty needs the consensus step. `docs/server-tasks/ST-010-results.md`.
+- Problems: the full-depth NaMeco run (300 k reads) was too slow on the shared server →
+  subsampled + `--novelty_max_reads`; a server reboot killed the first run.

@@ -141,6 +141,30 @@ identity too, so compare samples or databases with the same chemistry and baseca
 absolute values. On Zymo R10.4.1 SUP reads against a database containing the mock species, the
 median identity was 0.99. Skip with `--skip_db_fit`.
 
+## Novel organisms (`--skip_novelty`, `--skip_novel_otus`)
+
+Emu assigns every read to its closest reference, so an organism missing from the database is
+reported under a related name. Two steps make such organisms visible.
+
+**Novelty analysis** (per sample). Every read is aligned once to the database (best minimap2 hit).
+Its identity is divided by the read's own accuracy, estimated from its quality scores (Q10 ≈ 90 %,
+Q20 ≈ 99 %). This removes most of the read's sequencing errors, so the result reflects the distance
+between the organism and the reference, not the basecaller. The corrected identity is compared with
+the full-length 16S thresholds of Yarza et al. (2014): species 98.7 %, genus 94.5 %, family 86.5 %,
+order 82.0 %, class 78.5 %, phylum 75.0 %. Each read gets the deepest rank it reaches.
+`frac_novel_genus` is the fraction of aligned reads too distant for a genus name. Reads whose best
+hit covers less than `--novelty_min_coverage` (default 0.8) of the read count as `unaligned`
+(chimeras, off-target products).
+
+**Consensus OTUs** (all samples together). Reads too distant for a genus name are pooled and
+clustered with vsearch at `--novel_cluster_id` (default 0.90; raw reads, so lower than the genus
+threshold). Each cluster with at least `--novel_min_size` reads (default 10) gets a consensus sequence:
+its centroid polished twice with racon. A consensus averages out read errors (on the Zymo mock,
+99.9–100 % identity to the true species), so it is classified against the database directly. Use
+the consensus sequences for BLAST, phylogenetic placement or a custom database.
+
+These results complement Emu's table; they do not change it.
+
 ## Mock-community validation
 
 Samples with a `mock` value in the samplesheet are compared with a mock definition
