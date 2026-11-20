@@ -10,3 +10,4 @@ multiqc/multiqc_report.html
 pipeline_info/*.{html,json,txt,yml}
 qc/nanoplot/*/*.{html,png}
 multiqc/multiqc_data/nanostat_*.txt
+emu/emu-combined-*.tsv

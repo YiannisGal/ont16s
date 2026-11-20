@@ -141,10 +141,6 @@
                 "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_Yield_By_Length.html"
             ],
             [
-                "emu-combined-genus-counts.tsv:md5,865242de852037d032bfec2efc9ff6c7",
-                "emu-combined-genus.tsv:md5,4f6118a3c5dac876f71c9d8aeff33503",
-                "emu-combined-species-counts.tsv:md5,0f6126a0e47413b43f013a708c883b50",
-                "emu-combined-species.tsv:md5,bae68ea7699759be78b437aadf8a8a45",
                 "zymo_msplus_mab114_sup_rep1_rel-abundance.tsv:md5,975d4739cfa9a93c1b31d6726763701e",
                 "mock_validation_summary.tsv:md5,db3da958276d67b495e843def1a5348a",
                 "zymo_msplus_mab114_sup_rep1_mock_summary.tsv:md5,db3da958276d67b495e843def1a5348a",
@@ -327,10 +323,6 @@
                 "qc/nanoplot/raw/zymo_msplus_mab114_sup_rep1_raw_Yield_By_Length.html"
             ],
             [
-                "emu-combined-genus-counts.tsv:md5,d1babfe0342a08ecbcc741dff898b196",
-                "emu-combined-genus.tsv:md5,671ef891109676e9f61d5ae1b38f3933",
-                "emu-combined-species-counts.tsv:md5,62a3f3c385787132965335f45bd628bb",
-                "emu-combined-species.tsv:md5,c70fa3dd71f97f8955bf67de5e4394a8",
                 "pooled_rel-abundance.tsv:md5,20b0712167e0ad5b95a2165a61d73ad9",
                 "zymo_msplus_mab114_sup_rep1_rel-abundance.tsv:md5,203a5f2e9a711e0f16ffd6a0611c293d",
                 "mock_validation_summary.tsv:md5,2b937d371cd8466594577ec8f0f41695",
