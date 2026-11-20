@@ -6,6 +6,7 @@ Writes a per-taxon table and a one-row summary. Uses only the Python standard li
 
 import argparse
 import csv
+import math
 import sys
 
 NON_TAXA = {"unmapped", "mapped_filtered", "mapped_unclassified"}
@@ -53,6 +54,8 @@ def main():
     parser.add_argument("--mock", required=True, help="Mock definition TSV")
     parser.add_argument("--min-abundance", type=float, default=0.001,
                         help="Unexpected taxa at or above this fraction count as false positives")
+    parser.add_argument("--min-expected-ratio", type=float, default=0.01,
+                        help="Only taxa expected at or above this fraction enter mean_abs_log2_ratio")
     parser.add_argument("--prefix", required=True)
     args = parser.parse_args()
 
@@ -72,6 +75,7 @@ def main():
             "observed_abundance": f"{obs:.6f}",
             "expected_abundance": "NA" if exp is None else f"{exp:.6f}",
             "reported_as": ";".join(sorted(hits)),
+            "log2_ratio": f"{math.log2(obs / exp):.3f}" if exp and obs > 0 else "NA",
         })
 
     expected_genera = {genus(n) for _, names, _ in expected for n in names}
@@ -85,6 +89,7 @@ def main():
             "observed_abundance": f"{obs:.6f}",
             "expected_abundance": "0",
             "reported_as": name,
+            "log2_ratio": "NA",
         })
 
     with open(f"{args.prefix}_mock_validation.tsv", "w", newline="") as fh:
@@ -101,8 +106,18 @@ def main():
     if all(exp is not None for _, _, exp in expected):
         l1 = sum(abs(float(r["observed_abundance"]) - float(r["expected_abundance"])) for r in rows)
         l1 = f"{l1:.6f}"
+        tot_o = sum(float(r["observed_abundance"]) for r in rows)
+        tot_e = sum(float(r["expected_abundance"]) for r in rows)
+        shared = sum(min(float(r["observed_abundance"]), float(r["expected_abundance"])) for r in rows)
+        bc = f"{1 - 2 * shared / (tot_o + tot_e):.4f}" if tot_o + tot_e else "NA"
+        ratios = [abs(float(r["log2_ratio"])) for r in exp_rows
+                  if r["log2_ratio"] != "NA" and float(r["expected_abundance"]) >= args.min_expected_ratio]
+        mal = f"{sum(ratios) / len(ratios):.3f}" if ratios else "NA"
+        worst = max((r for r in exp_rows if r["log2_ratio"] != "NA" and float(r["expected_abundance"]) >= args.min_expected_ratio),
+                    key=lambda r: abs(float(r["log2_ratio"])), default=None)
+        worst = f"{worst['taxon']} ({worst['log2_ratio']})" if worst else "NA"
     else:
-        l1 = "NA"
+        l1 = bc = mal = worst = "NA"
 
     summary = {
         "sample": args.sample,
@@ -117,6 +132,9 @@ def main():
         "n_false_pos_off_target": sum(r["category"] == "off_target" for r in fp),
         "false_pos_min_abundance": args.min_abundance,
         "l1_distance": l1,
+        "bray_curtis": bc,
+        "mean_abs_log2_ratio": mal,
+        "worst_taxon_log2_ratio": worst,
     }
     with open(f"{args.prefix}_mock_summary.tsv", "w", newline="") as fh:
         writer = csv.DictWriter(fh, fieldnames=list(summary.keys()), delimiter="\t", lineterminator="\n")
