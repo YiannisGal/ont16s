@@ -12,7 +12,7 @@
 environmental ONT full-length 16S. Differentiated from TRANA (Emu Nextflow pipeline)
 and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 
-**Current milestone:** Release v0.2.0 (branch `release-v0.2.0` → `dev` → `main`). v0.1.0 released 2026-11-08 (DOI 10.5281/zenodo.24053595).
+**Current milestone:** Release v0.2.0 (branch `release-v0.2.0` → `dev` → `main`). v0.2.0 released 2026-11-20 (DOI 10.5281/zenodo.24406558; all versions 10.5281/zenodo.24053594).
 
 **Completed:**
 
