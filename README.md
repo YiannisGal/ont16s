@@ -70,7 +70,7 @@ Requirements: [Nextflow](https://www.nextflow.io/docs/latest/install.html) ≥ 2
 
 ```bash
 # 1. Run the built-in test (downloads a 0.7 MB test BAM and a 1.5 MB test database)
-nextflow run YiannisGal/ont16s -r v0.1.0 -profile test,docker --outdir results_test
+nextflow run YiannisGal/ont16s -r v0.2.0 -profile test,docker --outdir results_test
 ```
 
 The test takes about 2–3 minutes on 2 CPUs and should report the 12 expected bacteria of a Zymo mock
@@ -78,7 +78,7 @@ community (`results_test/mock_validation/mock_validation_summary.tsv`).
 
 ```bash
 # 2. Run your data
-nextflow run YiannisGal/ont16s -r v0.1.0 \
+nextflow run YiannisGal/ont16s -r v0.2.0 \
     -profile docker \
     --input samplesheet.csv \
     --emu_db /path/to/emu_db \
@@ -107,7 +107,7 @@ nextflow run YiannisGal/ont16s -r v0.1.0 \
 
 4. **An Emu database** (see [Databases](#databases)).
 
-Use `-r <version>` (e.g. `-r v0.1.0`) to run a fixed release.
+Use `-r <version>` (e.g. `-r v0.2.0`) to run a fixed release.
 
 ## Test data
 
@@ -186,20 +186,24 @@ Details: [docs/output.md](docs/output.md).
 
 Measured with this pipeline (details and data in [docs/server-tasks](docs/server-tasks/)):
 
-| Dataset                                                               | Result                                                                                                                                                                                                                          |
-| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Zymo MSPlus mock, ONT R10.4.1 SUP (ST-001, ST-008)                    | all 12 expected bacteria detected; 0.6 % of abundance assigned to unexpected taxa                                                                                                                                               |
-| Environmental samples, PRJNA925180 (soil, lake, freshwater; ST-004)   | replicates agree (Bray-Curtis ≤ 0.27), habitats separate (0.62–0.92)                                                                                                                                                            |
-| Lake-sediment core, 70 samples, R10.4.1 fast basecalling (ST-005–009) | vs a published NanoCLUST + SILVA analysis of the same reads: same between-sample pattern (Mantel r = 0.96 phylum, 0.95 genus), all published phyla detected, 36 min on 24 CPUs; [comparison](docs/etoliko-method-comparison.md) |
+| Dataset                                                               | Result                                                                                                                                                                                                                                                                                          |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Zymo MSPlus mock, ONT R10.4.1 SUP (ST-001, ST-008)                    | all 12 expected bacteria detected; 0.6 % of abundance assigned to unexpected taxa                                                                                                                                                                                                               |
+| Environmental samples, PRJNA925180 (soil, lake, freshwater; ST-004)   | replicates agree (Bray-Curtis ≤ 0.27), habitats separate (0.62–0.92)                                                                                                                                                                                                                            |
+| Lake-sediment core, 70 samples, R10.4.1 fast basecalling (ST-005–009) | vs a published NanoCLUST + SILVA analysis of the same reads: same between-sample pattern (Mantel r = 0.96 phylum, 0.95 genus), all published phyla detected, 36 min on 24 CPUs; [comparison](docs/etoliko-method-comparison.md)                                                                 |
+| NaMeco independent mocks, PRJEB82315, 50 k reads/sample (ST-010)      | D6306 even mock, 5 replicates: 8/8 species, Bray-Curtis 0.09; D6331 gut mock, 10 replicates: recall 0.65, Bray-Curtis 0.48, explained by primer bias (no _Bifidobacterium_/archaea), 16S-identical _Veillonella_ species and taxa below 0.002 %; [details](docs/server-tasks/ST-010-results.md) |
 
-Not yet done: an independent-laboratory mock (NaMeco, PRJEB82315), tests on HPC/cloud, and
-proportion accuracy against Zymo's expected 16S composition.
+Not yet done: tests on HPC/cloud.
 
 ## Limitations
 
 - Taxonomy depends on the database; Emu assigns every read to its closest reference, so organisms
   absent from the database appear under a related name.
-- No representative sequences are produced (yet).
+- Species names of 16S-identical relatives (e.g. _Veillonella rogosae_ / _parvula_) are not reliable;
+  use genus rank for these.
+- Primer and 16S copy-number biases from the wet lab are not corrected (D6331: up to 10× per taxon).
+- Novelty: in mocks 0.4–3.3 % of reads look novel at read level; trust a lineage only when it forms a
+  consensus OTU (`novelty/novel_otus/`).
 - Tested on Linux x86_64 (Docker, Singularity, conda); ARM64, HPC schedulers and cloud are not yet tested.
 
 ## Credits
