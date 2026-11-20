@@ -202,6 +202,13 @@
                     "minimum": 2,
                     "description": "Minimum reads in a cluster to build a consensus sequence.",
                     "fa_icon": "fas fa-hashtag"
+                },
+                "novelty_max_reads": {
+                    "type": "integer",
+                    "default": 50000,
+                    "minimum": 0,
+                    "description": "Reads per sample used for the novelty analysis (systematic subsample; 0 = all). Fractions need only a sample; consensus OTUs are built from the subsampled novel reads.",
+                    "fa_icon": "fas fa-hashtag"
                 }
             }
         },

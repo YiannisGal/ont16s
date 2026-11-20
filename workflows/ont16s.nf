@@ -194,7 +194,7 @@ workflow ONT16S {
     // MODULE: Novelty — which rank does each read's similarity to the database support
     //
     if (!params.skip_novelty) {
-        NOVELTY ( ch_filtered, ch_emu_db )
+        NOVELTY ( ch_filtered, ch_emu_db, params.novelty_max_reads )
         def ch_novelty_summary = NOVELTY.out.summary
             .map { _meta, tsv -> tsv }
             .collectFile(name: 'novelty_summary.tsv', keepHeader: true, sort: true, storeDir: "${params.outdir}/novelty")

@@ -8,6 +8,7 @@ process NOVELTY {
     input:
     tuple val(meta), path(reads)
     path db
+    val max_reads
 
     output:
     tuple val(meta), path("*_novelty_summary.tsv"), emit: summary
@@ -23,15 +24,20 @@ process NOVELTY {
     def args   = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    minimap2 -c -x map-ont --secondary=no -t ${task.cpus} ${db}/species_taxid.fasta ${reads} > hits.paf
+    # Systematic subsample (every k-th read) when the sample has more than max_reads reads (0 = all)
+    n=\$(zcat -f ${reads} | awk 'END { print int(NR / 4) }')
+    k=1
+    if [ ${max_reads} -gt 0 ] && [ \$n -gt ${max_reads} ]; then k=\$(( (n + ${max_reads} - 1) / ${max_reads} )); fi
+    zcat -f ${reads} | awk -v k=\$k '{ r = int((NR - 1) / 4) } r % k == 0' > novelty_input.fastq
+    minimap2 -c -x map-ont --secondary=no -t ${task.cpus} ${db}/species_taxid.fasta novelty_input.fastq > hits.paf
     novelty.py \\
-        --reads ${reads} \\
+        --reads novelty_input.fastq \\
         --paf hits.paf \\
         --taxonomy ${db}/taxonomy.tsv \\
         --sample ${meta.id} \\
         --prefix ${prefix} \\
         ${args}
-    rm hits.paf
+    rm hits.paf novelty_input.fastq
     """
 
     stub:
