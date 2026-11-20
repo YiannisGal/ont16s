@@ -2,7 +2,7 @@ process EMU_SPLIT_POOLED {
     tag "pooled"
     label 'process_single'
 
-    conda "bioconda::emu=3.6.2"
+    conda "bioconda::emu=3.6.2 bioconda::minimap2=2.30 conda-forge::python=3.13.12"
     container "community.wave.seqera.io/library/emu:3.6.2--0adcfa4809f061f6"
 
     input:
