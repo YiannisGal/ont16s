@@ -2,12 +2,24 @@
 """Compare an Emu abundance table with a mock-community definition.
 
 Writes a per-taxon table and a one-row summary. Uses only the Python standard library.
+
+Each expected taxon gets a status that separates profiler errors from limits of the data:
+  detected               reported under an accepted name
+  genus_only             species not reported, but another species of the same genus is
+                         (16S-identical relatives, e.g. Veillonella rogosae / parvula)
+  below_detection_limit  expected reads (abundance x classified reads) < --min-expected-reads
+  not_amplified          (with --novelty-reads) almost no read has its closest reference in the
+                         taxon's genus: the organism is missing from the sequenced amplicons
+  missed                 none of the above
+Metrics are reported at species and at genus rank.
 """
 
 import argparse
 import csv
+import gzip
 import math
 import sys
+from collections import Counter
 
 NON_TAXA = {"unmapped", "mapped_filtered", "mapped_unclassified"}
 
@@ -32,14 +44,36 @@ def load_mock(path):
 
 
 def load_emu(path):
-    """Return {species name: relative abundance} for classified taxa."""
-    abundance = {}
+    """Return ({species name: relative abundance}, {genus: abundance}, classified read count)."""
+    abundance, by_genus, n_reads = {}, Counter(), 0.0
     for row in read_tsv(path):
         if row["tax_id"] in NON_TAXA:
             continue
         name = row.get("species") or f"tax_id:{row['tax_id']}"
-        abundance[name] = abundance.get(name, 0.0) + float(row["abundance"])
-    return abundance
+        ab = float(row["abundance"])
+        abundance[name] = abundance.get(name, 0.0) + ab
+        by_genus[genus(name) or name] += ab
+        n_reads += float(row.get("estimated counts") or 0)
+    return abundance, by_genus, n_reads
+
+
+def load_novelty_genera(path):
+    """Return (Counter of closest-reference genus per read, number of reads) from novelty.py."""
+    opener = gzip.open if path.endswith(".gz") else open
+    counts, n = Counter(), 0
+    with opener(path, "rt") as fh:
+        for row in csv.DictReader(fh, delimiter="\t"):
+            n += 1
+            g = (row.get("best_genus") or "").strip()
+            if g:
+                counts[g] += 1
+    return counts, n
+
+
+def bray_curtis(obs, exp):
+    keys = set(obs) | set(exp)
+    tot = sum(obs.get(k, 0) + exp.get(k, 0) for k in keys)
+    return 1 - 2 * sum(min(obs.get(k, 0), exp.get(k, 0)) for k in keys) / tot if tot else float("nan")
 
 
 def genus(name):
@@ -56,11 +90,20 @@ def main():
                         help="Unexpected taxa at or above this fraction count as false positives")
     parser.add_argument("--min-expected-ratio", type=float, default=0.01,
                         help="Only taxa expected at or above this fraction enter mean_abs_log2_ratio")
+    parser.add_argument("--min-expected-reads", type=float, default=3,
+                        help="Expected taxa with fewer expected reads are 'below_detection_limit' "
+                             "(Poisson: P(0 reads | 3 expected) = 5 %%)")
+    parser.add_argument("--novelty-reads", help="novelty.py *_novelty_reads.tsv.gz (enables 'not_amplified')")
+    parser.add_argument("--not-amplified-ratio", type=float, default=0.1,
+                        help="'not_amplified' when reads with a closest reference in the genus are below "
+                             "this fraction of the expected reads")
     parser.add_argument("--prefix", required=True)
     args = parser.parse_args()
 
     expected = load_mock(args.mock)
-    observed = load_emu(args.emu)
+    observed, observed_genus, n_reads = load_emu(args.emu)
+    nov_genera, nov_n = load_novelty_genera(args.novelty_reads) if args.novelty_reads else (None, 0)
+    observed_genera = {genus(n) for n in observed}
 
     rows = []
     matched = set()
@@ -68,10 +111,23 @@ def main():
         hits = [n for n in observed if n in names]
         matched.update(hits)
         obs = sum(observed[n] for n in hits)
+        g = genus(species)
+        if obs > 0:
+            status = "detected"
+        elif exp is not None and n_reads and exp * n_reads < args.min_expected_reads:
+            status = "below_detection_limit"
+        elif nov_genera is not None and exp and nov_n and nov_genera.get(g, 0) < args.not_amplified_ratio * exp * nov_n:
+            status = "not_amplified"
+        elif g in observed_genera:
+            status = "genus_only"
+        else:
+            status = "missed"
         rows.append({
             "taxon": species,
             "category": "expected",
             "detected": "yes" if obs > 0 else "no",
+            "status": status,
+            "expected_reads": f"{exp * n_reads:.1f}" if exp is not None and n_reads else "NA",
             "observed_abundance": f"{obs:.6f}",
             "expected_abundance": "NA" if exp is None else f"{exp:.6f}",
             "reported_as": ";".join(sorted(hits)),
@@ -86,6 +142,8 @@ def main():
             "taxon": name,
             "category": "near_neighbour" if genus(name) in expected_genera else "off_target",
             "detected": "yes",
+            "status": "unexpected",
+            "expected_reads": "0",
             "observed_abundance": f"{obs:.6f}",
             "expected_abundance": "0",
             "reported_as": name,
@@ -116,8 +174,19 @@ def main():
         worst = max((r for r in exp_rows if r["log2_ratio"] != "NA" and float(r["expected_abundance"]) >= args.min_expected_ratio),
                     key=lambda r: abs(float(r["log2_ratio"])), default=None)
         worst = f"{worst['taxon']} ({worst['log2_ratio']})" if worst else "NA"
+        exp_genus = Counter()
+        for species, _, exp in expected:
+            exp_genus[genus(species)] += exp
+        bc_genus = f"{bray_curtis(observed_genus, exp_genus):.4f}"
     else:
-        l1 = bc = mal = worst = "NA"
+        l1 = bc = mal = worst = bc_genus = "NA"
+
+    def names(status):
+        return ";".join(r["taxon"] for r in exp_rows if r["status"] == status) or "none"
+
+    detectable = [r for r in exp_rows if r["status"] != "below_detection_limit"]
+    exp_genera = {genus(r["taxon"]) for r in exp_rows}
+    det_genera = {g for g in exp_genera if g in observed_genera}
 
     summary = {
         "sample": args.sample,
@@ -126,6 +195,14 @@ def main():
         "n_detected": n_detected,
         "recall": f"{n_detected / len(exp_rows):.4f}",
         "missing": ";".join(r["taxon"] for r in exp_rows if r["detected"] == "no") or "none",
+        "classified_reads": f"{n_reads:.0f}",
+        "n_detectable": len(detectable),
+        "recall_detectable": f"{sum(r['detected'] == 'yes' for r in detectable) / len(detectable):.4f}" if detectable else "NA",
+        "recall_genus": f"{len(det_genera) / len(exp_genera):.4f}",
+        "genus_only": names("genus_only"),
+        "below_detection_limit": names("below_detection_limit"),
+        "not_amplified": names("not_amplified") if nov_genera is not None else "NA",
+        "missed": names("missed"),
         "unexpected_abundance": f"{sum(float(r['observed_abundance']) for r in unexp):.6f}",
         "n_false_pos": len(fp),
         "n_false_pos_near_neighbour": sum(r["category"] == "near_neighbour" for r in fp),
@@ -133,6 +210,7 @@ def main():
         "false_pos_min_abundance": args.min_abundance,
         "l1_distance": l1,
         "bray_curtis": bc,
+        "bray_curtis_genus": bc_genus,
         "mean_abs_log2_ratio": mal,
         "worst_taxon_log2_ratio": worst,
     }

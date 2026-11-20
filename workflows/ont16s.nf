@@ -193,12 +193,16 @@ workflow ONT16S {
     //
     // MODULE: Novelty — which rank does each read's similarity to the database support
     //
+    def ch_novelty_reads = channel.empty()
+    def ch_novelty_tsv   = channel.value([])
     if (!params.skip_novelty) {
         NOVELTY ( ch_filtered, ch_emu_db, params.novelty_max_reads )
+        ch_novelty_reads = NOVELTY.out.reads
         def ch_novelty_summary = NOVELTY.out.summary
             .map { _meta, tsv -> tsv }
             .collectFile(name: 'novelty_summary.tsv', keepHeader: true, sort: true, storeDir: "${params.outdir}/novelty")
         ch_multiqc_files = ch_multiqc_files.mix(ch_novelty_summary)
+        ch_novelty_tsv   = ch_novelty_summary
 
         if (!params.skip_novel_otus) {
             NOVEL_OTUS (
@@ -224,7 +228,8 @@ workflow ONT16S {
         NANOPLOT_FILTERED.out.txt.map { _meta, txt -> txt }.collect(),
         SEQKIT_RMDUP.out.log.map { _meta, log -> log }.collect(),
         ch_decision,
-        ch_db_fit
+        ch_db_fit,
+        ch_novelty_tsv
     )
     ch_multiqc_files = ch_multiqc_files
         .mix(ONT16S_REPORT.out.summary)
@@ -238,11 +243,15 @@ workflow ONT16S {
     //
     // MODULE: Mock-community validation for samples with a 'mock' value
     //
+    // Novelty per-read tables (optional) let the validation tell 'not amplified' from 'missed'
     MOCK_VALIDATION (
         ch_emu_report
             .filter { meta, _report -> meta.mock }
+            .map { meta, report -> [ meta.id, meta, report ] }
+            .join( ch_novelty_reads.map { meta, table -> [ meta.id, table ] }, remainder: true )
+            .filter { row -> row[1] != null }
             // Definition file existence is checked during samplesheet validation
-            .map { meta, report -> [ meta, report, file("${params.mock_definitions ?: "${projectDir}/assets/mocks"}/${meta.mock}.tsv") ] }
+            .map { _id, meta, report, table -> [ meta, report, file("${params.mock_definitions ?: "${projectDir}/assets/mocks"}/${meta.mock}.tsv"), table ?: [] ] }
     )
 
     def ch_mock_summary = MOCK_VALIDATION.out.summary
