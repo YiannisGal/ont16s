@@ -3,7 +3,7 @@ process MOCK_VALIDATION {
     label 'process_single'
 
     // Standard-library Python only; reuses the Emu container (Python 3)
-    conda "bioconda::emu=3.6.2"
+    conda "bioconda::emu=3.6.2 bioconda::minimap2=2.30 conda-forge::python=3.13.12"
     container "community.wave.seqera.io/library/emu:3.6.2--0adcfa4809f061f6"
 
     input:
