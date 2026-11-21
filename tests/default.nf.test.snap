@@ -49,7 +49,7 @@
                     "untar": 1.34
                 },
                 "Workflow": {
-                    "YiannisGal/ont16s": "v0.3.0dev"
+                    "YiannisGal/ont16s": "v0.3.0"
                 }
             },
             [
@@ -155,7 +155,7 @@
                 "multiqc_ont16s_warnings_table.txt:md5,9c0a408901c305bd4ef11cdf4f82fb15",
                 "novel_otus.fasta:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "novel_otus.tsv:md5,65980d040ccc2b8dc09f45db9d55079f",
-                "novel_otus_params.tsv:md5,5f262c3aeefbc6d4b99760e1e68e30bd",
+                "novel_otus_params.tsv:md5,9cb89d195a3f5a21b4d4b52820b1a725",
                 "novel_reads_per_sample.tsv:md5,b253927b58a053cb25df23a50d02cfe2",
                 "novelty_summary.tsv:md5,5efcaf52710d941b90c6f93fef2c6ca7",
                 "zymo_msplus_mab114_sup_rep1_novelty_profile.tsv:md5,262ec2952e391d243ae2e3a140c9edf0",
@@ -169,7 +169,7 @@
                 "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
             ]
         ],
-        "timestamp": "2026-11-20T23:02:45.93365768",
+        "timestamp": "2026-11-21T11:39:55.075066185",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
@@ -231,7 +231,7 @@
                     "untar": 1.34
                 },
                 "Workflow": {
-                    "YiannisGal/ont16s": "v0.3.0dev"
+                    "YiannisGal/ont16s": "v0.3.0"
                 }
             },
             [
@@ -340,7 +340,7 @@
                 "multiqc_ont16s_warnings_table.txt:md5,c6fc1e6f8f730d90d1dee24f337781fd",
                 "novel_otus.fasta:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "novel_otus.tsv:md5,65980d040ccc2b8dc09f45db9d55079f",
-                "novel_otus_params.tsv:md5,5f262c3aeefbc6d4b99760e1e68e30bd",
+                "novel_otus_params.tsv:md5,9cb89d195a3f5a21b4d4b52820b1a725",
                 "novel_reads_per_sample.tsv:md5,b253927b58a053cb25df23a50d02cfe2",
                 "novelty_summary.tsv:md5,5efcaf52710d941b90c6f93fef2c6ca7",
                 "zymo_msplus_mab114_sup_rep1_novelty_profile.tsv:md5,262ec2952e391d243ae2e3a140c9edf0",
@@ -354,7 +354,7 @@
                 "zymo_msplus_mab114_sup_rep1_raw_NanoStats.txt:md5,5c52757f4b0e4c4012f0524f78b8215a"
             ]
         ],
-        "timestamp": "2026-11-20T23:08:46.272134399",
+        "timestamp": "2026-11-21T11:42:11.839919124",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.2"
