@@ -5,6 +5,7 @@ authors:
   - family-names: Galiatsatos
     given-names: I.
 version: 0.3.1
+doi: 10.5281/zenodo.24419883
 date-released: 2026-11-21
 identifiers:
   - type: doi
