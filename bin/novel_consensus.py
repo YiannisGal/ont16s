@@ -95,6 +95,7 @@ def main():
     ap.add_argument("--max-group-reads", type=int, default=5000, help="reads clustered per group (every k-th)")
     ap.add_argument("--rounds", type=int, default=2)
     ap.add_argument("--threads", type=int, default=1)
+    ap.add_argument("--keep-chimeras", action="store_true", help="skip the reference chimera filter")
     args = ap.parse_args()
 
     reads = read_fastq(args.reads)
@@ -176,6 +177,22 @@ def main():
                 break
             draft = polished[0]
         consensus[otu] = (draft, grp)
+
+    # drop chimeric consensus sequences (reference-based UCHIME against the Emu database);
+    # in mock communities every false-novel OTU was a chimera of two mock members
+    n_chim = 0
+    if consensus and not args.keep_chimeras:
+        with open("work_otu/raw_consensus.fasta", "w") as fh:
+            for otu, (seq, _) in consensus.items():
+                fh.write(f">{otu}\n{seq}\n")
+        run(["vsearch", "--uchime_ref", "work_otu/raw_consensus.fasta", "--db",
+             os.path.join(args.db, "species_taxid.fasta"), "--nonchimeras", "work_otu/nonchim.fasta",
+             "--threads", str(args.threads), "--quiet"])
+        ok = set(read_fasta("work_otu/nonchim.fasta"))
+        n_chim = len(consensus) - len(ok)
+        consensus = {o: v for o, v in consensus.items() if o in ok}
+    with open("novel_otus_params.tsv", "a") as fh:
+        fh.write(f"chimeric_consensus_removed\t{n_chim}\n")
 
     # assign every novel read to its best consensus
     assigned = defaultdict(Counter)
