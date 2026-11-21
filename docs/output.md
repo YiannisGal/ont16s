@@ -84,7 +84,9 @@ Species names and assignments depend strongly on the database. Report this file 
     best hit, supported rank.
   - `novel_otus/novel_otus.fasta`: consensus sequences of clusters of reads too distant for a genus.
   - `novel_otus/novel_otus.tsv`: per consensus OTU: size, reads per sample, best hit, identity,
-    supported rank, lineage truncated to that rank.
+    supported rank, lineage truncated to that rank, and the lineage group it was clustered in.
+  - `novel_otus/novel_otus_params.tsv`: measured read accuracy, clustering threshold used, number of
+    novel reads and number of chimeric consensus sequences removed.
   - `novel_otus/novel_reads_per_sample.tsv`: reads selected per sample.
 
 </details>
@@ -94,8 +96,8 @@ Species names and assignments depend strongly on the database. Report this file 
 <details markdown="1">
 <summary>Output files</summary>
 
-- `mock_validation/<sample>_mock_validation.tsv`: one row per taxon: expected taxa (detected yes/no, observed and expected abundance, name reported by Emu) and unexpected taxa (`near_neighbour` or `off_target`).
-- `mock_validation/<sample>_mock_summary.tsv`: one-row summary (recall, missing taxa, unexpected abundance, false positives, L1 distance).
+- `mock_validation/<sample>_mock_validation.tsv`: one row per taxon: expected taxa (detected yes/no, `status`, expected reads, observed and expected abundance, name reported by Emu) and unexpected taxa (`near_neighbour` or `off_target`).
+- `mock_validation/<sample>_mock_summary.tsv`: one-row summary (recall, recall of detectable taxa, genus-rank recall and Bray-Curtis, counts per status, missing taxa, unexpected abundance, false positives, L1 distance).
 - `mock_validation/mock_validation_summary.tsv`: all mock samples together; also shown in the MultiQC report.
 
 </details>

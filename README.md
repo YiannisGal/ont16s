@@ -171,14 +171,14 @@ All parameters, thresholds and their justification: [docs/usage.md](docs/usage.m
 
 ## Outputs
 
-| Directory          | Content                                                                                                       |
-| ------------------ | ------------------------------------------------------------------------------------------------------------- |
-| `emu/`             | per-sample Emu tables; `emu-combined-{species,genus}[-counts].tsv` (taxa × samples); `pooled/` in pooled mode |
-| `ont16s_report/`   | `ont16s_run_summary.tsv` (one row per sample) and `ont16s_warnings.tsv` (every warning with its reason)       |
-| `mock_validation/` | per-mock-sample expected vs observed taxa and a summary (recall, false positives, L1 distance)                |
-| `qc/`              | NanoPlot reports (raw/filtered), Emu read accounting, database fit                                            |
-| `multiqc/`         | MultiQC report combining QC, warnings and validation                                                          |
-| `pipeline_info/`   | software versions, database provenance, Nextflow reports                                                      |
+| Directory          | Content                                                                                                                     |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `emu/`             | per-sample Emu tables; `emu-combined-{species,genus}[-counts].tsv` (taxa × samples); `pooled/` in pooled mode               |
+| `ont16s_report/`   | `ont16s_run_summary.tsv` (one row per sample) and `ont16s_warnings.tsv` (every warning with its reason)                     |
+| `mock_validation/` | per-mock-sample expected vs observed taxa and a summary (status per taxon, recall, genus-rank Bray-Curtis, false positives) |
+| `qc/`              | NanoPlot reports (raw/filtered), Emu read accounting, database fit                                                          |
+| `multiqc/`         | MultiQC report combining QC, warnings and validation                                                                        |
+| `pipeline_info/`   | software versions, database provenance, Nextflow reports                                                                    |
 
 Details: [docs/output.md](docs/output.md).
 
@@ -186,12 +186,12 @@ Details: [docs/output.md](docs/output.md).
 
 Measured with this pipeline (details and data in [docs/server-tasks](docs/server-tasks/)):
 
-| Dataset                                                               | Result                                                                                                                                                                                                                                                                                          |
-| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Zymo MSPlus mock, ONT R10.4.1 SUP (ST-001, ST-008)                    | all 12 expected bacteria detected; 0.6 % of abundance assigned to unexpected taxa                                                                                                                                                                                                               |
-| Environmental samples, PRJNA925180 (soil, lake, freshwater; ST-004)   | replicates agree (Bray-Curtis ≤ 0.27), habitats separate (0.62–0.92)                                                                                                                                                                                                                            |
-| Lake-sediment core, 70 samples, R10.4.1 fast basecalling (ST-005–009) | vs a published NanoCLUST + SILVA analysis of the same reads: same between-sample pattern (Mantel r = 0.96 phylum, 0.95 genus), all published phyla detected, 36 min on 24 CPUs; [comparison](docs/etoliko-method-comparison.md)                                                                 |
-| NaMeco independent mocks, PRJEB82315, 50 k reads/sample (ST-010)      | D6306 even mock, 5 replicates: 8/8 species, Bray-Curtis 0.09; D6331 gut mock, 10 replicates: recall 0.65, Bray-Curtis 0.48, explained by primer bias (no _Bifidobacterium_/archaea), 16S-identical _Veillonella_ species and taxa below 0.002 %; [details](docs/server-tasks/ST-010-results.md) |
+| Dataset                                                               | Result                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Zymo MSPlus mock, ONT R10.4.1 SUP (ST-001, ST-008)                    | all 12 expected bacteria detected; 0.6 % of abundance assigned to unexpected taxa                                                                                                                                                                                                                                                                                                                                                                     |
+| Environmental samples, PRJNA925180 (soil, lake, freshwater; ST-004)   | replicates agree (Bray-Curtis ≤ 0.27), habitats separate (0.62–0.92)                                                                                                                                                                                                                                                                                                                                                                                  |
+| Lake-sediment core, 70 samples, R10.4.1 fast basecalling (ST-005–009) | vs a published NanoCLUST + SILVA analysis of the same reads: same between-sample pattern (Mantel r = 0.96 phylum, 0.95 genus), all published phyla detected, 36 min on 24 CPUs; [comparison](docs/etoliko-method-comparison.md)                                                                                                                                                                                                                       |
+| NaMeco independent mocks, PRJEB82315, 50 k reads/sample (ST-010)      | D6306 even mock, 5 replicates: 8/8 species, Bray-Curtis 0.09; D6331 gut mock, 10 replicates: recall 0.65, Bray-Curtis 0.48 (full depth, ST-013: 85 % of detectable species, genus-rank Bray-Curtis 0.32, 0 false novel OTUs; [details](docs/server-tasks/ST-012-013-results.md)), explained by primer bias (no _Bifidobacterium_/archaea), 16S-identical _Veillonella_ species and taxa below 0.002 %; [details](docs/server-tasks/ST-010-results.md) |
 
 Not yet done: tests on HPC/cloud.
 
@@ -202,6 +202,7 @@ Not yet done: tests on HPC/cloud.
 - Species names of 16S-identical relatives (e.g. _Veillonella rogosae_ / _parvula_) are not reliable;
   use genus rank for these.
 - Primer and 16S copy-number biases from the wet lab are not corrected (D6331: up to 10× per taxon).
+- Reads below ~90 % accuracy trigger a report warning; species names are unreliable at that accuracy.
 - Novelty: in mocks 0.4–3.3 % of reads look novel at read level; trust a lineage only when it forms a
   consensus OTU (`novelty/novel_otus/`).
 - Tested on Linux x86_64 (Docker, Singularity, conda); ARM64, HPC schedulers and cloud are not yet tested.

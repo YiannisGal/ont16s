@@ -11,6 +11,7 @@ process ONT16S_REPORT {
     path dedup   , stageAs: 'dedup/*'
     path decision
     path db_fit
+    path novelty
 
     output:
     path "ont16s_run_summary.tsv", emit: summary
@@ -23,6 +24,7 @@ process ONT16S_REPORT {
     script:
     def args = task.ext.args ?: ''
     def fit  = db_fit ? "--db-fit ${db_fit}" : ''
+    def nov  = novelty ? "--novelty ${novelty}" : ''
     """
     ont16s_report.py \\
         --metrics-dir metrics \\
@@ -31,6 +33,7 @@ process ONT16S_REPORT {
         --dedup-dir dedup \\
         --decision ${decision} \\
         ${fit} \\
+        ${nov} \\
         ${args}
     """
 

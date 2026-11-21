@@ -157,9 +157,15 @@ hit covers less than `--novelty_min_coverage` (default 0.8) of the read count as
 (chimeras, off-target products).
 
 **Consensus OTUs** (all samples together). Reads too distant for a genus name are pooled and
-clustered with vsearch at `--novel_cluster_id` (default 0.90; raw reads, so lower than the genus
-threshold). Each cluster with at least `--novel_min_size` reads (default 10) gets a consensus sequence:
-its centroid polished twice with racon. A consensus averages out read errors (on the Zymo mock,
+grouped by the lineage of their closest reference. Each group is clustered with vsearch at
+`--novel_cluster_id`. The default `auto` uses the measured read accuracy _a_ (median identity of
+reads that match a reference at species rank): threshold = _a_² − 0.02, bounded to 0.70–0.95
+(two reads of one organism differ by about two error rates). Each cluster gets a consensus
+sequence: its centroid polished twice with racon. All novel reads are then mapped back to the
+consensus sequences; an OTU is kept when at least `--novel_min_size` reads (default 10) map to it.
+Chimeric consensus sequences are removed with reference-based UCHIME (vsearch) against the Emu
+database: in the full-depth D6331 gut mock every one of 94 candidate OTUs was a chimera of two
+mock members, and the filter removed all of them. A consensus averages out read errors (on the Zymo mock,
 99.9–100 % identity to the true species), so it is classified against the database directly. Use
 the consensus sequences for BLAST, phylogenetic placement or a custom database.
 
@@ -183,6 +189,21 @@ Reported per mock sample: expected taxa detected (recall), unexpected taxa split
 near-neighbours (same genus as an expected taxon) and off-target taxa, false positives at or
 above `--mock_min_abundance` (default 0.001 = 0.1 %), and the L1 distance to the expected
 proportions when all expected abundances are given.
+
+Each expected taxon gets a `status`:
+
+| Status                  | Meaning                                                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------------------- |
+| `detected`              | species reported at or above `--mock_min_abundance`                                                     |
+| `genus_only`            | species missed, but its genus is reported (e.g. 16S-identical _Veillonella_ species)                    |
+| `below_detection_limit` | fewer than 3 reads expected at this depth (expected abundance × classified reads), so a miss is normal  |
+| `not_amplified`         | almost no reads anywhere near this genus (< 10 % of the expected reads): the primers did not amplify it |
+| `missed`                | none of the above: a real failure of the pipeline                                                       |
+
+`recall_detectable` counts only taxa above the detection limit; `bray_curtis_genus` compares
+proportions after summing species within each genus. On a staggered mock, genus-rank values are
+the fairer measure of the profiler, because species names of 16S-identical relatives cannot be
+resolved by any 16S method.
 
 Limits: false positives depend on depth (with < 1,000 reads a single read exceeds 0.1 %); the
 genus rule cannot see that e.g. _Shigella_ is nested within _E. coli_; proportions are not

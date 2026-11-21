@@ -13,6 +13,7 @@ process NOVEL_OTUS {
     path "novel_otus.fasta"           , emit: fasta
     path "novel_otus.tsv"             , emit: tsv
     path "novel_reads_per_sample.tsv" , emit: counts
+    path "novel_otus_params.tsv"      , emit: params
     tuple val("${task.process}"), val('vsearch'), eval('vsearch --version 2>&1 | head -1 | sed "s/vsearch v//; s/_.*//"'), topic: versions, emit: versions_vsearch
     tuple val("${task.process}"), val('racon'), eval('racon --version | sed "s/v//"'), topic: versions, emit: versions_racon
 
@@ -26,9 +27,10 @@ process NOVEL_OTUS {
     def r     = reads instanceof List ? reads : [reads]
     def pairs = [ids, t, r].transpose().collect { id, tab, fq -> "${id}=${tab}:${fq}" }.join(' ')
     """
-    novel_select.py ${pairs}
+    novel_select.py --taxonomy ${db}/taxonomy.tsv ${pairs}
     novel_consensus.py \\
         --reads novel_reads.fastq \\
+        --groups novel_groups.tsv \\
         --db ${db} \\
         --threads ${task.cpus} \\
         ${args}
@@ -37,6 +39,6 @@ process NOVEL_OTUS {
 
     stub:
     """
-    touch novel_otus.fasta novel_otus.tsv novel_reads_per_sample.tsv
+    touch novel_otus.fasta novel_otus.tsv novel_reads_per_sample.tsv novel_otus_params.tsv
     """
 }

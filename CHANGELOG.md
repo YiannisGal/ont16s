@@ -3,10 +3,26 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.3.0dev
+## v0.3.0 - 2026-11-21
+
+### Added
+
+- Mock validation: per-taxon `status` (`detected`, `genus_only`, `below_detection_limit`,
+  `not_amplified`, `missed`), expected reads, `recall_detectable`, `recall_genus` and
+  `bray_curtis_genus`.
+- Report warnings `low_read_accuracy` (measured accuracy < `--min_read_accuracy`, 0.90) and
+  `q_score_overestimate` (Q scores promise more accuracy than measured).
+- Novelty: measured read accuracy (median identity of species-rank reads) and best genus/species
+  per read.
+- `novel_otus_params.tsv`.
+- Validation at full depth on the D6331 gut mock (ST-013) and novel-lineage test on Etoliko (ST-012).
 
 ### Changed
 
+- Consensus OTUs: reads grouped by closest-reference lineage; clustering threshold `auto` from
+  measured read accuracy (`--novel_cluster_id auto`); OTU size counted by mapping all novel reads
+  back; chimeric consensus sequences removed (vsearch `--uchime_ref`). Old method: 0 OTUs on
+  Etoliko (88 % accurate reads); new: 2 566. Gut mock: 0 false OTUs.
 - Release DOI added (v0.2.0: 10.5281/zenodo.24406558).
 
 ## v0.2.0 - 2026-11-20

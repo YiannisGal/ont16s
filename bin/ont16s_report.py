@@ -38,6 +38,11 @@ def main():
     ap.add_argument("--max-filter-loss", type=float, default=0.5)
     ap.add_argument("--max-unassigned", type=float, default=0.2)
     ap.add_argument("--max-organelle", type=float, default=0.05)
+    ap.add_argument("--novelty", default=None, help="novelty_summary.tsv (all samples)")
+    ap.add_argument("--min-read-accuracy", type=float, default=0.90,
+                    help="warn when the measured read accuracy is below this (read-level novelty approximate)")
+    ap.add_argument("--max-q-overestimate", type=float, default=0.01,
+                    help="warn when Q-score accuracy exceeds the measured accuracy by more than this")
     args = ap.parse_args()
 
     raw = {sample_from(p, "_raw_NanoStats.txt"): nanostats(p)
@@ -114,6 +119,23 @@ def main():
         if organelle == organelle and organelle > args.max_organelle:
             warn(s, "organelle", f"{organelle:.2f}", args.max_organelle,
                  "Many reads are chloroplast/mitochondria; consider --exclude_taxa chloroplast,mitochondria.")
+
+    if args.novelty and os.path.exists(args.novelty):
+        with open(args.novelty) as fh:
+            for r in csv.DictReader(fh, delimiter="\t"):
+                s, meas, q = r["sample"], r.get("measured_accuracy", "NA"), r.get("median_read_accuracy", "NA")
+                if meas in ("", "NA"):
+                    continue
+                meas = float(meas)
+                if meas < args.min_read_accuracy:
+                    warn(s, "low_read_accuracy", f"{meas:.3f}", args.min_read_accuracy,
+                         "Reads of known organisms match their reference at only this identity (e.g. fast "
+                         "basecalling): read-level novelty fractions are approximate; rely on the consensus "
+                         "OTUs in novelty/novel_otus/ and consider SUP basecalling.")
+                if q not in ("", "NA") and float(q) - meas > args.max_q_overestimate:
+                    warn(s, "q_score_overestimate", f"{float(q) - meas:.3f}", args.max_q_overestimate,
+                         "Quality scores claim a higher accuracy than measured against references, so the "
+                         "error correction is too weak and read-level novelty is over-estimated.")
 
     warnings.insert(0, {"id": "all:emu_mode", "sample": "all", "check": "emu_mode", "value": decision["emu_mode"],
                         "threshold": decision.get("rule", ""), "message": decision.get("reason", "")})
