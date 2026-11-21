@@ -3,6 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v0.4.0dev
+
+### Added
+
+- Step-by-step installation and usage guide (`docs/installation-and-usage.md`).
+- Release DOI (v0.3.1: 10.5281/zenodo.24419883).
+
+## v0.3.1 - 2026-11-21
+
+### Fixed
+
+- `CITATION.cff`: removed the v0.2.0 version DOI and updated the version, so the Zenodo archive of the release succeeds (v0.3.0 failed to archive). Same code as v0.3.0.
+
 ## v0.3.0 - 2026-11-21
 
 ### Added

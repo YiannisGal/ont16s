@@ -47,6 +47,8 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 
 ## Running the pipeline
 
+A beginner-level walk-through (installation, samplesheet from a MinKNOW folder, resources, background runs, troubleshooting) is in [installation-and-usage.md](installation-and-usage.md).
+
 The typical command for running the pipeline is as follows:
 
 ```bash

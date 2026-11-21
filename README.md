@@ -65,12 +65,14 @@ flowchart LR
 
 ## Quick start
 
+**New to Nextflow?** Follow the step-by-step guide: [docs/installation-and-usage.md](docs/installation-and-usage.md) (install Java, Nextflow and Docker, download a database, build the samplesheet, run, read the results, fix common errors).
+
 Requirements: [Nextflow](https://www.nextflow.io/docs/latest/install.html) ≥ 25.10.4 (Java 17+) and
 [Docker](https://docs.docker.com/engine/install/).
 
 ```bash
 # 1. Run the built-in test (downloads a 0.7 MB test BAM and a 1.5 MB test database)
-nextflow run YiannisGal/ont16s -r v0.2.0 -profile test,docker --outdir results_test
+nextflow run YiannisGal/ont16s -r v0.3.1 -profile test,docker --outdir results_test
 ```
 
 The test takes about 2–3 minutes on 2 CPUs and should report the 12 expected bacteria of a Zymo mock
@@ -78,7 +80,7 @@ community (`results_test/mock_validation/mock_validation_summary.tsv`).
 
 ```bash
 # 2. Run your data
-nextflow run YiannisGal/ont16s -r v0.2.0 \
+nextflow run YiannisGal/ont16s -r v0.3.1 \
     -profile docker \
     --input samplesheet.csv \
     --emu_db /path/to/emu_db \
@@ -107,7 +109,7 @@ nextflow run YiannisGal/ont16s -r v0.2.0 \
 
 4. **An Emu database** (see [Databases](#databases)).
 
-Use `-r <version>` (e.g. `-r v0.2.0`) to run a fixed release.
+Use `-r <version>` (e.g. `-r v0.3.1`) to run a fixed release.
 
 ## Test data
 
@@ -215,8 +217,10 @@ ont16s was written by IGaliatsatos ([@YiannisGal](https://github.com/YiannisGal)
 
 If you use ont16s, please cite the pipeline:
 
-> Galiatsatos I. ont16s: full-length 16S rRNA profiling for Oxford Nanopore (v0.2.0). Zenodo.
-> doi: [10.5281/zenodo.24406558](https://doi.org/10.5281/zenodo.24406558)
+> Galiatsatos I. ont16s: full-length 16S rRNA profiling for Oxford Nanopore (v0.3.1). Zenodo.
+> doi: [10.5281/zenodo.24419883](https://doi.org/10.5281/zenodo.24419883)
+
+All versions: [10.5281/zenodo.24053594](https://doi.org/10.5281/zenodo.24053594).
 
 Please also cite the tools it runs, listed with references in
 [CITATIONS.md](CITATIONS.md), in particular:
