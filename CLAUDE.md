@@ -6,13 +6,13 @@
 
 # 0. Current project state (keep this section short and up to date)
 
-**Last updated:** 2026-11-20
+**Last updated:** 2026-11-21
 
 **Positioning (D-001):** validation- and database-aware Emu profiling pipeline for
 environmental ONT full-length 16S. Differentiated from TRANA (Emu Nextflow pipeline)
 and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
 
-**Current milestone:** Release v0.2.0 (branch `release-v0.2.0` → `dev` → `main`). v0.2.0 released 2026-11-20 (DOI 10.5281/zenodo.24406558; all versions 10.5281/zenodo.24053594).
+**Current milestone:** v0.3.1 released 2026-11-21 (DOI 10.5281/zenodo.24419883; v0.3.0 Zenodo archive failed because CITATION.cff carried the old version DOI — never put a version `doi:` of a previous release in CITATION.cff before tagging). dev = 0.4.0dev.
 
 **Completed:**
 
@@ -30,8 +30,9 @@ and nf-core/ampliseq dev (ONT via Savont). Details: `docs/project-landscape.md`.
   MacBook (8 GB RAM) = docs/review only
 - v0.2.0: novelty analysis + consensus OTUs (D-007), Bray-Curtis/log2 metrics, template 4.2.1
 - ST-010 NaMeco: D6306 8/8 BC 0.09; D6331 BC 0.48 (primer/copy-number bias); 0 false novel OTUs
+- v0.3.0/0.3.1: mock status per taxon + genus metrics, accuracy warnings, accuracy-aware consensus OTUs + uchime_ref chimera filter (ST-012 Etoliko 2 566 OTUs; ST-013 D6331 full depth: 85 % detectable recall, genus BC 0.32, 0 false OTUs)
 
-**Current task:** v0.2.0 release PRs. Next: Etoliko novelty results (ST-011), HPC profile.
+**Current task:** v0.3.1 docs (installation guide). Next: HPC profile; optional merging of over-split novel OTUs.
 
 **Server:** repo at `/mnt/Ubuntu_HD5/Users/yiannis/ont16s`; tools (nf-core venv, pre-commit, nf-test) in `/mnt/Ubuntu_HD5/Users/yiannis/ont16s_tools/`; run scratch in `/mnt/Ubuntu_HD5/Users/yiannis/ont16s_runs/`.
 The old `/mnt/Ubuntu_HD5/yiannis/` (repo + `ont16s_data`, ST-001–ST-011) was archived on 2026-11-07 to `gdrive:server/09_ont16s_pipeline/` (verified) and deleted from the server.
