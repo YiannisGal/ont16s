@@ -48,4 +48,4 @@ template:
     - codespaces
     - seqera_platform
     - email
-  version: 0.3.0
+  version: 0.3.1
