@@ -15,7 +15,9 @@ Per read:
 Reads whose best hit covers < --min-coverage of the read are 'unaligned' (chimeras, off-target).
 
 Outputs (prefix = sample):
-  <prefix>_novelty_summary.tsv  one row: fractions of reads per deepest supported rank
+  <prefix>_novelty_summary.tsv  one row: fractions of reads per deepest supported rank;
+                                measured_accuracy = median identity of species-rank reads to their
+                                reference (compare with median_read_accuracy from Q scores)
   <prefix>_novelty_profile.tsv  lineage of the best hit truncated to the supported rank, counts
   <prefix>_novelty_reads.tsv.gz per read details
 """
@@ -100,10 +102,10 @@ def main():
 
     counts = Counter()
     profile = Counter()
-    raw_ids, adj_ids, accs = [], [], []
+    raw_ids, adj_ids, accs, sp_ids = [], [], [], []
     with gzip.open(f"{args.prefix}_novelty_reads.tsv.gz", "wt") as out:
         w = csv.writer(out, delimiter="\t", lineterminator="\n")
-        w.writerow(["read_id", "read_accuracy", "identity", "adj_identity", "coverage", "best_taxid", "supported_rank"])
+        w.writerow(["read_id", "read_accuracy", "identity", "adj_identity", "coverage", "best_taxid", "best_genus", "best_species", "supported_rank"])
         for rid, a in acc.items():
             if a == a:
                 accs.append(a)
@@ -111,18 +113,21 @@ def main():
             if hit is None or hit[2] < args.min_coverage:
                 counts["unaligned"] += 1
                 profile[("unaligned",) + ("",) * len(RANKS)] += 1
-                w.writerow([rid, f"{a:.4f}", "", "", f"{hit[2]:.3f}" if hit else "", hit[3] if hit else "", "unaligned"])
+                lin = tax.get(hit[3], [""] * len(RANKS)) if hit else [""] * len(RANKS)
+                w.writerow([rid, f"{a:.4f}", "", "", f"{hit[2]:.3f}" if hit else "", hit[3] if hit else "", lin[4], lin[5], "unaligned"])
                 continue
             _, ident, cov, taxid = hit
             adj = ident if args.no_error_correction or a != a or a <= 0 else min(1.0, ident / a)
             rank = supported_rank(adj)
             raw_ids.append(ident)
             adj_ids.append(adj)
+            if rank == "species":
+                sp_ids.append(ident)
             counts[rank] += 1
             lineage = tax.get(taxid, [""] * len(RANKS))
             depth = RANKS.index(rank) + 1 if rank in RANKS else 0
             profile[(rank,) + tuple(lineage[:depth]) + ("",) * (len(RANKS) - depth)] += 1
-            w.writerow([rid, f"{a:.4f}", f"{ident:.4f}", f"{adj:.4f}", f"{cov:.3f}", taxid, rank])
+            w.writerow([rid, f"{a:.4f}", f"{ident:.4f}", f"{adj:.4f}", f"{cov:.3f}", taxid, lineage[4], lineage[5], rank])
 
     total = sum(counts.values())
     order = ["species", "genus", "family", "order", "class", "phylum", "unclassified", "unaligned"]
@@ -138,12 +143,12 @@ def main():
     with open(f"{args.prefix}_novelty_summary.tsv", "w", newline="") as fh:
         w = csv.writer(fh, delimiter="\t", lineterminator="\n")
         w.writerow(
-            ["sample", "reads", "median_read_accuracy", "median_identity", "median_adj_identity"]
+            ["sample", "reads", "median_read_accuracy", "measured_accuracy", "median_identity", "median_adj_identity"]
             + [f"frac_{k}" for k in order]
             + ["frac_novel_genus"]
         )
         w.writerow(
-            [args.sample, total, med(accs), med(raw_ids), med(adj_ids)]
+            [args.sample, total, med(accs), med(sp_ids) if len(sp_ids) >= 50 else "NA", med(raw_ids), med(adj_ids)]
             + [frac(counts[k], total) for k in order]
             + [frac(below_genus, aligned)]
         )

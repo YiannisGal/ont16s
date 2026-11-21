@@ -7,7 +7,7 @@ process MOCK_VALIDATION {
     container "community.wave.seqera.io/library/emu:3.6.2--0adcfa4809f061f6"
 
     input:
-    tuple val(meta), path(report), path(mock_definition)
+    tuple val(meta), path(report), path(mock_definition), path(novelty_reads)
 
     output:
     tuple val(meta), path("*_mock_validation.tsv"), emit: taxa
@@ -20,6 +20,7 @@ process MOCK_VALIDATION {
     script:
     def args   = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
+    def novelty = novelty_reads ? "--novelty-reads ${novelty_reads}" : ''
     """
     mock_validation.py \\
         --sample ${meta.id} \\
@@ -27,6 +28,7 @@ process MOCK_VALIDATION {
         --emu ${report} \\
         --mock ${mock_definition} \\
         --prefix ${prefix} \\
+        ${novelty} \\
         ${args}
     """
 

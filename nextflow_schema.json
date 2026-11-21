@@ -189,11 +189,11 @@
                     "fa_icon": "fas fa-forward"
                 },
                 "novel_cluster_id": {
-                    "type": "number",
-                    "default": 0.9,
-                    "minimum": 0.5,
-                    "maximum": 1,
-                    "description": "vsearch identity for clustering novel reads (raw reads, so lower than the genus threshold).",
+                    "type": "string",
+                    "default": "auto",
+                    "pattern": "^(auto|0?\\.[0-9]+|1(\\.0+)?)$",
+                    "description": "Identity threshold for clustering novel reads, or 'auto' (from the measured read accuracy).",
+                    "help_text": "'auto' uses a^2 - 0.02 (bounded 0.70-0.95), where a is the median identity of species-rank reads to their reference. A fixed 0.90 only works for reads of about 95 % accuracy or better.",
                     "fa_icon": "fas fa-percent"
                 },
                 "novel_min_size": {
